@@ -159,6 +159,9 @@
         display: block;
         margin: 0 auto;
     }
+    .modal-backdrop{
+        display: none;
+    }
 </style>
 <div id="modal" class="modal">
     <div class="modal-content">
@@ -482,6 +485,8 @@ echo generate_low_balance_popup($FareDetails['_CustomerBuying'] + $FareDetails['
                                 return ($pax_count == 1 ? true : false);
                             }
                             ?>
+                                <input type="hidden" id="selectedPlanInput" name="selectedPlan">
+                                    <input type="hidden" id="selectedPlanIdInput" name="selectedPlanId">
                             <form action="<?= base_url() . 'index.php/flight/pre_booking/' . $search_data['search_id'] ?>" method="POST" autocomplete="off" id="pre-booking-form">
                                 <div class="hide">
                                     <input type="hidden" required="required" name="search_id" value="<?= $search_data['search_id']; ?>" />
@@ -494,9 +499,11 @@ echo generate_low_balance_popup($FareDetails['_CustomerBuying'] + $FareDetails['
                                     <input type="text" name="redeem_points_post" class="redeem_points_post" value="0">
                                     <input type="hidden" name="reward_usable" value="<?= round($reward_usable) ?>">
                                     <input type="hidden" name="reward_earned" value="<?= round($reward_earned) ?>">
-                                    <input type="hidden" id="selectedPlanInput" name="selectedPlan">
-                                    <input type="hidden" id="selectedPlanIdInput" name="selectedPlanId">
+                                
                                     <input type="hidden" id="selectedPlansJson" name="selectedPlansJson">
+                                    <input type="hidden" id="isInsured" name="isInsured">
+                                    <input type="hidden" id="insuranceId" name="insuranceId">
+
 
                                     <input type="hidden" name="total_price_with_rewards" value="<?= round($total_price_with_rewards) ?>">
                                     <input type="hidden" name="reducing_amount" class="reduceamount" value="<?= round($reducing_amount) ?>" <!--<input type="hidden" required="required" name="provab_auth_key" value="?=$ProvabAuthKey ?>" readonly>
@@ -988,7 +995,7 @@ echo generate_low_balance_popup($FareDetails['_CustomerBuying'] + $FareDetails['
                                         <p>Would you like to purchase insurance for this flight?</p>
                                         <a href='<?php echo base_url() . "insurance/GetAvailablePlansOTAWithRiders/" . $search_data['search_id'] . '/' . $segmentDetails ?>'>Insure Trip</a>
                                         <a href='<?php echo base_url() . "insurance/index" ?>'>Confirm Insurance</a>
-                                        <button type="button" onclick="showModal()" class="btn btn-primary" id="yesBtn">Yes</button>
+                                        <button type="button"class="btn btn-primary" id="yesBtn">Yes</button>
                                         <button type="button" class="btn btn-danger" id="noBtn">No</button>
                                     </div>
                                     <div id="errorDiv"></div>
@@ -1168,7 +1175,7 @@ echo generate_low_balance_popup($FareDetails['_CustomerBuying'] + $FareDetails['
                                             <input type="hidden" name="ticket_method" value="" id="ticket_method" />
                                             <?php if ($hold_ticket == true) { ?>
                                                 <div class="continye col-sm-3 col-xs-6">
-                                                    <button type="button" id="" name="flight" value="direct_ticket" class="continue_booking_button ticket_type_cls bookcont">Direct Ticket</button>
+                                                    <button type="submit" id="" name="flight" value="direct_ticket" class="continue_booking_button ticket_type_cls bookcont">Direct Ticket</button>
                                                 </div>
                                                 <div class="continye col-sm-3 col-xs-6">
                                                     <button type="submit" id="" name="flight" value="hold_ticket" class="continue_booking_button ticket_type_cls book_hold_ticket">Hold Ticket</button>
@@ -1804,19 +1811,22 @@ let selectedPlans = [];
 let currentPassenger = 1;
 const totalPassengers = <?php echo $total_pax_count; ?>; // Get the total passenger count from PHP
 let familyPlanSelected = false; // Flag to track if a family plan is already selected
-
+const isInsuranceSelected = document.getElementById("isInsured");
+const insuranceIdInput = document.getElementById("insuranceId");
 const baseUrl = "<?php echo base_url(); ?>";
 const fetchUrl = `${baseUrl}index.php/flight/GetAvailablePlansOTAWithRiders/<?php echo $searchId ?>/<?php echo $segmentDetails ?>`;
 
 closeBtn.onclick = function() {
     resetModal();
     modal.style.display = "none";
+    isInsuranceSelected.value = 0;
 }
 
 window.onclick = function(event) {
     if (event.target === modal) {
         resetModal();
         modal.style.display = "none";
+        isInsuranceSelected.value = 0;
     }
 }
 
@@ -1834,6 +1844,8 @@ function openModal() {
         .then(data => {
             hideLoading();
             showPlanOptions(data);
+            console.log(data);
+            insuranceIdInput.value  = data.id? data.id :0;
         })
         .catch(error => {
             console.error('Error fetching data:', error);
@@ -1944,6 +1956,7 @@ function showFamilyPlans(familyPlans) {
 }
 
 function showIndividualPlans(passenger, individualPlans) {
+    console.log(individualPlans);
     const passengerName = getPassengerName(passenger);
     modalBody.innerHTML = `
         <button id="goBackBtn">Go Back</button>
@@ -1990,7 +2003,6 @@ function showIndividualPlans(passenger, individualPlans) {
                     plan: plan.PlanTitle,
                     planId: plan.PlanCode
                 });
-                console.log(`Selected ${plan.PlanTitle} for ${passengerName}`);
                 appendSelectedPlan(plan.PlanTitle, plan.PlanCode, passengerName);
                 if (passenger < totalPassengers) {
                     showIndividualPlans(passenger + 1, individualPlans);
@@ -2043,6 +2055,7 @@ function finishSelection() {
 
     document.getElementById("insuranceSection").style.display = "none";
     document.getElementById("insurancePlans").style.display = "none";
+    isInsuranceSelected.value=1;
     
     const selectedPlansDiv = document.createElement('div');
     selectedPlansDiv.innerHTML = `
@@ -2056,6 +2069,7 @@ function finishSelection() {
 
     document.getElementById("cancelBtn").addEventListener("click", () => {
         selectedPlansDiv.remove();
+        isInsuranceSelected.value = 0;
         selectedPlans = [];
         const selectedPlansInput = document.getElementById("selectedPlansJson");
     selectedPlansInput.value = '';
@@ -2075,8 +2089,6 @@ function resetModal() {
     selectedPlans = [];
     currentPassenger = 1;
     familyPlanSelected = false;
-    const selectedPlanInput = document.getElementById("selectedPlanInput");
-    const selectedPlanIdInput = document.getElementById("selectedPlanIdInput");
     selectedPlanInput.value = "";
     selectedPlanIdInput.value = "";
 }

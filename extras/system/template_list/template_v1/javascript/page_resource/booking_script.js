@@ -10,7 +10,10 @@ $("input").focus(function () {
 
     // make payment 
     $('#make-payment-btn').on('click', function () {
+        $(".modal-backdrop").hide;
 
+        $(".modal-backdrop").modal("hide");
+        $(".modal-backdrop").css("display","none");
 
 
         //Hiding Continue Button
@@ -24,12 +27,16 @@ $("input").focus(function () {
             return false;
         }
         else {
+            
             $('.continue_booking_button').attr('disabled', true);
-            $('<button class="btn btn-success" disabled="disabled"> Processing....</button>').insertAfter($('.continue_booking_button:eq(0)'));
+            $('<button class="btn btn-success" disabled="disabled"> Processing....</button>').
+            insertAfter($('.continue_booking_button:eq(0)'));
+            
             $('.continue_booking_button').hide();
             $('#pre-booking-form').submit();
             $('#passenger-confirm-modal').modal('hide');
-            showModal();
+            // showModal();
+            $
         }
 
         user_details_confirmed = 0;

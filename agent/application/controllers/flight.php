@@ -611,6 +611,35 @@ class Flight extends CI_Controller
         $extra_service_details =  $this->flight_lib->get_extra_services($flight_booking_details);
         return $extra_service_details;
     }
+    function getSelectedInsuranceFullDetails($selectedPlans, $availablePlans){
+        if($selectedPlans[0]['type'] == 'Family'){
+            $planType = 'familyPlans';
+            $planId[] = $selectedPlans[0]['planId'];
+        }else{
+            $planType = 'perPassengerPlans';
+            foreach($selectedPlans as $k=>$v){
+                $planId[] = $v['PlanId'];
+            }
+// debug($availablePlans);die;
+foreach($planId as $plan_k=>$plan_v){
+            foreach($availablePlans[$planType] as $a_k=>$a_v){
+                foreach($a_v as $k=>$v){
+                  
+                        // debug();
+                        // die;
+                        if($plan_v == $v['PlanCode']){
+                            // $responsePlans[key($availablePlans[$planType])][] = $v;
+                            $responsePlans[$plan_k]['PlanDetails'] = $v;
+                            // $reponsePlans
+                            // $responseArray
+                        }
+                    }
+                }
+            }
+
+
+        }
+    }
     /**
      * Balu A
      * Secure Booking of FLIGHT
@@ -629,7 +658,35 @@ class Flight extends CI_Controller
         if (valid_array($post_params) == false) {
             redirect(base_url());
         }
-        //debug($post_params);exit;
+        if($post_params['isInsured'] == 1 && $post_params['insuranceId'] != NULL && $post_params['insuranceId'] != ''){
+            $insurancePlansDetails= $this->custom_db->single_table_records('plan_retirement', '*', array('id'=>$post_params['insuranceId']));
+            if($insurancePlansDetails['status'] == 1){
+                $availableInsurancePlanDetails=json_decode($insurancePlansDetails['data'][0]['message'], true);
+                $selectedPlanDetails = json_decode($post_params['selectedPlansJson'], true);
+                foreach($post_params['identification_type'] as $k=>$v){
+                    $selectedPlanDetails[$k]['passengerDetails']['name'] = $selectedPlanDetails[$k]['passenger']; 
+                    $selectedPlanDetails[$k]['passengerDetails']['identificationType'] = $post_params['identification_type'][$k];
+                    $selectedPlanDetails[$k]['passengerDetails']['identificationNumber'] = $post_params['passenger_passport_number'][$k];
+                    $passengerDetails[] = $selectedPlanDetails[$k]['passengerDetails'];
+                  
+                }
+                
+                $formattedArray['passengerDetails'] = $passengerDetails;
+                $formattedArray['bookingPassengerDetails']['name'] = $selectedPlanDetails[0]['passenger']; 
+                 $formattedArray['bookingPassengerDetails']['email'] = $post_params['billing_email']; 
+                 $formattedArray['bookingPassengerDetails']['phoneNumber'] = $post_params['passenger_contact']; 
+                 $searchData = $this->flight_model->get_safe_search_data($search_id);
+                 $formattedArray['searchData'] = $searchData['data'];
+                //  debug($formattedArray);die;
+                $this->getSelectedInsuranceFullDetails($selectedPlanDetails, $availableInsurancePlanDetails);
+
+            }else{
+                redirect(base_url() . 'index.php/flight/exception?op=Invalid Insurance Details&notification="Insurance Detils Not Found"');
+            }
+            
+
+            // $totalInsuranceAmount = $this->insurance_model->getTotalInsurancePrice($selectedPlans);
+        }
         // $this->custom_db->generate_static_response(json_encode($post_params));
         // Insert To temp_booking and proceed
         /* $post_params = $this->flight_model->get_static_response($static_search_result_id); */
@@ -726,6 +783,7 @@ class Flight extends CI_Controller
                     ));
                 }
                 $temp_token = unserialized_data($post_params['token']);
+           
                 $total_seg_cnt = 0;
                 foreach ($temp_token['token'][0]['SegmentDetails'] as $segk => $segv) {
                     $total_seg_cnt += count($segv);
@@ -733,7 +791,8 @@ class Flight extends CI_Controller
                 if ($post_params['booking_source'] == AMADEUS_FLIGHT_BOOKING_SOURCE) {
                     $discount_details = discount_details();
                 }
-
+                $formattedArray['searchId'] = $search_id;
+                $formattedArray['SegmentDetails'] = $temp_token['token'][0]['SegmentDetails']; 
                 $discount = array();
                 $segment_discount = 0;
                 if ($discount_details['status'] == SUCCESS_STATUS) {
@@ -780,6 +839,7 @@ class Flight extends CI_Controller
                 $book_params['ori_segment_discount'] = $ori_segment_discount;
 
                 $data = $this->flight_lib->save_booking($book_id, $book_params, $currency_obj, $this->current_module);
+                debug($formattedArray);die;
 
                 $reward_point = 0;
                 $reward_amount = 0;

@@ -320,7 +320,6 @@ class Protect implements InsuranceInterface
                     ];
                 }
             }
-
             $response['PlanDetails'] = $sortedPlans;
             $response['status'] = 1;
         } else {
