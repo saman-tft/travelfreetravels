@@ -1,0 +1,9 @@
+<web:Header>
+            <web:Channel>IBE_B2BAE</web:Channel>
+            <web:Currency>NPR</web:Currency>
+            <web:CountryCode>NP</web:CountryCode>
+            <web:CultureCode>EN</web:CultureCode>
+            <web:TotalAdults></web:TotalAdults>
+            <web:TotalChild></web:TotalChild>
+            <web:TotalInfants></web:TotalInfants>
+         </web:Header>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+                <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+                <soapenv:Header>
+                <awsse:Session TransactionStatusCode="InSeries" xmlns:awsse="http://xml.amadeus.com/2010/06/Session_v3">
+                <awsse:SessionId>0TR6KR6T32</awsse:SessionId>
+                <awsse:SequenceNumber>3</awsse:SequenceNumber>
+                <awsse:SecurityToken>3FYQSEMH3583S3ELS935GRP0OI</awsse:SecurityToken>
+            </awsse:Session>
+            <add:MessageID xmlns:add="http://www.w3.org/2005/08/addressing">urn:uuid:0001-7f000001-66431450-c48a-7b75c085</add:MessageID>
+            <add:Action xmlns:add="http://www.w3.org/2005/08/addressing">http://webservices.amadeus.com/TPCBRQ_18_1_1A</add:Action>
+            <add:To xmlns:add="http://www.w3.org/2005/08/addressing">https://nodeD1.production.webservices.amadeus.com/1ASIWTRATFT</add:To>
+            </soapenv:Header>
+            <soapenv:Body>
+            <tpc:Fare_PricePNRWithBookingClass xmlns:tpc="http://xml.amadeus.com/TPCBRQ_18_1_1A" >
+                <tpc:pricingOptionGroup>
+                    <tpc:pricingOptionKey>
+                        <tpc:pricingOptionKey>RP</tpc:pricingOptionKey>
+                    </tpc:pricingOptionKey>
+                </tpc:pricingOptionGroup>
+                
+                <tpc:pricingOptionGroup>
+                    <tpc:pricingOptionKey>
+                        <tpc:pricingOptionKey>RU</tpc:pricingOptionKey>
+                    </tpc:pricingOptionKey>
+                </tpc:pricingOptionGroup>
+                <tpc:pricingOptionGroup>
+                    <tpc:pricingOptionKey>
+                        <tpc:pricingOptionKey>VC</tpc:pricingOptionKey>
+                    </tpc:pricingOptionKey>
+                    <tpc:carrierInformation>
+                        <tpc:companyIdentification>
+                            <tpc:otherCompany>OD</tpc:otherCompany>
+                        </tpc:companyIdentification>
+                    </tpc:carrierInformation>
+                    </tpc:pricingOptionGroup></tpc:Fare_PricePNRWithBookingClass>
+            </soapenv:Body>
+            </soapenv:Envelope>

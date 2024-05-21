@@ -1,0 +1,11 @@
+<IfModule mod_rewrite.c>
+   RewriteEngine On
+   RewriteBase /travelfreetravels/
+
+   # Redirect any requests that don't match a directory or file
+   RewriteCond %{REQUEST_FILENAME} !-d
+   RewriteCond %{REQUEST_FILENAME} !-f
+
+   # Redirect to index.php with the full path
+   RewriteRule ^(.*)$ index.php/$1 [L]
+</IfModule>

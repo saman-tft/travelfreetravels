@@ -1,0 +1,340 @@
+<?php 
+foreach($tour_destinations as $td_key => $td_data)
+{
+ $TOUR_DESTINATIONS[$td_data['id']] =  $td_data['destination'];
+}
+foreach($tour_list as $tl_key => $tl_data)
+{
+ $TOUR_LIST[$tl_data['id']]     =  $tl_data['package_name'];
+ $TOURS_COUNTRY[$tl_data['id']] =  $tours_country_name[$tl_data['tours_country']];
+}
+foreach($tours_itinerary as $ti_key => $ti_data)
+{
+ $TOUR_ITINERARY[$ti_data['id']] =  $ti_data['dep_date'];
+}
+?>
+<div id="Package" class="bodyContent col-md-12">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<div class="panel-title">
+				<ul class="nav nav-tabs nav-justified" role="tablist" id="myTab">
+					<li role="presentation" class="active" id="add_package_li"><a
+						href="#add_package" aria-controls="home" role="tab"
+						data-toggle="tab">Tours Inquiry </a></li>
+     </ul>
+    </div>
+   </div>
+   <div class="panel-body">
+    <button class="btn btn-primary" type="button" data-toggle="collapse"
+    data-target="#advanced_search" aria-expanded="false"
+    aria-controls="advanced_search">Advanced Search</button>
+    <hr>
+    <div class="collapse in" id="advanced_search">
+     <form method="GET" autocomplete="off"
+     action="<?=base_url().'index.php/tours/tours_enquiry';?>">
+     <div class="clearfix form-group">
+      <div class="col-xs-4">
+       <label> Package Name </label> <input type="text"
+       class="form-control" name="package_name"
+       value="<?=@$package_name?>" placeholder="Package Name">
+      </div>
+      <div class="col-xs-4">
+       <label> Phone </label> <input type="text" class="form-control"
+       name="phone" value="<?=@$phone?>" placeholder="Phone">
+      </div> 
+      <div class="col-xs-4">
+       <label> Email </label> <input type="text" class="form-control"
+       name="email" value="<?=@$email?>" placeholder="Email">
+      </div>
+     </div>
+     <div class="col-sm-12 well well-sm">
+      <button type="submit" class="btn btn-primary">Search</button>
+      <button type="reset" class="btn btn-warning">Reset</button>
+     </div>
+    </form>
+   </div>
+  </div>
+  <div class="panel-body">
+  </div>
+  <div class="table-responsive scroll_main">
+   <table class="table table-bordered">
+    <thead>
+     <tr>
+      <th>SN</th>
+      <th>Action</th>
+      <th>Status</th>  
+      <th>Inquiry By</th>  
+      <th>Inquiry Reference No</th>
+      <th>Title</th>
+      <th>Name</th>
+      <th>Country Code</th>
+      <th>Phone</th>
+      <th>Email</th>
+      <th>Package Name</th>
+      <th>Inquiry Date</th>
+      <th>Departure Date</th>
+      <th>Price(CAD)</th>
+      <th>Updated Price(CAD)</th>
+      <th>Duration</th>
+      <th>No Of Pax</th>
+      <th>Message</th>
+     </tr>
+     <thead>
+      <tbody>
+       <?php
+      // debug($tours_enquiry);exit;
+       $sn = 1;
+       foreach ($tours_enquiry as $key => $data) {
+       if(!empty($data['updated_price'])){
+          $update_price = $data['updated_price'];
+       }
+       else{
+           $update_price = $data['price'];
+       } 
+       
+        $email_btn = '<br><a class="" data-placement="top" href="'.base_url().'index.php/tours/send_link_to_user/'.$data['enquiry_reference_no'].'"
+        data-original-title="Send link to user"> <i class="glyphicon glyphicon-th-large"></i></i> Send Link
+       </a>';
+       $action = '';        
+       $module = 'b2c';
+       if($module){
+        $pax_creationb = car_paxCreation($key);
+        $paxhtml = '<div class="modal fade" id="myModal'.$key.'" role="dialog">
+        <div class="modal-dialog">
+
+         <!-- Modal content-->
+         <div class="modal-content">
+          <div class="modal-header">
+           <button type="button" class="close" data-dismiss="modal">&times;</button>
+           <h4 class="modal-title">Passenger Profile</h4>
+          </div>
+          <div class="modal-body">';                         
+
+           $paxhtml .= '<span>Title : &nbsp;</span><span>'.get_enum_list ( 'title', $data ['title'] ).'</span><br/>
+           <span>First Name : &nbsp;</span><span>'.$data['name'].'</span><br/>
+           <span>Last Name : &nbsp;</span><span>'.$data['lname'].'</span><br/>
+           <span>Mobile : &nbsp;</span><span>'.$data['pn_country_code'].' '.$data['phone'].'</span><br/>                        
+           <span>Email : &nbsp;</span><span>'.$data["email"].'</span><br/>';                              
+
+           $paxhtml .= '</div>
+           <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+           </div>
+          </div>
+
+         </div>
+        </div>';
+        echo $paxhtml;
+        $action .= $pax_creationb;
+       }
+
+       if($module == 'b2b'){
+        if($created_by_id != 0){
+         $this->load->model('custom_db');
+         $agency_details = $this->custom_db->get_result_by_query("SELECT * FROM user WHERE user_id=".$created_by_id);
+         $agency_details = json_decode(json_encode($agency_details[0]), True);
+         $agent_pax_creationb = car_agent_paxCreation ( $key );
+         $paxhtml = '<div class="modal fade" id="myModalb2b'.$key.'" role="dialog">
+         <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+           <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Agent Profile</h4>
+           </div>
+           <div class="modal-body">';
+
+            $paxhtml .=  '<span>Agency Name : &nbsp;</span><span>'.$agency_details["agency_name"].'</span><br/>
+            <span>Name : &nbsp;</span><span>'.$agency_details["first_name"].'&nbsp;'.$agency_details["last_name"].'</span><br/>
+            <span>Mobile : &nbsp;</span><span>+'.$agency_details["country_code"].'&nbsp; - &nbsp;'.$agency_details["office_phone"].'</span><br/>                        
+            <span>Email : &nbsp;</span><span>'.$agency_details["email"].'</span><br/>';
+
+            $paxhtml .= '</div>
+            <div class="modal-footer">
+             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+           </div>
+
+          </div>
+         </div>';
+         echo $paxhtml;
+
+         $action .= $agent_pax_creationb;
+        }
+       }
+
+
+       if($data['status']==1)
+       {
+        $status = '<span style="color:green;">Replied</span>';
+       }
+       else
+       {
+        $status = '<span style="color:red;">Pending</span>';
+       }
+
+       if($data['tours_itinerary_id']!='')
+       {
+        $dep_date = changeDateFormat($TOUR_ITINERARY[$data['tours_itinerary_id']]);
+       }
+       else
+       {
+        $dep_date = '';
+       }
+       echo '<tr>
+       <td>'.$sn.'</td> ';
+       echo '<td class="center">';
+       if($data['status']==1)
+       {
+        /*echo '<a class="" data-placement="top" href="'.base_url().'index.php/tours/activation_enquiry/'.$data['id'].'/0"
+        data-original-title="Deactivate Tour Destination"> <i class="glyphicon glyphicon-th-large"></i></i> Pending
+       </a><br>';*/
+      }
+      else
+      {
+        $action .= '<br><a href="#" class="approve_modal_btn" data-toggle="modal" data-target="#approve-modal" data-enquiry="'.$data['enquiry_reference_no'].'" data-price="'.$data['price'].'" data-currency="'.$data['currency'].'"><i class="fa fa-file-o"></i> Approve</a><br>';
+       /*echo '<a class="" data-placement="top" href="'.base_url().'index.php/tours/activation_enquiry/'.$data['id'].'/1"
+       data-original-title="Activate Tour Destination"> <i class="glyphicon glyphicon-th-large"></i></i> Replied
+      </a><br>';*/
+     } 
+     echo '<!--<a class="" data-placement="top" href="'.base_url().'index.php/tours/edit_enquiry/'.$data['id'].'"
+     data-original-title="Edit Tour Destination"> <i class="glyphicon glyphicon-pencil"></i> Edit
+    </a><br>-->
+    <a class="callDelete" id="'.$data['id'].'"> 
+     <i class="glyphicon glyphicon-trash"></i> Delete</a><br>';
+        // $action .= $email_btn;
+     echo $action. '</td>';  
+     echo '<td>'.$status.'</td>'; 
+     echo '<td>'.$data['created_by'].'</td>'; 
+     echo '<td>'.$data['enquiry_reference_no'].'</td>'; 
+     echo '<td>'.get_enum_list ( 'title', $data ['title'] ).'</td>
+     <td>'.$data['name'].'</td>
+     <td>'.$data['pn_country_code'].'</td>   
+     <td>'.$data['phone'].'</td>
+     <td>'.$data['email'].'</td>             
+     <td><a href="'.base_url().'index.php/tours/voucher/'.$data['tour_id'].'">'.$TOUR_LIST[$data['tour_id']].'</a></td> 
+     <td>'.changeDateFormat($data['date']).'</td>   
+     <td>'.changeDateFormat($data['departure_date']).'</td>  
+     <td>'.$data['price'].'.00'.'</td>   
+     <td>'.$update_price.'</td>   
+     <td>'.$data['durations'].'</td>  
+     <td>'.$data['number_of_passengers'].'</td>           
+     <td>'.$data['message'].'</td>';
+
+     $sn++;
+    }
+    ?>
+   </tbody>
+  </table>
+ </div>				
+</div>
+<div class="modal fade" id="approve-modal" role="dialog">
+ <div class="modal-dialog">
+  <div class="modal-content">
+   <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h4 class="modal-title">Approval</h4>
+   </div>
+   <div class="modal-body">
+    <form method="POST" role="form" action="<?=base_url()?>tours/send_booking_link">
+     <input type="hidden" name="enquiry_reference_no" id="enquiry_reference_no" value="">
+     <div class="row">
+      <div class="col-md-6">
+       <div class="form-group">
+        <label for="">Adult Count</label>
+        <select name="adult_count" id="adult_count" class="form-control" required="required">
+         <?=generate_options(custom_numeric_dropdown(20,1,1));?>
+        </select>
+       </div>
+       <div class="form-group">
+        <label for="">Child Count</label>
+        <select name="child_count" id="child_count" class="form-control" required="required">
+         <?=generate_options(custom_numeric_dropdown(5,0,1));?>
+        </select>
+       </div>
+       <div class="form-group">
+        <label for="">Infant Count</label>
+        <select name="infant_count" id="infant_count" class="form-control" required="required">
+         <?=generate_options(custom_numeric_dropdown(5,0,1));?>
+        </select>
+       </div>
+      </div>
+      <div class="col-md-6">
+       <div class="form-group">
+        <label for="">Currency</label>
+        <input type="text" id="currency" name="currency" class="form-control" readonly="readonly">
+       </div>
+       <div class="form-group">
+        <label for="">Price</label>
+        <input type="text" class="form-control calculation" id="new_price" name="new_price" >
+       </div>
+       <div class="form-group hide">
+        <label for="">Tax</label>
+        <input type="text" class="form-control calculation" id="tax" name="tax" value="0">
+       </div>  
+       <div class="form-group hide">
+        <label for="">Total</label>
+        <input type="text" readonly="readonly" class="form-control calculation" id="total" name="total" value="0">
+       </div>     
+      </div>
+      <div class="col-md-12">
+       <div class="form-group pull-right">
+        <button class="btn btn-primary">Send Approval</button>
+       </div>
+      </div>
+     </div>
+    </form>
+   </div>
+   <div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+   </div>
+  </div>
+ </div>
+</div>
+</div>
+<script type="text/javascript">  
+function sum_val(x,y){
+ x = parseInt(x);
+ y = parseInt(y);
+ var z = x+y;
+ z = parseInt(z);
+ return z;
+}
+ $(document).ready(function()
+ {
+  $('.approve_modal_btn').click(function(){
+   $('#enquiry_reference_no').val($(this).data('enquiry'));
+   var price = $(this).data('price');
+   if(price == ''){
+    price =0;
+   }
+   var currency =  $(this).data('currency');
+   if(currency == ''){
+    currency ='CAD';
+   }
+   $('#new_price').val(price);
+   $('#currency').val(currency);
+   $('#total').val(sum_val(price,$('#tax').val()));
+  });
+  $('.calculation').on('keyup blur change', function(e) {
+   $('#total').val(sum_val($('#new_price').val(),$('#tax').val()));
+  });
+
+  $(".callDelete").click(function() { 
+   $id = $(this).attr('id'); 
+   $response = confirm("Are you sure to delete this record???");
+   if($response==true){ window.location='<?=base_url()?>index.php/tours/delete_enquiry/'+$id; } else{}
+  });
+ });
+</script>
+<link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+<script type="text/javascript" src="http://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+<script> $(function () { $('.table').DataTable(); }); </script> 
+<?php 
+function send_link_to_user($enquiry_reference_no,$tour_id)
+{
+
+ return '<a data-toggle="modal" data-target="#send_link_to_user" id="send_link_to_user_id" class="send_link_to_user_class fa fa-envelope-o" data-enquiry_reference_no="'.$enquiry_reference_no.'" data-tour_id="'.$tour_id.'"> Send Link</a>';
+}
+?>

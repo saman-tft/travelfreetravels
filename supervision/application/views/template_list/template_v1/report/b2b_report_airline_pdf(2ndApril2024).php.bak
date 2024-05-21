@@ -1,0 +1,104 @@
+<table class="table table-condensed table-bordered" id="b2c_report_hotel_table">
+    <thead>
+        <tr>
+            <th>Sno</th>
+            <th style="min-width: 150px;">Reference No</th>
+            <th>Status</th>
+            <th>Lead Pax <br />Details</th>
+            <th>PNR</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Booked Via</th>
+            <th style="min-width: 180px; max-width: 180px;">Financial Remarks</th>
+            <th style="min-width: 180px; max-width: 180px;">Other Remarks</th>
+            <th style="min-width: 200px; max-width: 200px;">Creation Details</th>
+            <th>Supplier Name</th>
+            <th>Type</th>
+            <th>BookedOn</th>
+            <th>Travel<br /> date</th>
+            <th>Comm.Fare</th>
+            <th>Commission</th>
+            <th>Tax</th>
+            <th>Segment Discount</th>
+            <th>TDS</th>
+            <th>Admin NetFare</th>
+            <th>Admin<br />Markup</th>
+            <th>GST</th>
+            <th>Agent<br />Commission</th>
+            <th>Agent<br />TDS</th>
+            <th>Agent <br />Net Fare</th>
+            <th>Agent<br />Markup</th>
+            <th>TotalFare</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        if (!empty($export_data)) {
+            $i = 1;
+            foreach ($export_data as $parent_k => $parent_v) {
+                extract($parent_v);
+                $booking_attributes_remarks = json_decode($attributes);
+                $attributes = json_decode($parent_v['booking_transaction_details'][0]['attributes'], true);
+        ?>
+                <tr>
+                    <td><?php echo ($i++) ?></td>
+                    <td><?php echo $app_reference; ?></td>
+                    <td><?php echo $status ?></td>
+                    <td><?php echo $lead_pax_name . '<br/>' . $email . "<br/>" . $phone; ?></td>
+                    <td><?php echo @$pnr ?></td>
+                    <td><?php echo $from_loc ?></td>
+                    <td><?php echo $to_loc ?></td>
+                    <td><?php echo $agency_name; ?></td>
+                    <td><?php echo @$booking_attributes_remarks->fin_remarks; ?></td>
+                    <td><?php echo @$booking_attributes_remarks->oth_remarks; ?></td>
+                    <td>
+                        Added At: <?php echo @$booking_attributes_remarks->remarks_updated; ?><br />
+                        Financial Remarks By <?php echo @$booking_attributes_remarks->fin_remarks_user_name; ?><br />
+                        Other Remarks By <?php echo @$booking_attributes_remarks->oth_remarks_user_name; ?>
+                    </td>
+                    <td><?php echo @flight_supplier_name($booking_source); ?></td>
+                    <td><?php echo $trip_type_label ?></td>
+                    <td><?php echo date('d-m-Y H:i:s A', strtotime($created_datetime)) ?></td>
+                    <td><?php echo date('d-m-Y', strtotime($journey_start)) ?></td>
+                    <td><?php echo $fare ?></td>
+                    <td><?php echo $net_commission ?></td>
+                    <td><?php
+                        if ($booking_source == "PTBSID0000000021") {
+                            $trans_attributes = json_decode($booking_transaction_details[0]['attributes'], true);
+                            $currency_obj = new Currency(array(
+                                'module_type' => 'flight',
+                                'from' => $trans_attributes['Fare']['Currency'],
+                                'to' => 'NPR',
+                            ));
+                            echo round(get_converted_currency_value($currency_obj->force_currency_conversion($attributes['Fare']['Tax'])));
+                        } else {
+                            if ($booking_source == "PTBSID0000000002") {
+                                $trans_attributes = json_decode($booking_transaction_details[0]['attributes'], true);
+                                $currency_obj = new Currency(array(
+                                    'module_type' => 'flight',
+                                    'from' => $trans_attributes['Fare']['Currency'],
+                                    'to' => 'NPR',
+                                ));
+                                echo round(get_converted_currency_value($currency_obj->force_currency_conversion($attributes['Fare']['Tax'])));
+                            } else {
+                                echo $attributes['Fare']['Tax'];
+                            }
+                        }
+                        ?></td>
+                    <td><?php echo $segment_discount ?></td>
+                    <td><?php echo $net_commission_tds ?></td>
+                    <td><?php echo $net_fare ?></td>
+                    <td><?php echo $admin_markup ?></td>
+                    <td><?php echo $gst ?></td>
+                    <td><?php echo $agent_commission ?></td>
+                    <td><?php echo $agent_tds ?></td>
+                    <td><?php echo $agent_buying_price - $agent_markup ?></td>
+                    <td><?php echo $agent_markup ?></td>
+                    <td><?php echo ($grand_total - ($segment_discount + $reward_amount)) ?></td>
+                </tr>
+        <?php
+            }
+        }
+        ?>
+    </tbody>
+</table>

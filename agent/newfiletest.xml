@@ -1,0 +1,34 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://ZEUSTravelInsuranceGateway/WebServices">
+<soapenv:Header/>
+<soapenv:Body>
+   <web:GetAvailablePlansOTAWithRiders>
+      <web:GenericRequestOTALite>
+         <web:Authentication>
+            <web:Username>UAT_DEMO</web:Username>
+            <web:Password>ypHALsJ3EG3p</web:Password>
+         </web:Authentication>
+         <web:Header>
+            <web:Channel>IBE_B2BAE</web:Channel>
+            <web:Currency>AED</web:Currency>
+            <web:CountryCode>AE</web:CountryCode>
+            <web:CultureCode>EN</web:CultureCode>
+            <web:TotalAdults>1</web:TotalAdults>
+            <web:TotalChild>0</web:TotalChild>
+            <web:TotalInfants>0</web:TotalInfants>
+         </web:Header>
+         <web:Flights>
+            <web:DepartCountryCode>AE</web:DepartCountryCode>
+            <web:DepartStationCode></web:DepartStationCode>
+            <web:ArrivalCountryCode>IN</web:ArrivalCountryCode>
+            <web:ArrivalStationCode></web:ArrivalStationCode>
+            <web:DepartAirlineCode>AI</web:DepartAirlineCode>
+            <web:DepartDateTime>2025-01-01 06:30:00</web:DepartDateTime>
+            <web:ReturnAirlineCode></web:ReturnAirlineCode>
+            <web:ReturnDateTime></web:ReturnDateTime>
+            <web:DepartFlightNo>638</web:DepartFlightNo>
+            <web:ReturnFlightNo></web:ReturnFlightNo> 
+      </web:Flights>
+      </web:GenericRequestOTALite>
+   </web:GetAvailablePlansOTAWithRiders>
+</soapenv:Body>
+</soapenv:Envelope>

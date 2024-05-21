@@ -1,0 +1,152 @@
+/**
+ *
+ * Apply Here your Custom CSS
+ *
+*/
+
+body {
+	
+}
+
+/* Password Related Information */
+		.myselectx {
+			position: relative;
+		}
+		.pwdwidgetdiv {
+			position: relative;
+		}
+		.pwdopsdiv {margin: 2px;
+		  overflow: hidden;
+		  padding: 3px 5px;
+		  text-align: center;
+		  float: left;
+		}
+		.divcol1 {
+			background: none repeat scroll 0 0 #34c9ee;
+		}
+		.divcol2 {
+			background: none repeat scroll 0 0 #15aafb;
+		}
+		.pwdopsdiv a {
+			color: #fff;
+			display: block;
+			font-size: 10px;
+			line-height: 21px;
+		}
+		.padpas {
+			padding: 0 60px 0 10px;
+		}
+		.pwdstrengthbar {
+			float: left;
+			height: 5px;
+			margin: 33px 0 0;
+		}
+		.pwdstrength {
+			bottom: -22px;
+			height: 20px;
+			left: 0;
+			position: absolute;
+		}
+		.pwdstrengthstr {
+			float: left;
+			font-size: 10px;
+			margin: 30px 0 0 5px;
+		}		
+		.wrapgen{
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
+  		.input-group.gropdis{display:block;}
+		/* Password Related Information */
+		
+	.user-management {
+		color: #FFFFFF !important;
+		background-color: #0073b7 !important;
+		border-color: #FFFFFF !important;
+		text-align: center;
+	}
+	.user-info-details {
+		color: #574802 !important;
+		background-color: #00c0ef !important;
+		border-color: #FFFFFF !important;
+		text-align: center;
+	}
+	.user-actions {	  
+		color: #045702 !important;
+		background-color: #00b29e !important;
+		border-color: #FFFFFF !important;
+		text-align: center;
+	}
+	.action-details{
+	margin-top : 5px;
+	width : 74px;
+	}
+	.mtop{ margin-top : 5px;}
+	.action-details1{
+		margin-top : 5px;
+		width : 140px;
+	}
+.minhigh{min-height: 279px;}
+/*************/
+
+.mapsec {
+  border: 1px solid #dddddd;
+  display: block;
+  margin-top: 10px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.googlemap {
+  height: 220px;
+  margin: 5px;
+  max-width: 500px;
+}
+.none {
+  display:none !important;
+}
+.cancelll{background: none repeat scroll 0 0 #ccc;
+    border-radius: 3px;
+    color: #333;
+    float: left;
+    font-size: 14px;
+    margin: 15px;
+    padding: 10px 30px;
+    cursor: pointer;}
+.rndpopup{background: rgba(0, 0, 0, 0.1) none repeat scroll 0 0;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;z-index: 10000;}
+.formcont{background: #fff none repeat scroll 0 0;
+    border-radius: 3px;
+    width: 350px;
+    display: table;
+    left: 40%;
+    padding: 25px;
+    position: absolute;
+    top: 40%;}
+ .labname{font-size: 14px;
+    margin: 11px 7px 10px;}
+ .viwedetsb {
+    background: #283891 none repeat scroll 0 0;
+    border-radius: 3px;
+    color: #fff;
+    display: block;
+    margin: 8px auto auto;
+    padding: 7px 10px;
+    text-align: center;
+    width: 50%;
+}
+.mrgspe
+    { display: table;
+    margin-top: 15px; border:1px solid #283891;margin-bottom: 15px}
+
+
+.logo_image{
+width:150px;
+}
+
+

@@ -1,0 +1,152 @@
+
+.thrty {
+    width: 33.333%;
+}
+.logovcr {
+   display: block;
+    max-width: 150px;
+    overflow: hidden;
+}
+.insideone {
+    width: 100%;
+}
+.logovcr img {
+    max-width: 100%;
+}
+.faprnt.fa {
+    background: #eeeeee none repeat scroll 0 0;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    color: #333333;
+    cursor: pointer;
+    display: block;
+    font-size: 22px;
+    height: 50px;
+    line-height: 50px;
+    margin: 0 auto;
+    overflow: hidden;
+    text-align: center;
+    width: 50px;
+}
+.bighedingv {
+    color: #444444;
+    display: block;
+    font-size: 22px;
+    overflow: hidden;
+    padding: 15px 0;
+    text-align: center;
+}
+.iconsofvcr.fa {
+background: #ddd none repeat scroll 0 0;
+    border: 1px solid #ddd;
+    border-radius: 100%;
+    color: #333;
+    float: right;
+    font-size: 16px;
+    height: 40px;
+    line-height: 38px;
+    margin: 20px 0 20px 20px;
+    text-align: center;
+    width: 40px;
+}
+.centervoucher2 {
+    display: table;
+    margin: 0 auto;
+    padding: 20px 1%;border: 1px solid #dddddd;
+    width: 70%;
+}
+.vcradrss {
+    color: #333;
+    display: block;
+    font-size: 16px;
+    line-height: 24px;
+    overflow: hidden;
+    text-align: right;
+}
+.vcradrss .fa{color: #666;
+    font-size: 14px;
+    margin-right: 10px;}
+.iconmania {
+    color: #666;
+    display: block;
+    font-family: roboto;
+    font-size: 14px;
+    overflow: hidden;
+}
+.agent_or_logo{border-radius: 100%;
+    display: block;
+    height: 100px;
+    margin: 0 0 20px;
+    overflow: hidden;
+    width: 100px;}
+.agent_or_logo img{min-height: 100px;
+    width: 100%;}
+.contentvcr2{background:#fff;}
+.colprint{float: left;
+    width: 33.33%;}
+
+
+table{border-collapse:collapse;}
+.insideone{width: 100%;}
+.celpad5 tr td{color: #666;
+    font-size: 14px;
+    padding: 5px 10px;
+	vertical-align:middle;}
+.clrtr{background:#9EA8C0;}
+.clrtr th{border: 1px solid #bec8e0;
+    color: #fff;
+    padding: 10px;}
+
+
+.splalgn{width: 100%;}
+.splalgn tr td{padding:10px;border:1px solid #f6f6f6;color:#666;}
+
+.centervoucher { display: table; margin: 0px auto; padding: 0px 0; width: 70%;}
+.vouher_logo{ width:100%; height:auto; border-bottom:1px solid #ddd; display:table; padding-bottom:10px; margin-bottom:5px;}
+
+.centervoucher h2 { font-size:18px; color:#fff; font-family:verdana, Arial, Helvetica, sans-serif; font-weight:normal;
+                   text-align:center; margin:0px; padding:5px 0px; background:#A6A6A6; margin-bottom:5px; text-transform:uppercase;}
+.hv_title4 { margin:0px; padding:0px; font-size:16px;}
+.confirmtionltr {
+    color: #666;
+    display: block;
+    font-size: 20px;
+    overflow: hidden;
+    padding: 20px;
+}
+.tables{border-collapse:collapse;font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#555;}
+.tables tr td, .tables tr th{padding:10px;}
+.tables tr td.padding1 {
+    padding: 0;
+}
+.colsdets {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 0 10px;
+}
+.detailhed_trvels{font-size: 18px;
+    padding: 10px 0;}
+.set_bordr td{border: 1px solid #eee;}
+
+
+
+
+.htl_vchrimg{}
+.htl_vchrimg img{width:100%;}
+
+
+.stra_hotel {
+    display: block;
+    overflow: hidden;
+}
+.stra_hotel .fa {
+    color: #91a9b1;
+    font-size: 13px;
+    margin:0 2px;
+}
+.stra_hotel[data-star="5"] .fa:nth-child(1), .stra_hotel[data-star="5"] .fa:nth-child(2), .stra_hotel[data-star="5"] .fa:nth-child(3), .stra_hotel[data-star="5"] .fa:nth-child(4), .stra_hotel[data-star="5"] .fa:nth-child(5), .stra_hotel[data-star="4"] .fa:nth-child(1), .stra_hotel[data-star="4"] .fa:nth-child(2), .stra_hotel[data-star="4"] .fa:nth-child(3), .stra_hotel[data-star="4"] .fa:nth-child(4), .stra_hotel[data-star="3"] .fa:nth-child(1), .stra_hotel[data-star="3"] .fa:nth-child(2), .stra_hotel[data-star="3"] .fa:nth-child(3), .stra_hotel[data-star="2"] .fa:nth-child(1), .stra_hotel[data-star="2"] .fa:nth-child(2), .stra_hotel[data-star="1"] .fa:nth-child(1) {
+    color: #0f7ab2;
+}
+
+
+

@@ -1,0 +1,34 @@
+<!-- <meta name="google-signin-client_id" content="<?=$client_id?>" /> -->
+<!-- <script src="https://apis.google.com/js/platform.js"  async defer></script> -->
+<script src="https://unpkg.com/jwt-decode/build/jwt-decode.js"></script>
+<?php if(is_logged_in_user()==false) { ?>
+<script src="https://accounts.google.com/gsi/client?onload=onLoad" async defer></script>
+<div id="g_id_onload"
+         data-client_id="<?=$client_id?>"
+         data-callback="handleCredentialResponse">
+    </div>
+
+<script>
+function onLoad() {
+     gapi.load('auth2', function() {
+          gapi.auth2.init();
+     });
+}
+    function handleCredentialResponse(response) {
+          const responsePayload = jwt_decode(response.credential);
+     var n = {};
+     n.first_name = responsePayload.given_name, n.last_name = responsePayload.family_name, n.email = responsePayload.email, n.id = responsePayload.sub, $.post(app_base_url + "index.php/auth/social_network_login_auth/google", n, function(o) {
+            1 == o.status ? ($("body").css("opacity", ".1"), $(".my_account_dropdown").hide(), location.reload()) : ($("body").css("opacity", "1"), location.reload())
+        })
+     }
+
+</script>
+<?php } ?>
+<script>
+function onLoad() {
+     alert("hii");
+     gapi.load('auth2', function() {
+          gapi.auth2.init();
+     });
+}
+</script>

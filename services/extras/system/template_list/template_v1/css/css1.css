@@ -1,0 +1,311 @@
+/* ========================================================================================
+   General Style Starts
+   ====================================================================================  */
+:-webkit-full-screen { /* properties */
+	
+}
+
+:-moz-full-screen { /* properties */
+	
+}
+
+:-ms-fullscreen { /* properties */
+	
+}
+
+:full-screen { /*pre-spec */ /* properties */
+	
+}
+
+:-webkit-full-screen { /* spec */ /* properties */
+	
+}
+
+:-moz-full-screen { /* spec */ /* properties */
+	
+}
+
+:-ms-fullscreen { /* spec */ /* properties */
+	
+}
+
+:fullscreen { /* spec */ /* properties */
+	
+}
+
+/* deeper elements */
+:-webkit-full-screen video {
+	width: 100%;
+	height: 100%;
+}
+
+/* styling the backdrop*/
+::backdrop { /* properties */
+	
+}
+
+::-ms-backdrop { /* properties */
+	
+}
+
+/* For JavaScript Disabled Starts */
+noscript {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 9999;
+	background: white;
+}
+
+/* img current size is 64px */
+noscript img {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -32px;
+	margin-left: -32px;
+}
+
+/* For JavaScript Disabled Ends */ /* For Default Font Size Starts */
+	/* For Default Font Size Ends */
+.hidden-ip {
+	width: 0px;
+	border: none;
+	background: transparent;
+}
+
+.invalid-ip {
+	border: 1px solid #cf2700 !important;
+}
+
+.hand-cursor {
+	cursor: pointer;
+}
+
+legend {
+	background-color: #dfdfdf;
+}
+
+.pagination,.pagination li,.pagination li a {
+	margin: 0;
+	color: #2e4057 !important;
+}
+
+.contrast10 {
+	font-size: 10px;
+}
+
+/* ========================================================================================
+   General Style Ends
+   ====================================================================================  */
+	/** Reduce Menu Size **/
+.nav-stacked {
+	font-size: 12px;
+}
+
+/* ========================================================================================
+   Application Specific Style Starts
+   ====================================================================================  */
+	/* ========================================================================================
+   Table Modifier Start
+   ====================================================================================  */
+	/* ========================================================================================
+   Table Modifier End
+   ====================================================================================  */
+	/* ========================================================================================
+   Application Specific Style Ends
+   ====================================================================================  */
+	/* ========================================================================================
+   Header Style Starts
+   ====================================================================================  */
+.navbar {
+	min-height: 82px;
+}
+
+.navbar-toggle {
+	margin-top: 40px;
+	margin-bottom: 40px;
+}
+
+.navbar-inverse .navbar-brand,.navbar-inverse .navbar-brand:hover,.navbar-inverse .navbar-brand:active,.navbar-inverse .navbar-brand:focus
+	{
+	height: auto;
+}
+
+.login-logo {
+	background: #222;
+	padding: 25px 0;
+	margin-bottom: 10px;
+}
+
+/* ========================================================================================
+   Header Style Ends
+   ====================================================================================  */
+	/* ========================================================================================
+   Section Style Starts
+   ====================================================================================  */
+	/* ========================================================================================
+   Section Style Ends
+   ====================================================================================  */
+	/* ========================================================================================
+   Footer Style Starts
+   ====================================================================================  */
+	/* Sticky Footer Starts */
+html {
+	position: relative;
+	min-height: 100%;
+}
+
+body {
+	background: #f5f5f5;
+}
+
+.footer {
+	bottom: 0;
+	width: 100%;
+}
+
+/* Sticky Footer Ends */
+	/* ========================================================================================
+   Footer Style Ends
+   ====================================================================================  */
+	/* ========================================================================================
+   Don't Make Any Normal CSS in below Media Query
+   ====================================================================================  */
+	/* ========================================================================================
+   Media Query Starts
+   ====================================================================================  */
+	/*==========  Mobile First Method  ==========*/
+	/* Custom, iPhone Retina */
+@media only screen and (min-width: 320px) {
+	.navbar-collapse {
+		text-align: center;
+	}
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width: 480px) {
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width: 768px) {
+	.navbar-collapse {
+		margin-top: 17px;
+	}
+	.dropdown:hover .dropdown-menu,.dropdown:focus .dropdown-menu {
+		display: block;
+	}
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width: 992px) {
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width: 1200px) {
+}
+
+/* ========================================================================================
+   Media Query Ends 
+   ====================================================================================  */
+	/* Print */
+@media print {
+	aside,.printMedia {
+		display: none;
+	}
+}
+
+/* Print End */ /* REMINDER TYPES*/
+.form-horizontal legend {
+	padding: 6px 10px;
+	color: #000000;
+}
+
+.navbar>.container .navbar-brand,.navbar>.container-fluid .navbar-brand
+	{
+	width: 108px;
+}
+
+.container-fluid {
+	box-shadow: 0 0 4px #FFFFFF;
+}
+
+.center-align-image {
+	margin: auto;
+	display: block;
+}
+
+.table.table-bordered.table-condensed input[type='date']::-webkit-clear-button,.table.table-bordered.table-condensed input[type='date']::-webkit-inner-spin-button,.table.table-bordered.table-condensed input[type='date']::-webkit-calendar-picker-indicator
+	{
+	display: none;
+}
+
+.btn-info {
+	background-color: #009688;
+	border-color: #008678;
+}
+
+.btn-success {
+	background-color: #108e4c;
+	border-bottom-color: #006e2c;
+}
+
+.btn-primary {
+	background-color: #3d74cd;
+}
+
+.btn-warning {
+	background-color: #ff5722;
+	border-color: #ef4712;
+}
+
+.btn-danger {
+	background-color: #f44336;
+	border-color: #e43326;
+}
+
+.label-default {
+	background-color: #455157;
+}
+
+.carousel-inner {
+	height: 120%;
+}
+
+.carousel-inner .item {
+	height: 100%;
+}
+
+#log-slider img {
+	width: 100%;
+	max-height: 100%;
+}
+
+.optional-view {
+	display: none;
+}
+#s-clear-filter{
+	
+	margin-top: 5px;
+}
+#clear-filter{
+	margin-left: 5px;
+}
+.list_of_sections a {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #eeeeee;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px 0 #ccc;
+    color: #666;
+    float: left;
+    font-size: 14px;
+    margin: 5px;
+    padding: 5px 10px;
+}
+.list_of_sections a.active, .list_of_sections a:hover {
+    background: #2daae4 none repeat scroll 0 0;
+    border: 1px solid #2daae4;
+    color: #fff;
+}

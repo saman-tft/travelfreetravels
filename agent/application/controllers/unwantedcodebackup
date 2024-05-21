@@ -1,0 +1,42 @@
+  load_flight_lib(PROVAB_AEROCRS_BOOKING_SOURCE);
+                            $raw_flight_crs_list = $this->flight_lib->get_flight_list(abs($search_params['search_id']));
+
+                           
+                            if ($raw_flight_crs_list['status']) {
+                              
+                                $raw_flight_crs_search_result = $raw_flight_crs_list['data']['Search']['FlightDataList'];
+                              
+                                
+                                $currency_obj = new Currency(array('module_type' => 'flight', 'from' => get_api_data_currency(), 'to' => get_application_currency_preference()));
+
+                                $raw_flight_crs_search_result = $this->flight_lib->search_data_in_preferred_currency_b2b($raw_flight_crs_search_result, $currency_obj);
+
+                   
+                                $currency_obj = new Currency(array('module_type' => 'flight', 'from' => get_application_currency_preference(), 'to' => get_application_currency_preference()));
+
+                                $flight_crs_formatted_search_data = $this->flight_lib->format_search_response($raw_flight_crs_search_result, $currency_obj, $search_params['search_id'], $this->current_module, $raw_flight_crs_list['from_cache'], $raw_flight_crs_list['search_hash']);
+
+
+                                }
+
+                                     //   debug($flight_crs_formatted_search_data);exit("oooo");
+
+                                if(valid_array($flight_crs_formatted_search_data['data']['Flights'][0])){
+                                    $formatted_search_data['booking_url'] = $flight_crs_formatted_search_data['booking_url'];
+                                    $formatted_search_data['data']['JourneySummary'] = $flight_crs_formatted_search_data['data']['JourneySummary'];
+                                
+                                   $formatted_search_data['data']['Flights'][0] = array_merge($formatted_search_data['data']['Flights'][0],$flight_crs_formatted_search_data['data']['Flights'][0]);
+                                }
+                            // Aero CRS Instant solution need to FIX IT
+
+
+                                 //   debug($flight_crs_formatted_search_data);exit("oooo");
+
+                                if(valid_array($flight_crs_formatted_search_data['data']['Flights'][0])){
+                                    $formatted_search_data['booking_url'] = $flight_crs_formatted_search_data['booking_url'];
+                                    $formatted_search_data['data']['JourneySummary'] = $flight_crs_formatted_search_data['data']['JourneySummary'];
+                                
+                                   $formatted_search_data['data']['Flights'][0] = array_merge($formatted_search_data['data']['Flights'][0],$flight_crs_formatted_search_data['data']['Flights'][0]);
+                                }
+                            // Aero CRS Instant solution need to FIX IT
+

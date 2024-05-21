@@ -1,0 +1,31 @@
+span.tip {
+    background: #000;
+    color: #fff;
+    padding: 2px 5px;
+    position: absolute;
+    left: 0;
+    top: -28px;
+    z-index: 1;
+    margin: 0 auto;
+    text-align: center;
+    display: none;
+}
+table a {
+    position: relative;
+}
+table a {
+    display: table-cell;
+    width: 100%;
+}
+.panel-default > a {
+    background-color: #006bd7;
+    border-color: #006bd7;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 14px;
+    height: 34px;
+    margin: 10px 5px 0 0;
+    padding: 6px 12px;
+    float: right;
+    vertical-align: middle;
+}
