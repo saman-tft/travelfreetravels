@@ -102,8 +102,8 @@ class Api_Interface {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         // debug($ch);exit;
         $res = curl_exec($ch);
-        // debug($res);
-        // exit; 
+        debug($res);
+        exit; 
         $res = json_decode($res, true);
         curl_close($ch);
         return $res;

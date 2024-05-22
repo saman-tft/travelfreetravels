@@ -1528,7 +1528,7 @@ error_reporting(0);*/
                     }
                     // Save booking based on booking status and book id
                     break;
-            }
+        }
             if (in_array($booking['status'], array(SUCCESS_STATUS, BOOKING_CONFIRMED, BOOKING_PENDING, BOOKING_FAILED, BOOKING_ERROR, BOOKING_HOLD, FAILURE_STATUS)) == true) {
                 $currency_obj = new Currency(array(
                     'module_type' => 'flight',

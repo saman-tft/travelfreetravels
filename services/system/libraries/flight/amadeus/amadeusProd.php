@@ -1818,6 +1818,7 @@ class Amadeus extends Common_Api_Flight
         } else {
             $country = "others";
         }
+        debug($country);die;
         // echo 'live key';exit;
         // exit;
         $response['status'] = FAILURE_STATUS; // Status Of Operation

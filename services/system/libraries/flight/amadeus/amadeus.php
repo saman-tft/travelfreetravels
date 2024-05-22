@@ -2705,7 +2705,7 @@ class Amadeus extends Common_Api_Flight
                 }
             }
         }
-
+// debug($country);die;
         //added these lines for exempting NQ tax
         $nq_tax = '';
         if (($nqOrigin == "KTM" || $nqOrigin == "ktm" || $nqOrigin == "Kathmandu" || $nqOrigin == "kathmandu") && ($country == "Nepalese" || $country == "Nepal" || $country = "nepal")) {
