@@ -159,7 +159,8 @@
         display: block;
         margin: 0 auto;
     }
-    .modal-backdrop{
+
+    .modal-backdrop {
         display: none;
     }
 </style>
@@ -485,8 +486,8 @@ echo generate_low_balance_popup($FareDetails['_CustomerBuying'] + $FareDetails['
                                 return ($pax_count == 1 ? true : false);
                             }
                             ?>
-                                <input type="hidden" id="selectedPlanInput" name="selectedPlan">
-                                    <input type="hidden" id="selectedPlanIdInput" name="selectedPlanId">
+                            <input type="hidden" id="selectedPlanInput" name="selectedPlan">
+                            <input type="hidden" id="selectedPlanIdInput" name="selectedPlanId">
                             <form action="<?= base_url() . 'index.php/flight/pre_booking/' . $search_data['search_id'] ?>" method="POST" autocomplete="off" id="pre-booking-form">
                                 <div class="hide">
                                     <input type="hidden" required="required" name="search_id" value="<?= $search_data['search_id']; ?>" />
@@ -499,7 +500,7 @@ echo generate_low_balance_popup($FareDetails['_CustomerBuying'] + $FareDetails['
                                     <input type="text" name="redeem_points_post" class="redeem_points_post" value="0">
                                     <input type="hidden" name="reward_usable" value="<?= round($reward_usable) ?>">
                                     <input type="hidden" name="reward_earned" value="<?= round($reward_earned) ?>">
-                                
+
                                     <input type="hidden" id="selectedPlansJson" name="selectedPlansJson">
                                     <input type="hidden" id="isInsured" name="isInsured">
                                     <input type="hidden" id="insuranceId" name="insuranceId">
@@ -540,7 +541,7 @@ echo generate_low_balance_popup($FareDetails['_CustomerBuying'] + $FareDetails['
                                                     <div class="hide hidden_pax_details">
                                                         <input type="hidden" name="passenger_type[]" value="<?= ucfirst($pax_type) ?>">
                                                         <input type="hidden" name="lead_passenger[]" value="<?= (is_lead_pax($pax_index) ? true : false) ?>">
-                                                        <input type="hidden" name="gender[]" value="1" class="pax_gender">
+                                                        <input type="hidden" id="passenger-nationality-<?= $pax_index ?>" name="gender[]" value="1" class="pax_gender">
                                                         <input type="hidden" required="required" name="passenger_nationality[]" id="passenger-nationality-<?= $pax_index ?>" value="<?php echo $nationality_code; ?>">>
                                                     </div>
                                                     <div class="col-xs-1 nopadding full_dets_aps">
@@ -550,7 +551,10 @@ echo generate_low_balance_popup($FareDetails['_CustomerBuying'] + $FareDetails['
                                                         <div class="inptalbox">
                                                             <div class="col-xs-3 spllty">
                                                                 <div class="selectedwrap">
-                                                                    <select class="mySelectBoxClass flyinputsnor name_title" name="name_title[]" required="required">
+                                                                    <select 
+                                                                    class="mySelectBoxClass flyinputsnor name_title" name="name_title[]" 
+                                                                    id="passenger-title-<?= $pax_index ?>"
+                                                                    required="required">
                                                                         <?php echo (is_adult($pax_index, $total_adult_count) ? $adult_title_options : $child_title_options) ?>
                                                                     </select>
                                                                 </div>
@@ -994,8 +998,8 @@ echo generate_low_balance_popup($FareDetails['_CustomerBuying'] + $FareDetails['
                                     <div id="insuranceSection">
                                         <p>Would you like to purchase insurance for this flight?</p>
                                         <a href='<?php echo base_url() . "insurance/GetAvailablePlansOTAWithRiders/" . $search_data['search_id'] . '/' . $segmentDetails ?>'>Insure Trip</a>
-                                        <a href='<?php echo base_url() . "insurance/index" ?>'>Confirm Insurance</a>
-                                        <button type="button"class="btn btn-primary" id="yesBtn">Yes</button>
+                                        <a href='<?php echo base_url() . "flight/ConfirmPurchase" ?>'>Confirm Insurance</a>
+                                        <button type="button" class="btn btn-primary" id="yesBtn">Yes</button>
                                         <button type="button" class="btn btn-danger" id="noBtn">No</button>
                                     </div>
                                     <div id="errorDiv"></div>
@@ -1800,165 +1804,171 @@ for (const planKey in plans) {
 <!-- const baseUrl = "<?php echo base_url(); ?>";
         const fetchUrl = baseUrl + `index.php/flight/GetAvailablePlansOTAWithRiders/<?php echo $searchId ?>/<?php echo $segmentDetails ?>`;
         modalBody.innerHTML = ' <img id ="loading" src="<?php echo SYSTEM_IMAGE_DIR . "loading.gif" ?>" alt="Loading..." />'; -->
-        <script>
-document.getElementById("yesBtn").addEventListener("click", openModal);
+<script>
+    document.getElementById("yesBtn").addEventListener("click", openModal);
+    const modal = document.getElementById("modal");
+    const modalBody = document.getElementById("modal-body");
+    const closeBtn = document.getElementsByClassName("close")[0];
 
-const modal = document.getElementById("modal");
-const modalBody = document.getElementById("modal-body");
-const closeBtn = document.getElementsByClassName("close")[0];
+    let selectedPlans = [];
+    let currentPassenger = 1;
+    const totalPassengers = <?php echo $total_pax_count; ?>; // Get the total passenger count from PHP
+    let familyPlanSelected = false; // Flag to track if a family plan is already selected
+    const isInsuranceSelected = document.getElementById("isInsured");
+    const insuranceIdInput = document.getElementById("insuranceId");
+    const baseUrl = "<?php echo base_url(); ?>";
+    const fetchUrl = `${baseUrl}index.php/flight/GetAvailablePlansOTAWithRiders/<?php echo $searchId ?>/<?php echo $segmentDetails ?>`;
 
-let selectedPlans = [];
-let currentPassenger = 1;
-const totalPassengers = <?php echo $total_pax_count; ?>; // Get the total passenger count from PHP
-let familyPlanSelected = false; // Flag to track if a family plan is already selected
-const isInsuranceSelected = document.getElementById("isInsured");
-const insuranceIdInput = document.getElementById("insuranceId");
-const baseUrl = "<?php echo base_url(); ?>";
-const fetchUrl = `${baseUrl}index.php/flight/GetAvailablePlansOTAWithRiders/<?php echo $searchId ?>/<?php echo $segmentDetails ?>`;
-
-closeBtn.onclick = function() {
-    resetModal();
-    modal.style.display = "none";
-    isInsuranceSelected.value = 0;
-}
-
-window.onclick = function(event) {
-    if (event.target === modal) {
+    closeBtn.onclick = function() {
         resetModal();
         modal.style.display = "none";
         isInsuranceSelected.value = 0;
     }
-}
 
-function openModal() {
-    if (!arePassengerNamesEntered()) {
-        displayErrorMessage("Please enter the names first.");
-        return;
-    }
-
-    modal.style.display = "block";
-    showLoading();
-
-    fetch(fetchUrl)
-        .then(response => response.json())
-        .then(data => {
-            hideLoading();
-            showPlanOptions(data);
-            console.log(data);
-            insuranceIdInput.value  = data.id? data.id :0;
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-            hideLoading();
-            modalBody.innerHTML = '<p>Error loading data. Please try again later.</p>';
-        });
-}
-
-function arePassengerNamesEntered() {
-    for (let i = 1; i <= totalPassengers; i++) {
-        const firstName = document.getElementById(`passenger-first-name-${i}`).value.trim();
-        const lastName = document.getElementById(`passenger-last-name-${i}`).value.trim();
-        if (!firstName || !lastName) {
-            return false;
+    window.onclick = function(event) {
+        if (event.target === modal) {
+            resetModal();
+            modal.style.display = "none";
+            isInsuranceSelected.value = 0;
         }
     }
-    return true;
-}
 
-function displayErrorMessage(message) {
-    const errorDiv = document.getElementById("errorDiv");
-    if (errorDiv) {
-        errorDiv.innerText = message;
-    } else {
-        const errorMessage = document.createElement("div");
-        errorMessage.id = "errorDiv";
-        errorMessage.style.color = "red";
-        errorMessage.innerText = message;
-        document.getElementById("yesNoBtnDiv").appendChild(errorMessage);
+    function openModal() {
+        if (!arePassengerNamesEntered()) {
+            displayErrorMessage("Please enter the names first.");
+            return;
+        }
+
+        modal.style.display = "block";
+        showLoading();
+
+        fetch(fetchUrl)
+            .then(response => response.json())
+            .then(data => {
+                hideLoading();
+                showPlanOptions(data);
+                console.log(data);
+                insuranceIdInput.value = data.id ? data.id : 0;
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                hideLoading();
+                modalBody.innerHTML = '<p>Error loading data. Please try again later.</p>';
+            });
     }
-}
 
-function showLoading() {
-    modalBody.innerHTML = '<img id="loading" src="<?php echo SYSTEM_IMAGE_DIR . "loading.gif"; ?>" alt="Loading...">';
-}
+    function arePassengerNamesEntered() {
+        for (let i = 1; i <= totalPassengers; i++) {
+            const firstName = document.getElementById(`passenger-first-name-${i}`).value.trim();
+            const lastName = document.getElementById(`passenger-last-name-${i}`).value.trim();
+            const dateOfBirth = document.getElementById(`adult-date-picker-${i}`).value.trim();
 
-function hideLoading() {
-    const loadingImg = document.getElementById("loading");
-    if (loadingImg) {
-        loadingImg.style.display = "none";
+            if (!firstName || !lastName || !dateOfBirth) {
+                return false;
+            }
+        }
+        return true;
     }
-}
 
-function showPlanOptions(data) {
-    modalBody.innerHTML = `
+    function displayErrorMessage(message) {
+        const errorDiv = document.getElementById("errorDiv");
+        if (errorDiv) {
+            errorDiv.innerText = message;
+        } else {
+            const errorMessage = document.createElement("div");
+            errorMessage.id = "errorDiv";
+            errorMessage.style.color = "red";
+            errorMessage.innerText = message;
+            document.getElementById("yesNoBtnDiv").appendChild(errorMessage);
+        }
+    }
+
+    function showLoading() {
+        modalBody.innerHTML = '<img id="loading" src="<?php echo SYSTEM_IMAGE_DIR . "loading.gif"; ?>" alt="Loading...">';
+    }
+
+    function hideLoading() {
+        const loadingImg = document.getElementById("loading");
+        if (loadingImg) {
+            loadingImg.style.display = "none";
+        }
+    }
+
+    function showPlanOptions(data) {
+        modalBody.innerHTML = `
         <p>Which plan would you like to purchase?</p>
         <button id="familyPlanBtn">Family Plan</button>
         <button id="individualPlanBtn">Individual Plan</button>
     `;
 
-    document.getElementById("familyPlanBtn").addEventListener("click", () => showFamilyPlans(data.familyPlans));
-    document.getElementById("individualPlanBtn").addEventListener("click", () => showIndividualPlans(currentPassenger, data.perPassengerPlans));
-}
+        document.getElementById("familyPlanBtn").addEventListener("click", () => showFamilyPlans(data.familyPlans));
+        document.getElementById("individualPlanBtn").addEventListener("click", () => showIndividualPlans(currentPassenger, data.perPassengerPlans));
+    }
 
-function showFamilyPlans(familyPlans) {
-    modalBody.innerHTML = `
+    function showFamilyPlans(familyPlans) {
+        modalBody.innerHTML = `
         <button id="goBackBtn">Go Back</button>
         <div id="familyPlans">
             <!-- Family plans will be loaded here -->
         </div>
     `;
 
-    document.getElementById("goBackBtn").addEventListener("click", openModal);
+        document.getElementById("goBackBtn").addEventListener("click", openModal);
 
-    const familyPlansContainer = document.getElementById("familyPlans");
+        const familyPlansContainer = document.getElementById("familyPlans");
 
-    let planExists = false;
-    Object.values(familyPlans).forEach(plansArray => {
-        if (plansArray.length > 0) {
-            planExists = true;
-            plansArray.forEach((plan, index) => {
-                const planElement = document.createElement('div');
-                planElement.innerHTML = `
+        let planExists = false;
+        Object.values(familyPlans).forEach(plansArray => {
+            if (plansArray.length > 0) {
+                planExists = true;
+                plansArray.forEach((plan, index) => {
+                    const planElement = document.createElement('div');
+                    planElement.innerHTML = `
                     <h3>${plan.PlanTitle}</h3>
                     <p>${plan.CurrencyCode} ${plan.TotalPremiumAmount}</p>
                     <button id="selectFamilyPlan${index}" class="family-plan-select">Select</button>
                     <button id="viewDetailsFamilyPlan${index}" class="view-details">View Details</button>
                     <div id="detailsFamilyPlan${index}" style="display:none;">${plan.PlanContent}</div>
                 `;
-                familyPlansContainer.appendChild(planElement);
+                    familyPlansContainer.appendChild(planElement);
 
-                document.getElementById(`viewDetailsFamilyPlan${index}`).addEventListener("click", () => {
-                    const details = document.getElementById(`detailsFamilyPlan${index}`);
-                    details.style.display = details.style.display === "none" ? "block" : "none";
-                });
+                    document.getElementById(`viewDetailsFamilyPlan${index}`).addEventListener("click", () => {
+                        const details = document.getElementById(`detailsFamilyPlan${index}`);
+                        details.style.display = details.style.display === "none" ? "block" : "none";
+                    });
 
-                document.getElementById(`selectFamilyPlan${index}`).addEventListener("click", () => {
-                    if (!familyPlanSelected) {
-                        selectedPlans = selectedPlans.filter(plan => plan.type !== 'Family'); // Remove any previously selected family plan
-                        selectedPlans.push({
-                            type: 'Family',
-                            plan: plan.PlanTitle,
-                            planId: plan.PlanCode
-                        });
-                        familyPlanSelected = true;
-                        console.log(`Selected ${plan.PlanTitle}`);
-                        appendSelectedPlan(plan.PlanTitle, plan.PlanCode, 'Family');
-                        finishSelection(); // Directly finish selection
-                    }
+                    document.getElementById(`selectFamilyPlan${index}`).addEventListener("click", () => {
+                        if (!familyPlanSelected) {
+                            selectedPlans = selectedPlans.filter(plan => plan.type !== 'Family'); // Remove any previously selected family plan
+                            selectedPlans.push({
+                                type: 'Family',
+                                plan: plan.PlanTitle,
+                                planId: plan.PlanCode,
+                                planType: plan.planType
+                            });
+                            familyPlanSelected = true;
+                            console.log(`Selected ${plan.PlanTitle}`);
+                            appendSelectedPlan(plan.PlanTitle, plan.PlanCode, 'Family');
+                            finishSelection(); // Directly finish selection
+                        }
+                    });
                 });
-            });
+            }
+        });
+
+        if (!planExists) {
+            familyPlansContainer.innerHTML = '<p>No family plans available.</p>';
         }
-    });
-
-    if (!planExists) {
-        familyPlansContainer.innerHTML = '<p>No family plans available.</p>';
     }
-}
 
-function showIndividualPlans(passenger, individualPlans) {
-    console.log(individualPlans);
-    const passengerName = getPassengerName(passenger);
-    modalBody.innerHTML = `
+    function showIndividualPlans(passenger, individualPlans) {
+        console.log(individualPlans);
+        const passengerName = getPassengerName(passenger);
+        const passengerDOB = getPassengerDOB(passenger);
+        const passengerAge = getPassengerAge(passengerDOB);
+        const passengerGender = getPassengerGender(passenger);
+        
+        modalBody.innerHTML = `
         <button id="goBackBtn">Go Back</button>
         <div id="individualPlans">
             <h2>Select a plan for ${passengerName}</h2>
@@ -1966,131 +1976,160 @@ function showIndividualPlans(passenger, individualPlans) {
         </div>
     `;
 
-    document.getElementById("goBackBtn").addEventListener("click", () => {
-        if (passenger === 1) {
-            openModal();
-        } else {
-            showIndividualPlans(passenger - 1, individualPlans);
-        }
-    });
+        document.getElementById("goBackBtn").addEventListener("click", () => {
+            if (passenger === 1) {
+                openModal();
+            } else {
+                showIndividualPlans(passenger - 1, individualPlans);
+            }
+        });
 
-    const individualPlansContainer = document.getElementById("individualPlans");
+        const individualPlansContainer = document.getElementById("individualPlans");
 
-    let planExists = false;
-    Object.values(individualPlans).forEach(plan => {
-        if (plan) {
-            planExists = true;
-            const planElement = document.createElement('div');
-            planElement.innerHTML = `
+        let planExists = false;
+        Object.values(individualPlans).forEach(plan => {
+            if (plan) {
+                if (passengerAge <= plan.MaxAge && passengerAge >= plan.MinAge &&(plan.Gender == "Both" || plan.Gender == passengerGender)) {
+                    planExists = true;
+                    const planElement = document.createElement('div');
+                    planElement.innerHTML = `
                 <h3>${plan.PlanTitle}</h3>
                 <p>${plan.CurrencyCode} ${plan.TotalPremiumAmount}</p>
                 <button id="selectIndividualPlan${plan.PlanCode}" class="individual-plan-select">Select</button>
                 <button id="viewDetailsIndividualPlan${plan.PlanCode}" class="view-details">View Details</button>
                 <div id="detailsIndividualPlan${plan.PlanCode}" style="display:none;">${plan.PlanContent}</div>
             `;
-            individualPlansContainer.appendChild(planElement);
+                    individualPlansContainer.appendChild(planElement);
 
-            document.getElementById(`viewDetailsIndividualPlan${plan.PlanCode}`).addEventListener("click", () => {
-                const details = document.getElementById(`detailsIndividualPlan${plan.PlanCode}`);
-                details.style.display = details.style.display === "none" ? "block" : "none";
-            });
+                    document.getElementById(`viewDetailsIndividualPlan${plan.PlanCode}`).addEventListener("click", () => {
+                        const details = document.getElementById(`detailsIndividualPlan${plan.PlanCode}`);
+                        details.style.display = details.style.display === "none" ? "block" : "none";
+                    });
 
-            document.getElementById(`selectIndividualPlan${plan.PlanCode}`).addEventListener("click", () => {
-                selectedPlans = selectedPlans.filter(p => !(p.type === 'Individual' && p.passenger === passengerName)); // Remove any previously selected plan for this passenger
-                selectedPlans.push({
-                    type: 'Individual',
-                    passenger: passengerName,
-                    plan: plan.PlanTitle,
-                    planId: plan.PlanCode
-                });
-                appendSelectedPlan(plan.PlanTitle, plan.PlanCode, passengerName);
-                if (passenger < totalPassengers) {
-                    showIndividualPlans(passenger + 1, individualPlans);
-                } else {
-                    finishSelection();
+                    document.getElementById(`selectIndividualPlan${plan.PlanCode}`).addEventListener("click", () => {
+                        selectedPlans = selectedPlans.filter(p => !(p.type === 'Individual' && p.passenger === passengerName));
+                        selectedPlans.push({
+                            type: 'Individual',
+                            passenger: passengerName,
+                            plan: plan.PlanTitle,
+                            planId: plan.PlanCode,
+                            planType: plan.planType,
+                            passengerAge: passengerAge,
+                            passengerGender: passengerGender
+                        });
+                        appendSelectedPlan(plan.PlanTitle, plan.PlanCode, passengerName);
+                        if (passenger < totalPassengers) {
+                            showIndividualPlans(passenger + 1, individualPlans);
+                        } else {
+                            finishSelection();
+                        }
+                    });
                 }
-            });
-        }
-    });
+            }
+        });
 
-    if (!planExists) {
-        individualPlansContainer.innerHTML = '<p>No individual plans available.</p>';
+        if (!planExists) {
+            individualPlansContainer.innerHTML = '<p>No individual plans available.</p>';
+        }
+
+        const skipButton = document.createElement('button');
+        skipButton.innerText = 'Skip';
+        skipButton.addEventListener('click', () => {
+            selectedPlans = selectedPlans.filter(p => !(p.type === 'Individual' && p.passenger === passengerName)); // Ensure no previous selection
+            selectedPlans.push({
+                type: 'Individual',
+                passenger: passengerName,
+                plan: 'None'
+            });
+            if (passenger < totalPassengers) {
+                showIndividualPlans(passenger + 1, individualPlans);
+            } else {
+                finishSelection();
+            }
+        });
+        individualPlansContainer.appendChild(skipButton);
     }
 
-    const skipButton = document.createElement('button');
-    skipButton.innerText = 'Skip';
-    skipButton.addEventListener('click', () => {
-        selectedPlans = selectedPlans.filter(p => !(p.type === 'Individual' && p.passenger === passengerName)); // Ensure no previous selection
-        selectedPlans.push({
-            type: 'Individual',
-            passenger: passengerName,
-            plan: 'None'
-        });
-        if (passenger < totalPassengers) {
-            showIndividualPlans(passenger + 1, individualPlans);
-        } else {
-            finishSelection();
+    function getPassengerName(index) {
+        const firstName = document.getElementById(`passenger-first-name-${index}`).value;
+        const lastName = document.getElementById(`passenger-last-name-${index}`).value;
+        return `${firstName} ${lastName}`;
+    }
+
+    function getPassengerDOB(index) {
+        const dob = document.getElementById(`adult-date-picker-${index}`).value;
+        return dob;
+    }
+
+    function getPassengerAge(currentPassengerDOB) {
+        currentPassengerDOB = new Date(currentPassengerDOB);
+        const now = new Date();
+        const diff = now - currentPassengerDOB;
+        const age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+
+        return age;
+
+    }
+    function getPassengerGender(index) {
+        const title = document.getElementById(`passenger-title-${index}`).value;
+        if(title == 1 || title == 3){
+            gender = "Male"
+        }else{
+            gender = "Female"
         }
-    });
-    individualPlansContainer.appendChild(skipButton);
-}
+        return gender; 
 
-function getPassengerName(index) {
-    const firstName = document.getElementById(`passenger-first-name-${index}`).value;
-    const lastName = document.getElementById(`passenger-last-name-${index}`).value;
-    return `${firstName} ${lastName}`;
-}
+    }
 
-function appendSelectedPlan(planTitle, planId, passenger) {
-    const selectedPlanInput = document.getElementById("selectedPlanInput");
-    const selectedPlanIdInput = document.getElementById("selectedPlanIdInput");
+    function appendSelectedPlan(planTitle, planId, passenger) {
+        const selectedPlanInput = document.getElementById("selectedPlanInput");
+        const selectedPlanIdInput = document.getElementById("selectedPlanIdInput");
 
-    selectedPlanInput.value += `${passenger}: ${planTitle}; `;
-    selectedPlanIdInput.value += `${passenger}: ${planId}; `;
-}
+        selectedPlanInput.value += `${passenger}: ${planTitle}; `;
+        selectedPlanIdInput.value += `${passenger}: ${planId}; `;
+    }
 
-function finishSelection() {
-    const selectedPlansInput = document.getElementById("selectedPlansJson");
-    selectedPlansInput.value = JSON.stringify(selectedPlans);
+    function finishSelection() {
+        const selectedPlansInput = document.getElementById("selectedPlansJson");
+        selectedPlansInput.value = JSON.stringify(selectedPlans);
 
-    document.getElementById("insuranceSection").style.display = "none";
-    document.getElementById("insurancePlans").style.display = "none";
-    isInsuranceSelected.value=1;
-    
-    const selectedPlansDiv = document.createElement('div');
-    selectedPlansDiv.innerHTML = `
+        document.getElementById("insuranceSection").style.display = "none";
+        document.getElementById("insurancePlans").style.display = "none";
+        isInsuranceSelected.value = 1;
+
+        const selectedPlansDiv = document.createElement('div');
+        selectedPlansDiv.innerHTML = `
         <h2>Selected Plans</h2>
         <ul>
             ${selectedPlans.map(plan => `<li>${plan.type === 'Individual' ? plan.passenger : 'Family'}: ${plan.plan}</li>`).join('')}
         </ul>
         <button id="cancelBtn">Cancel</button>
     `;
-    document.getElementById("insuranceSection").parentNode.appendChild(selectedPlansDiv);
+        document.getElementById("insuranceSection").parentNode.appendChild(selectedPlansDiv);
 
-    document.getElementById("cancelBtn").addEventListener("click", () => {
-        selectedPlansDiv.remove();
-        isInsuranceSelected.value = 0;
-        selectedPlans = [];
-        const selectedPlansInput = document.getElementById("selectedPlansJson");
-    selectedPlansInput.value = '';
+        document.getElementById("cancelBtn").addEventListener("click", () => {
+            selectedPlansDiv.remove();
+            isInsuranceSelected.value = 0;
+            selectedPlans = [];
+            const selectedPlansInput = document.getElementById("selectedPlansJson");
+            selectedPlansInput.value = '';
 
-        document.getElementById("insuranceSection").style.display = "block";
+            document.getElementById("insuranceSection").style.display = "block";
+            resetModal();
+        });
+
+        // Close the modal
         resetModal();
-    });
-
-    // Close the modal
-    resetModal();
-    modal.style.display = "none";
-}
+        modal.style.display = "none";
+    }
 
 
-function resetModal() {
-    modalBody.innerHTML = "";
-    selectedPlans = [];
-    currentPassenger = 1;
-    familyPlanSelected = false;
-    selectedPlanInput.value = "";
-    selectedPlanIdInput.value = "";
-}
-
+    function resetModal() {
+        modalBody.innerHTML = "";
+        selectedPlans = [];
+        currentPassenger = 1;
+        familyPlanSelected = false;
+        selectedPlanInput.value = "";
+        selectedPlanIdInput.value = "";
+    }
 </script>

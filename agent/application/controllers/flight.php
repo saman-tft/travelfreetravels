@@ -658,35 +658,7 @@ foreach($planId as $plan_k=>$plan_v){
         if (valid_array($post_params) == false) {
             redirect(base_url());
         }
-        if($post_params['isInsured'] == 1 && $post_params['insuranceId'] != NULL && $post_params['insuranceId'] != ''){
-            $insurancePlansDetails= $this->custom_db->single_table_records('plan_retirement', '*', array('id'=>$post_params['insuranceId']));
-            if($insurancePlansDetails['status'] == 1){
-                $availableInsurancePlanDetails=json_decode($insurancePlansDetails['data'][0]['message'], true);
-                $selectedPlanDetails = json_decode($post_params['selectedPlansJson'], true);
-                foreach($post_params['identification_type'] as $k=>$v){
-                    $selectedPlanDetails[$k]['passengerDetails']['name'] = $selectedPlanDetails[$k]['passenger']; 
-                    $selectedPlanDetails[$k]['passengerDetails']['identificationType'] = $post_params['identification_type'][$k];
-                    $selectedPlanDetails[$k]['passengerDetails']['identificationNumber'] = $post_params['passenger_passport_number'][$k];
-                    $passengerDetails[] = $selectedPlanDetails[$k]['passengerDetails'];
-                  
-                }
-                
-                $formattedArray['passengerDetails'] = $passengerDetails;
-                $formattedArray['bookingPassengerDetails']['name'] = $selectedPlanDetails[0]['passenger']; 
-                 $formattedArray['bookingPassengerDetails']['email'] = $post_params['billing_email']; 
-                 $formattedArray['bookingPassengerDetails']['phoneNumber'] = $post_params['passenger_contact']; 
-                 $searchData = $this->flight_model->get_safe_search_data($search_id);
-                 $formattedArray['searchData'] = $searchData['data'];
-                //  debug($formattedArray);die;
-                $this->getSelectedInsuranceFullDetails($selectedPlanDetails, $availableInsurancePlanDetails);
 
-            }else{
-                redirect(base_url() . 'index.php/flight/exception?op=Invalid Insurance Details&notification="Insurance Detils Not Found"');
-            }
-            
-
-            // $totalInsuranceAmount = $this->insurance_model->getTotalInsurancePrice($selectedPlans);
-        }
         // $this->custom_db->generate_static_response(json_encode($post_params));
         // Insert To temp_booking and proceed
         /* $post_params = $this->flight_model->get_static_response($static_search_result_id); */
@@ -753,7 +725,7 @@ foreach($planId as $plan_k=>$plan_v){
             }
             // debug($post_params);die;
             $temp_booking = $this->module_model->serialize_temp_booking_record($post_params, FLIGHT_BOOKING);
-
+$insuranceAmount = 0;
             $book_id = $temp_booking['book_id'];
             $book_origin = $temp_booking['temp_booking_origin'];
             if ($post_params['booking_source'] == PROVAB_FLIGHT_BOOKING_SOURCE  || $post_params['booking_source'] == PROVAB_AEROCRS_BOOKING_SOURCE || $post_params['booking_source'] == PLAZMA_BOOKING_SOURCE || $post_params['booking_source'] == AMADEUS_FLIGHT_BOOKING_SOURCE) {
@@ -787,6 +759,70 @@ foreach($planId as $plan_k=>$plan_v){
                 $total_seg_cnt = 0;
                 foreach ($temp_token['token'][0]['SegmentDetails'] as $segk => $segv) {
                     $total_seg_cnt += count($segv);
+                }
+                if($post_params['isInsured'] == 1 && $post_params['insuranceId'] != NULL && $post_params['insuranceId'] != ''){
+                    $finalPlanDetails = [];
+                    $insurancePlansDetails= $this->custom_db->single_table_records('plan_retirement', '*', array('id'=>$post_params['insuranceId']));
+                    if($insurancePlansDetails['status'] == 1){
+                        $availableInsurancePlanDetails=json_decode($insurancePlansDetails['data'][0]['message'], true);
+                        $selectedPlanDetails = json_decode($post_params['selectedPlansJson'], true);
+                        foreach($post_params['identification_type'] as $k=>$v){
+                            $selectedPlanDetails[$k]['passengerDetails']['name'] = $selectedPlanDetails[$k]['passenger']; 
+                            $selectedPlanDetails[$k]['passengerDetails']['identificationType'] = $post_params['identification_type'][$k];
+                            $selectedPlanDetails[$k]['passengerDetails']['identificationNumber'] = $post_params['passenger_passport_number'][$k];
+                            $passengerDetails[] = $selectedPlanDetails[$k]['passengerDetails'];
+                          
+                        }
+                        $formattedArray['searchId'] = $search_id;
+                        $formattedArray['passengerDetails'] = $passengerDetails;
+                        $formattedArray['bookingPassengerDetails']['name'] = $selectedPlanDetails[0]['passenger']; 
+                         $formattedArray['bookingPassengerDetails']['email'] = $post_params['billing_email']; 
+                         $formattedArray['bookingPassengerDetails']['phoneNumber'] = $post_params['passenger_contact']; 
+                         $searchData = $this->flight_model->get_safe_search_data($search_id);
+                         $formattedArray['searchData'] = $searchData['data'];
+                         $formattedArray['SegmentDetails'] = $temp_token['token'][0]['SegmentDetails'];
+                        //  debug($selectedPlanDetails);
+                         $allAvailableInsurancePlans = json_decode($insurancePlansDetails['data'][0]['message'], true);
+                        //  debug($allAvailableInsurancePlans);
+                        //  die;
+                          foreach($selectedPlanDetails as $k=>$v){
+                            if($v['type'] == "Individual"){
+                                $planType = "perPassengerPlans";
+                            }else{
+                                $planType = "familyPlans";
+                            }
+                            $planCategory = $v['planType'];
+// $string = "Plans"
+
+// debug($formattedArray);die;
+                            foreach($allAvailableInsurancePlans[$planType][$planCategory.'Plans'] as $a_k=>$a_v){
+
+                                if($v['planId']== $a_v['PlanCode']){
+                                    $finalPlanDetails[$formattedArray['passengerDetails'][$k]['name']] = $a_v;
+
+                                    $insuranceAmount += (int) $a_v['TotalPremiumAmount'];
+                                    break;
+                                }
+
+                            }
+                         }
+                        $formattedArray['planDetails'] = $finalPlanDetails;
+                        $formattedArray['totalPrice'] = $insuranceAmount;
+                        $updateData['message'] = json_encode($formattedArray, true);
+                        $updateData['app_reference'] = $book_id;
+                        $updateData['sortcode'] = 1;
+                        $updateCondition['id'] = $post_params['insuranceId'];
+                         $upateStatus = $this->custom_db->update_record('plan_retirement', $updateData,$updateCondition);
+
+                        //  die("here");
+                        // $this->getSelectedInsuranceFullDetails($selectedPlanDetails, $availableInsurancePlanDetails);
+        
+                    }else{
+                        redirect(base_url() . 'index.php/flight/exception?op=Invalid Insurance Details&notification="Insurance Detils Not Found"');
+                    }
+                    
+        
+                    // $totalInsuranceAmount = $this->insurance_model->getTotalInsurancePrice($selectedPlans);
                 }
                 if ($post_params['booking_source'] == AMADEUS_FLIGHT_BOOKING_SOURCE) {
                     $discount_details = discount_details();
@@ -839,7 +875,6 @@ foreach($planId as $plan_k=>$plan_v){
                 $book_params['ori_segment_discount'] = $ori_segment_discount;
 
                 $data = $this->flight_lib->save_booking($book_id, $book_params, $currency_obj, $this->current_module);
-                debug($formattedArray);die;
 
                 $reward_point = 0;
                 $reward_amount = 0;
@@ -854,7 +889,7 @@ foreach($planId as $plan_k=>$plan_v){
                     //  debug($reward_discount);die;
                     $amount    = number_format(($amount - $reward_discount), 2);
                 }
-                //  debug($pgi_amount);die;
+                $pgi_amount += $insuranceAmount;
                 $reward_earned = $post_params['reward_earned'];
                 switch ($post_params['payment_method']) {
                     case PAY_NOW:
@@ -965,14 +1000,21 @@ foreach($planId as $plan_k=>$plan_v){
             //verify payment status and continue
             $book_id = trim($post_data['book_id']);
             $temp_book_origin = intval($post_data['temp_book_origin']);
+
         } else {
             echo "faile71";
             die;
             redirect(base_url() . 'index.php/flight/exception?op=InvalidBooking&notification=invalid');
         }
-
+        
         // run booking request and do booking
         $temp_booking = $this->module_model->unserialize_temp_booking_record($book_id, $temp_book_origin);
+        $insuranceDetails = $this->custom_db->single_table_records('plan_retirement','message,sortcode', array('app_reference'=>$book_id));
+        // debug($insuranceDetails);
+        $insuranceDetails = json_decode($insuranceDetails['data'][0]['message'], true);
+        // $insuranceAmount = $insuranceDetails[''];
+        // debug($insuranceDetails);die;
+        $insuranceTotalAmount = $insuranceDetails['totalPrice'];
         //Delete the temp_booking record, after accessing
         //$this->module_model->delete_temp_booking_record ($book_id, $temp_book_origin);
 
@@ -994,7 +1036,7 @@ foreach($planId as $plan_k=>$plan_v){
             $flight_details = $temp_booking['book_attributes']['token']['token'];
             $flight_booking_summary = $this->flight_lib->merge_flight_segment_fare_details($flight_details);
             $fare_details = $flight_booking_summary['FareDetails'][$this->current_module . '_PriceDetails'];
-            $total_booking_price = $fare_details['_AgentBuying'];
+            $total_booking_price = $fare_details['_AgentBuying']+$insuranceTotalAmount;
             $currency = $fare_details['Currency'];
         }
         // verify payment status and continue
@@ -1021,7 +1063,7 @@ foreach($planId as $plan_k=>$plan_v){
                             //debug($flight_lib);die;
 
                             $booking = $this->flight_lib->process_booking($book_id, $temp_booking['book_attributes']);
-                            //debug($booking );die;
+                            // debug($booking );die;
                         } catch (Exception $e) {
 
                             $booking['status'] = BOOKING_ERROR;
@@ -1029,7 +1071,12 @@ foreach($planId as $plan_k=>$plan_v){
                         // Update booking based on booking status and book id
                         break;
                 }
-                $this->ConfirmPurchase();
+                // $this->ConfirmPurchase();
+                $updateCondition['app_reference'] = $book_id;
+                $bookingId = $array['data']['ticket']['TicketDetails'][0]['CommitBooking']['BookingDetails']['BookingId'];
+                $updateData['source'] = $insuranceTotalAmount;
+                $this->custom_db->update_record('flight_booking_transaction_details', $updateData, $updateCondition);
+                $this->ConfirmPurchase($insuranceDetails, $insuranceTotalAmount, $bookingId);
                 //Failed booking logs in separate file, FIXME ---------------------------
                 if (in_array($booking['status'], array(SUCCESS_STATUS, BOOKING_CONFIRMED, BOOKING_PENDING, BOOKING_FAILED, BOOKING_ERROR, BOOKING_HOLD, FAILURE_STATUS)) == true) {
                     $currency_obj = new Currency(array(
@@ -1111,90 +1158,124 @@ foreach($planId as $plan_k=>$plan_v){
         }
         // redirect(base_url().'index.php/flight/exception?op=Remote IO error @ FLIGHT Secure Booking&notification=validation');
     }
-    function ConfirmPurchase()
+    function ConfirmPurchase($insuranceDetails, $amount, $pnr)
     {
-        $request = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://ZEUSTravelInsuranceGateway/WebServices">
-            <soapenv:Header/>
-            <soapenv:Body>
-            <web:ConfirmPurchase>
-            <web:GenericRequest>
-            <web:Authentication>
-            <web:Username>UAT_DEMO</web:Username>
-            <web:Password>ypHALsJ3EG3p</web:Password>
-            </web:Authentication>
-            <web:Header>
-            <web:Channel>IBE_B2BAE</web:Channel>
-            <web:ItineraryID/>
-            <web:PNR>TEST12345</web:PNR>
-            <web:PolicyNo/>
-            <web:PurchaseDate>2024-05-16</web:PurchaseDate>
-            <web:SSRFeeCode>Fee_Code_Name</web:SSRFeeCode>
-            <web:FeeDescription/>
-            <web:Currency>AED</web:Currency>
-            <web:TotalPremium>TOTAL_PREMIUM_AMOUNT</web:TotalPremium>
-            <web:CountryCode>AE</web:CountryCode>
-            <web:CultureCode>EN</web:CultureCode>
-            <web:TotalAdults>1</web:TotalAdults>
-            <web:TotalChild>0</web:TotalChild>
-            <web:TotalInfants>0</web:TotalInfants>
-            </web:Header>
-            <web:ContactDetails>
-            <web:ContactPerson>ARINDRAJIT</web:ContactPerson>
-            <web:Address1/>
-            <web:Address2/>
-            <web:Address3/>
-            <web:HomePhoneNum/>
-            <web:MobilePhoneNum>1234567890</web:MobilePhoneNum>
-            <web:OtherPhoneNum/>
-            <web:PostCode/>
-            <web:City/>
-            <web:State/>
-            <web:Country>AE</web:Country>
-            <web:EmailAddress>mail_acc@test.com</web:EmailAddress>
-            </web:ContactDetails>
-            <web:Flights>
-            <web:Flight>
-            <web:DepartCountryCode>AE</web:DepartCountryCode>
-            <web:DepartStationCode/>
-            <web:ArrivalCountryCode>KW</web:ArrivalCountryCode>
-            <web:ArrivalStationCode/>
-            <web:DepartAirlineCode/>
-            <web:DepartDateTime>2025-10-2</web:DepartDateTime>
-            <web:ReturnAirlineCode/>
-            <web:ReturnDateTime></web:ReturnDateTime>
-            <web:DepartFlightNo/>
-            <web:ReturnFlightNo/>
-            </web:Flight>
-            </web:Flights>
-            <web:Passengers>
-            <web:Passenger>
-            <web:IsInfant>0</web:IsInfant>
-            <web:FirstName>TEST</web:FirstName>
-            <web:LastName>TEST</web:LastName>
-            <web:Gender>Male</web:Gender>
-            <web:DOB>1980-12-10</web:DOB>
-            <web:Age>45</web:Age>
-            <web:IdentityType>Passport</web:IdentityType>
-            <web:IdentityNo>K6669645</web:IdentityNo>
-            <web:IsQualified>true</web:IsQualified>
-            <web:Nationality>AE</web:Nationality>
-            <web:CountryOfResidence>AE</web:CountryOfResidence>
-            <web:SelectedPlanCode>Travel Assurance- Silver Covid Plus Plan</web:SelectedPlanCode>
-            <web:SelectedSSRFeeCode>Fee Code</web:SelectedSSRFeeCode>
-            <web:CurrencyCode>AED</web:CurrencyCode>
-            <web:PassengerPremiumAmount>42.39</web:PassengerPremiumAmount>
-            <web:EmailAddress/>
-            <web:PhoneNumber/>
-            <web:Address/>
-            </web:Passenger>
-            </web:Passengers>
-            </web:GenericRequest>
-            </web:ConfirmPurchase>
-            </soapenv:Body>
-            </soapenv:Envelope>';
+        $authHeader = $this->getAuthHeader();
+        $searchId = $insuranceDetails['searchId'];
+        $segmentDetails = $insuranceDetails['SegmentDetails'];
+        $header = $this->getArkoHeader($searchId, $amount, $pnr);
+        $currentFlightInformation = $this->formatFlightInformationToXML($searchId, $segmentDetails);
+        $request = '<?xml version="1.0" encoding="utf-8"?>
+        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+        <soap:Body>
+        <ConfirmPurchase xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
+        <GenericRequest>'
+        . $authHeader .
+        $header['request'] .
+        '<ContactDetails>
+        <ContactPerson>Lawrence Yeoh</ContactPerson>
+        <Address1>9, JALAN 32/63D, SRI DAMAI</Address1>
+        <Address2>BUKIT RIMAU, SEKSYEN 32</Address2>
+        <Address3/>
+        <HomePhoneNum/>
+        <MobilePhoneNum>60132210101</MobilePhoneNum>
+        <OtherPhoneNum/>
+        <PostCode>40460</PostCode>
+        <City>SHAH ALAM</City>
+        <State>SELANGOR</State>
+        <Country>MALAYSIA</Country>
+        <EmailAddress>chichern.yeoh@tuneinsurance.com</EmailAddress>
+        </ContactDetails>
+        <Flights>
+        <Flight>
+        <DepartCountryCode>AE</DepartCountryCode>
+        <DepartStationCode>SHJ</DepartStationCode>
+        <ArrivalCountryCode>RU</ArrivalCountryCode>
+        <ArrivalStationCode>ODS</ArrivalStationCode>
+        <DepartAirlineCode>G9</DepartAirlineCode>
+        <DepartDateTime>2024-11-01 09:05:00</DepartDateTime>
+        <ReturnAirlineCode>G9</ReturnAirlineCode>
+        <ReturnDateTime>2024-11-29 13:05:00</ReturnDateTime>
+        <DepartFlightNo>293</DepartFlightNo>
+        <ReturnFlightNo>294</ReturnFlightNo>
+        </Flight>
+        </Flights>
+        <Passengers>
+        <Passenger>
+        <IsInfant>1</IsInfant><FirstName>Edward</FirstName>
+        <LastName>Yeoh</LastName>
+        <Gender>Male</Gender>
+        <DOB>2024-01-01 00:00:00</DOB>
+        <Age>0</Age>
+        <IdentityType>Passport</IdentityType>
+        <IdentityNo>A12341230</IdentityNo>
+        <IsQualified>false</IsQualified>
+        <Nationality>MY</Nationality>
+        <CountryOfResidence>AE</CountryOfResidence>
+        <SelectedPlanCode>AEINT2WAYADVANCED</SelectedPlanCode>
+        <SelectedSSRFeeCode>INSC</SelectedSSRFeeCode>
+        <CurrencyCode>AED</CurrencyCode>
+        <PassengerPremiumAmount>0.00</PassengerPremiumAmount>
+        </Passenger>
+        <Passenger>
+        <IsInfant>0</IsInfant>
+        <FirstName>Eleanor</FirstName>
+        <LastName>Yeoh</LastName>
+        <Gender>Female</Gender>
+        <DOB>2010-01-01 00:00:00</DOB>
+        <Age>3</Age>
+        <IdentityType>Passport</IdentityType>
+        <IdentityNo>A12341231</IdentityNo>
+        <IsQualified>false</IsQualified>
+        <Nationality>MY</Nationality>
+        <CountryOfResidence>AE</CountryOfResidence>
+        <SelectedPlanCode>AEINT2WAYADVANCED</SelectedPlanCode>
+        <SelectedSSRFeeCode>INSC</SelectedSSRFeeCode>
+        <CurrencyCode>AED</CurrencyCode>
+        <PassengerPremiumAmount>40.00</PassengerPremiumAmount>
+        </Passenger>
+        <Passenger>
+        <IsInfant>0</IsInfant>
+        <FirstName>Lawrence</FirstName>
+        <LastName>Yeoh</LastName>
+        <Gender>Male</Gender>
+        <DOB>1979-10-16 00:00:00</DOB>
+        <Age>34</Age>
+        <IdentityType>Passport</IdentityType>
+        <IdentityNo>A12341232</IdentityNo>
+        <IsQualified>false</IsQualified>
+        <Nationality>MY</Nationality>
+        <CountryOfResidence>AE</CountryOfResidence>
+        <SelectedPlanCode>AEINT2WAYADVANCED</SelectedPlanCode>
+        <SelectedSSRFeeCode>INSC</SelectedSSRFeeCode>
+        <CurrencyCode>AED</CurrencyCode>
+        <PassengerPremiumAmount>60.00</PassengerPremiumAmount></Passenger>
+        <Passenger>
+        <IsInfant>0</IsInfant>
+        <FirstName>Sue</FirstName>
+        <LastName>Soo</LastName>
+        <Gender>Female</Gender>
+        <DOB>1979-06-23 00:00:00</DOB>
+        <Age>34</Age>
+        <IdentityType>Passport</IdentityType>
+        <IdentityNo>A12341233</IdentityNo>
+        <IsQualified>false</IsQualified>
+        <Nationality>MY</Nationality>
+        <CountryOfResidence>AE</CountryOfResidence>
+        <SelectedPlanCode>AEINT2WAYADVANCED</SelectedPlanCode><SelectedSSRFeeCode>INSC</SelectedSSRFeeCode>
+        <CurrencyCode>AED</CurrencyCode>
+        <PassengerPremiumAmount>60.00</PassengerPremiumAmount>
+        </Passenger>
+        </Passengers>
+        </GenericRequest>
+        </ConfirmPurchase>
+        </soap:Body>
+        </soap:Envelope>';
         $request_url = "https://uat-tpe.tune2protect.com/ZeusAPI/Zeus.asmx";
-        $username = PROTECT_USERNAME;
-        $password = PROTECT_PASSWORD;
+        $username = PROTECT_TEST_USERNAME;
+        $password = PROTECT_TEST_PASSWORD;
         $ch = curl_init($request_url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
         curl_setopt($ch, CURLOPT_HEADER, 1);
@@ -1589,6 +1670,65 @@ foreach($planId as $plan_k=>$plan_v){
         }
         return $response;
     }
+    // <Header>
+    // <Channel>IBE</Channel>
+    // <ItineraryID/>
+    // <PNR>29288258</PNR>
+    // <PolicyNo/>
+    // <PurchaseDate>2013-10-19 13:00:00</PurchaseDate>
+    // <SSRFeeCode>INSC</SSRFeeCode>
+    // <FeeDescription/>
+    // <Currency>AED</Currency>
+    // <TotalPremium>160.00</TotalPremium>
+    // <CountryCode>AE</CountryCode>
+    // <CultureCode>EN</CultureCode>
+    // <TotalAdults>2</TotalAdults>
+    // <TotalChild>1</TotalChild>
+    // <TotalInfants>1</TotalInfants>
+    // </Header>
+    
+    private function getArkoHeader($searchId = '', $totalPrice, $pnr): array
+    {
+        if ($searchId != NULL && $searchId != '') {
+            $searchData = $this->flight_model->get_safe_search_data($searchId);
+            if ($searchData['status'] == 1 && isset($searchData['data'])) {
+                //get current currency
+                $currentCurrency = get_application_currency_preference();
+
+                //IF number of adults,children,infants is blank 0 is assigned
+                $numberOfAdults = ($searchData['data']['adult_config'] == 0 || $searchData['data']['adult_config'] == NULL || $searchData['data']['adult_config'] == '') ? 0 : $searchData['data']['adult_config'];
+                $numberOfChildren = ($searchData['data']['child_config'] == 0 || $searchData['data']['child_config'] == NULL || $searchData['data']['child_config'] == '') ? 0 : $searchData['data']['child_config'];
+                $numberOfInfants = ($searchData['data']['infant_config'] == 0 || $searchData['data']['infant_config'] == NULL || $searchData['data']['infant_config'] == '') ? 0 : $searchData['data']['infant_config'];
+
+                //prepare the request to return
+                $response['request'] = "<web:Header>
+            <web:Channel>" . PROTECT_TEST_CHANNEL_CODE . "</web:Channel>
+            <web:ItineraryID><web:ItineraryID>
+            <web:PNR>$pnr</web:PNR>
+            <web:PolicyNo/>
+            <web:PurchaseDate>2024-05-23 18:00:00</web:PurchaseDate>
+            <web:Currency>AED</web:Currency>
+            <TotalPremium>$totalPrice</TotalPremium>
+            <web:CountryCode>EN</web:CountryCode>
+            <web:CultureCode>EN</web:CultureCode>
+            <web:TotalAdults>$numberOfAdults</web:TotalAdults>
+            <web:TotalChild>$numberOfChildren</web:TotalChild>
+            <web:TotalInfants>$numberOfInfants </web:TotalInfants>
+         </web:Header>";
+
+                $response['status'] = 1;
+            } else {
+                //search data not found
+                $response['status'] = 0;
+                $response['message'] = "No record with the search id was found";
+            }
+        } else {
+            //null search id
+            $response['status'] = 0;
+            $response['message'] = "Invalid search id";
+        }
+        return $response;
+    }
     // $testFile = fopen("newfile.xml", "w") or die("Unable to open file!");
     // fwrite($testFile, $request['request']);
     // fclose($testFile);
@@ -1696,6 +1836,8 @@ foreach($planId as $plan_k=>$plan_v){
                             $gender = ($plan['PlanPricingBreakdown']['PricingBreakdown']['Gender'] === 'B') ? "Both" : (($plan['PlanPricingBreakdown']['PricingBreakdown']['Gender'] === 'M') ? "Male" : "Female");
                             $silverPlansPerPassengerForView['PlanCode'] = $plan['PlanCode'];
                             $silverPlansPerPassengerForView['PlanTitle'] = $plan['PlanTitle'];
+                            $silverPlansPerPassengerForView['planType'] = "silver";
+
                             $silverPlansPerPassengerForView['CurrencyCode'] = $plan['CurrencyCode'];
                             $silverPlansPerPassengerForView['TotalPremiumAmount'] = $plan['TotalPremiumAmount'];
                             $silverPlansPerPassengerForView['PlanContent'] = $plan['PlanContent'];
@@ -1712,6 +1854,8 @@ foreach($planId as $plan_k=>$plan_v){
                             $gender = ($plan['PlanPricingBreakdown']['PricingBreakdown']['Gender'] === 'B') ? "Both" : (($plan['PlanPricingBreakdown']['PricingBreakdown']['Gender'] === 'M') ? "Male" : "Female");
                             $goldPlansPerPassengerForView['PlanCode'] = $plan['PlanCode'];
                             $goldPlansPerPassengerForView['PlanTitle'] = $plan['PlanTitle'];
+                            $goldPlansPerPassengerForView['planType'] = "gold";
+
                             $goldPlansPerPassengerForView['CurrencyCode'] = $plan['CurrencyCode'];
                             $goldPlansPerPassengerForView['TotalPremiumAmount'] = $plan['TotalPremiumAmount'];
                             $goldPlansPerPassengerForView['PlanContent'] = $plan['PlanContent'];
@@ -1727,6 +1871,8 @@ foreach($planId as $plan_k=>$plan_v){
                             $gender = ($plan['PlanPricingBreakdown']['PricingBreakdown']['Gender'] === 'B') ? "Both" : (($plan['PlanPricingBreakdown']['PricingBreakdown']['Gender'] === 'M') ? "Male" : "Female");
                             $platinumPlansPerPassengerForView['PlanCode'] = $plan['PlanCode'];
                             $platinumPlansPerPassengerForView['PlanTitle'] = $plan['PlanTitle'];
+                            $platinumPlansOtherForView['planType'] = "platinum";
+
                             $platinumPlansPerPassengerForView['CurrencyCode'] = $plan['CurrencyCode'];
                             $platinumPlansPerPassengerForView['TotalPremiumAmount'] = $plan['TotalPremiumAmount'];
                             $platinumPlansPerPassengerForView['PlanContent'] = $plan['PlanContent'];

@@ -464,6 +464,10 @@ if (isset($booking_transaction_details_value ['booking_customer_details'])) {
                                                     <td><span>Taxes &amp; Fees</span></td>
                                                     <td><span> <?php echo round(($Tax + $booking_details['admin_markup'] + $booking_details['agent_markup'] + ($booking_details['convinence_amount']))) ?></span></td>
                                                 </tr>
+                                                <tr>
+                                                    <td><span>Insurance</span></td>
+                                                    <td><span><?php echo round($booking_transaction_details_value['source']) ?></span></td>
+                                                </tr>
 <?php endif; ?>
 <?php if ($GST > 0) { ?>
                                                 <tr>
@@ -504,7 +508,7 @@ if (isset($booking_transaction_details_value ['booking_customer_details'])) {
 <?php } ?>
                                             <tr>
                                                 <td style="border-top:1px solid #ccc"><span style="font-size:13px">Grand Total</span></td>
-                                                <td style="border-top:1px solid #ccc"><span style="font-size:13px"> <?= round(@$booking_details['grand_total'] + $seat_price + $meal_price + $baggage_price - ($segment_discount+$booking_details['reward_amount']) ) ?></span></td>
+                                                <td style="border-top:1px solid #ccc"><span style="font-size:13px"> <?= round(@$booking_details['grand_total'] + $seat_price + $meal_price + $baggage_price - ($segment_discount+$booking_details['reward_amount'] + round($booking_transaction_details_value['source'])) ) ?></span></td>
                                             </tr>
                                         </tbody>
                                     </table>
