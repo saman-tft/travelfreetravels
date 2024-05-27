@@ -35,30 +35,110 @@ class Protect implements InsuranceInterface
             $this->channelCode = PROTECT_LIVE_CHANNEL_CODE;
         }
     }
-    private function getAuthHeader(): String
+    public function getFormattedHeader(array $headerData): array
     {
-        $authHeader = '<web:Authentication>
-                    <web:Username>' . $this->userName . '</web:Username>
-                    <web:Password>' . $this->password . '</web:Password>
-                 </web:Authentication>';
-        return $authHeader;
-    }
-    public function getHeader(String $headerName, array $headerData): array
-    {
-        if ($headerName !== '' && $headerName !== NULL && (is_array($headerData) == true) && isset($headerData['status']) && $headerData['status'] === 1) {
+        if (valid_array($headerData) == true && $headerData !== '' && $headerData !== NULL && (isset($headerData['status']) && $headerData['status'] === 1)) {
+            $headerName = $headerData['headerName'];
+            $rawHeaderData = $headerData['rawHeaderData'];
             switch ($headerName) {
                 case 'GetAvailablePlansOTAWithRiders':
-                    $response = $this->get_GetAvailablePlansOTAWithRiders_Request_Header($headerData);
+                    $formattedHeaderData = $this->get_GetAvailablePlansOTAWithRiders_Request_Header($rawHeaderData);
                     break;
                 default:
+                    throw new Exception("Invalid header name");
+            }
+            return $formattedHeaderData;
+        } else {
+            throw new Exception("Bad insurance header request.");
+        }
+    }
+
+    public function getFormattedApiRequest(array $requestData): array
+    {
+
+
+        if ($requestData !== '' && $requestData !== NULL && (valid_array($requestData) == true) && isset($requestData['status']) && $requestData['status'] === 1) {
+            $requestName = $requestData['method_name'];
+            $rawRequestData = $requestData['data'];
+            switch ($requestName) {
+                case 'GetAvailablePlansOTAWithRiders':
+                    $formattedApiRequest = $this->get_GetAvailablePlansOTAWithRiders_Request($rawRequestData);
+                    break;
+                default:
+                    throw new Exception("Invalid request name provided");
+            }
+            return $formattedApiRequest;
+        } else {
+            throw new Exception("Invalid request data provided");
+        }
+    }
+
+    public function getRawApiResponse(array $request): array
+    {
+        if ((is_array($request) == true) && isset($request['status']) && $request['status'] === 1) {
+            $ch = curl_init($this->url);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+            curl_setopt($ch, CURLOPT_HEADER, 1);
+            curl_setopt($ch, CURLOPT_USERPWD, $this->userName . ":" . $this->password);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $request['data']);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            $rawApiResponse = curl_exec($ch);
+            if (curl_errno($ch)) {
+                // request couldn't be sent
+                $response['message'] = 'Couldn\'t send request: ' . curl_error($ch);
+                $response['data'] = $rawApiResponse;
+                $response['status'] = 0;
+            } else {
+                $resultStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                if ($resultStatus == 200) {
+                    //good response
+                    $response['message'] = '';
+                    $response['data'] = $rawApiResponse;
+                    $response['status'] = 1;
+                } else {
+                    //server responded with a http error
+                    $response['message'] = 'Request failed: HTTP status code: ' . $resultStatus;
+                    $response['data'] = $rawApiResponse;
+                    $response['status'] = 0;
+                }
+            }
+        } else {
+            throw new Exception("Invalid request data provided");
+        }
+
+        return $response;
+    }
+
+    public function getFormattedApiResponse(array $rawApiResponse): array
+    {
+        if ($rawApiResponse !== '' && $rawApiResponse !== NULL && (valid_array($rawApiResponse) == true) && isset($rawApiResponse['status']) && $rawApiResponse['status'] === 1) {
+            $apiMethodName = $rawApiResponse['method_name'];
+            $rawApiResponseData = $rawApiResponse['data'];
+            switch ($apiMethodName) {
+                case 'GetAvailablePlansOTAWithRiders':
+                    $response = $this->process_GetAvailablePlansOTAWithRidersResponse($rawApiResponseData);
+                    break;
+                default:
+                    throw new Exception("Invalid api method name provided");
             }
             return $response;
         } else {
-            // bad request and unauth accesss
-
+            throw new Exception("Invalid raw response data");
         }
     }
-    private function get_GetAvailablePlansOTAWithRiders_Request_Header($headerData = ''): array
+
+    private function getAuthHeader(): String
+    {
+        $authHeader = '<Authentication>
+                    <Username>' . $this->userName . '</Username>
+                    <Password>' . $this->password . '</Password>
+                 </Authentication>';
+        return $authHeader;
+    }
+
+    private function get_GetAvailablePlansOTAWithRiders_Request_Header($headerData): array
     {
         if ((is_array($headerData) == true) && isset($headerData['status']) && $headerData['status'] === 1) {
             $searchId = $headerData['data']['search_id'];
@@ -74,17 +154,18 @@ class Protect implements InsuranceInterface
                     $numberOfInfants = ($searchData['data']['infant_config'] == 0 || $searchData['data']['infant_config'] == NULL || $searchData['data']['infant_config'] == '') ? 0 : $searchData['data']['infant_config'];
 
                     //prepare the request to return
-                    $response['data'] = "<web:Header>
-            <web:Channel>" . $this->channelCode . "</web:Channel>
-            <web:Currency>AED</web:Currency>
-            <web:CountryCode>EN</web:CountryCode>
-            <web:CultureCode>EN</web:CultureCode>
-            <web:TotalAdults>$numberOfAdults</web:TotalAdults>
-            <web:TotalChild>$numberOfChildren</web:TotalChild>
-            <web:TotalInfants>$numberOfInfants </web:TotalInfants>
-         </web:Header>";
+                    $response['data'] = "<Header>
+            <Channel>" . $this->channelCode . "</Channel>
+            <Currency>AED</Currency>
+            <CountryCode>EN</CountryCode>
+            <CultureCode>EN</CultureCode>
+            <TotalAdults>$numberOfAdults</TotalAdults>
+            <TotalChild>$numberOfChildren</TotalChild>
+            <TotalInfants>$numberOfInfants </TotalInfants>
+         </Header>";
 
                     $response['status'] = 1;
+                    $response['message'] = '';
                 } else {
                     //search data not found
                     $response['status'] = 0;
@@ -93,67 +174,56 @@ class Protect implements InsuranceInterface
             } else {
                 //null search id
                 $response['status'] = 0;
+                $response['data'] = '';
                 $response['message'] = "Invalid search id";
             }
         } else {
-            //unauth access
+            //invalid data provided or unauth access
+            $response['status'] = 0;
+            $response['data'] = '';
+            $response['message'] = "Unauthorized access";
         }
         return $response;
     }
 
-    public function getApiRequest(String $requestName, array $requestData): array
-    {
 
-
-        if ($requestName !== '' && $requestName !== NULL && (is_array($requestData) == true) && isset($requestData['status']) && $requestData['status'] === 1) {
-            switch ($requestName) {
-                case 'GetAvailablePlansOTAWithRiders':
-                    $response = $this->get_GetAvailablePlansOTAWithRiders_Request($requestData);
-                    break;
-                default:
-            }
-            return $response;
-        } else {
-            // bad request and unauth accesss
-
-        }
-    }
 
     private function get_GetAvailablePlansOTAWithRiders_Request($request = array()): array
     {
         if ((is_array($request) == true) && isset($request['status']) && $request['status'] === 1) {
             $response['status'] = 1;
-            $searchId = $request['data']['search_id'] ?? 0;
             $searchData = $request['data']['search_data'];
             $segmentDetails = $request['data']['segment_details'];
-            $header = $this->getHeader('GetAvailablePlansOTAWithRiders', $request);
+            $header = $request['data']['header'];
             $authHeader = $this->getAuthHeader();
             $currentFlightInformation = $this->formatFlightInformationToXML($searchData, $segmentDetails);
             $response['data'] = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://ZEUSTravelInsuranceGateway/WebServices">
             <soapenv:Header/>
             <soapenv:Body>
-            <web:GetAvailablePlansOTAWithRiders>
-                <web:GenericRequestOTALite>'
+                <GetAvailablePlansOTAWithRiders xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
+                <GenericRequestOTALite>'
                 . $authHeader .
                 $header['data'] .
                 $currentFlightInformation
-                . '</web:GenericRequestOTALite>
-            </web:GetAvailablePlansOTAWithRiders>
+                . '</GenericRequestOTALite>
+            </GetAvailablePlansOTAWithRiders>
             </soapenv:Body>
             </soapenv:Envelope>';
+            $response['message'] = '';
         } else {
             //no search id and unauthorized access
             $response['status'] = 0;
-            $response['message'] = 'Invalid Request';
+            $response['data'] = '';
+            $response['message'] = 'Invalid request data for request method GetAvailablePlansOTAWithRiders ';
         }
         return $response;
     }
 
     private function formatFlightInformationToXML($searchData = array(), $segmentDetails = array())
     {
-       
+
         $tripType = $searchData['data']['trip_type'];
-        $request = '';
+        $request = '<flights>';
         if ($tripType != 'circle') {
             foreach ($segmentDetails as $k => $v) {
                 foreach ($v as $s_k => $s_v) {
@@ -165,121 +235,73 @@ class Protect implements InsuranceInterface
                     $departureAirlineCode = $segmentDetails[$k][$s_k]['AirlineDetails']['AirlineCode'];
                     $departureFlightNumber = $segmentDetails[$k][$s_k]['AirlineDetails']['FlightNumber'];
                     $request .= "
-                <web:Flights>
-                <web:DepartCountryCode>$departureCountryCode</web:DepartCountryCode>
-                <web:DepartStationCode></web:DepartStationCode>
-                <web:ArrivalCountryCode>$arrivalCountryCode</web:ArrivalCountryCode>
-                <web:ArrivalStationCode></web:ArrivalStationCode>
-                <web:DepartAirlineCode>$departureAirlineCode</web:DepartAirlineCode>
-                <web:DepartDateTime>$departureDateTime</web:DepartDateTime>
-                <web:ReturnAirlineCode></web:ReturnAirlineCode>
-                <web:ReturnDateTime></web:ReturnDateTime>
-                <web:DepartFlightNo>$departureFlightNumber</web:DepartFlightNo>
-                <web:ReturnFlightNo></web:ReturnFlightNo>
-             </web:Flights>";
+                <Flight>
+                <DepartCountryCode>$departureCountryCode</DepartCountryCode>
+                <DepartStationCode></DepartStationCode>
+                <ArrivalCountryCode>$arrivalCountryCode</ArrivalCountryCode>
+                <ArrivalStationCode></ArrivalStationCode>
+                <DepartAirlineCode>$departureAirlineCode</DepartAirlineCode>
+                <DepartDateTime>$departureDateTime</DepartDateTime>
+                <ReturnAirlineCode></ReturnAirlineCode>
+                <ReturnDateTime></ReturnDateTime>
+                <DepartFlightNo>$departureFlightNumber</DepartFlightNo>
+                <ReturnFlightNo></ReturnFlightNo>
+             </Flight>";
                 }
             }
-        }else{
+        } else {
             $segmentDetails[1] = array_reverse($segmentDetails[1]);
-                foreach($segmentDetails[0] as $k=>$v){
-                    $departureCityName = $segmentDetails[0][$k]['OriginDetails']['CityName'];
-                    $departureCountryCode = $this->CI->insurance_model->getCountryDetailsFromCityName($departureCityName);
-                    $arrivalCityName = $segmentDetails[0][$k]['DestinationDetails']['CityName'];
-                    
-                    $arrivalCountryCode = $this->CI->insurance_model->getCountryDetailsFromCityName($arrivalCityName);
-                    $departureDateTime = $segmentDetails[0][$k]['OriginDetails']['DateTime'];
-                    $departureAirlineCode = $segmentDetails[0][$k]['AirlineDetails']['AirlineCode'];
-                    $departureFlightNumber = $segmentDetails[0][$k]['AirlineDetails']['FlightNumber'];
-                    $returnAirlineCode = $segmentDetails[1][$k]['AirlineDetails']['AirlineCode'];
-                    $returnFlightNumber = $segmentDetails[1][$k]['AirlineDetails']['FlightNumber'];
-                    $returnDateTime = $segmentDetails[1][$k]['OriginDetails']['DateTime'];
-                    $request .= "
-                    <web:Flights>
-                    <web:DepartCountryCode>$departureCountryCode</web:DepartCountryCode>
-                    <web:DepartStationCode></web:DepartStationCode>
-                    <web:ArrivalCountryCode>$arrivalCountryCode</web:ArrivalCountryCode>
-                    <web:ArrivalStationCode></web:ArrivalStationCode>
-                    <web:DepartAirlineCode>$departureAirlineCode</web:DepartAirlineCode>
-                    <web:DepartDateTime>$departureDateTime</web:DepartDateTime>
-                    <web:ReturnAirlineCode>$returnAirlineCode</web:ReturnAirlineCode>
-                    <web:ReturnDateTime>$returnDateTime</web:ReturnDateTime>
-                    <web:DepartFlightNo>$departureFlightNumber</web:DepartFlightNo>
-                    <web:ReturnFlightNo>$returnFlightNumber</web:ReturnFlightNo>
-                 </web:Flights>";
-                }
+            foreach ($segmentDetails[0] as $k => $v) {
+                $departureCityName = $segmentDetails[0][$k]['OriginDetails']['CityName'];
+                $departureCountryCode = $this->CI->insurance_model->getCountryDetailsFromCityName($departureCityName);
+                $arrivalCityName = $segmentDetails[0][$k]['DestinationDetails']['CityName'];
 
+                $arrivalCountryCode = $this->CI->insurance_model->getCountryDetailsFromCityName($arrivalCityName);
+                $departureDateTime = $segmentDetails[0][$k]['OriginDetails']['DateTime'];
+                $departureAirlineCode = $segmentDetails[0][$k]['AirlineDetails']['AirlineCode'];
+                $departureFlightNumber = $segmentDetails[0][$k]['AirlineDetails']['FlightNumber'];
+                $returnAirlineCode = $segmentDetails[1][$k]['AirlineDetails']['AirlineCode'];
+                $returnFlightNumber = $segmentDetails[1][$k]['AirlineDetails']['FlightNumber'];
+                $returnDateTime = $segmentDetails[1][$k]['OriginDetails']['DateTime'];
+                $request .= "
+                    <Flight>
+                    <DepartCountryCode>$departureCountryCode</DepartCountryCode>
+                    <DepartStationCode></DepartStationCode>
+                    <ArrivalCountryCode>$arrivalCountryCode</ArrivalCountryCode>
+                    <ArrivalStationCode></ArrivalStationCode>
+                    <DepartAirlineCode>$departureAirlineCode</DepartAirlineCode>
+                    <DepartDateTime>$departureDateTime</DepartDateTime>
+                    <ReturnAirlineCode>$returnAirlineCode</ReturnAirlineCode>
+                    <ReturnDateTime>$returnDateTime</ReturnDateTime>
+                    <DepartFlightNo>$departureFlightNumber</DepartFlightNo>
+                    <ReturnFlightNo>$returnFlightNumber</ReturnFlightNo>
+                 </Flight>";
             }
+        }
+        $request .= '</Flights>';
         $request = '
-            <web:Flights>
-            <web:DepartCountryCode>AE</web:DepartCountryCode>
-            <web:DepartStationCode></web:DepartStationCode>
-            <web:ArrivalCountryCode>IN</web:ArrivalCountryCode>
-            <web:ArrivalStationCode></web:ArrivalStationCode>
-            <web:DepartAirlineCode>AI</web:DepartAirlineCode>
-            <web:DepartDateTime>2025-01-01 06:30:00</web:DepartDateTime>
-            <web:ReturnAirlineCode></web:ReturnAirlineCode>
-            <web:ReturnDateTime></web:ReturnDateTime>
-            <web:DepartFlightNo>638</web:DepartFlightNo>
-            <web:ReturnFlightNo></web:ReturnFlightNo>
-        </web:Flights>';
-
+            <Flights>
+            <Flight>
+            <DepartCountryCode>AE</DepartCountryCode>
+            <DepartStationCode></DepartStationCode>
+            <ArrivalCountryCode>IN</ArrivalCountryCode>
+            <ArrivalStationCode></ArrivalStationCode>
+            <DepartAirlineCode>AI</DepartAirlineCode>
+            <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
+            <ReturnAirlineCode></ReturnAirlineCode>
+            <ReturnDateTime></ReturnDateTime>
+            <DepartFlightNo>638</DepartFlightNo>
+            <ReturnFlightNo></ReturnFlightNo>
+            </Flight>
+        </Flights>';
+        
         return $request;
     }
 
 
-    public function getApiResponse(array $request): array
-    {
 
-        if ((is_array($request) == true) && isset($request['status']) && $request['status'] === 1) {
-            $ch = curl_init($this->url);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
-            curl_setopt($ch, CURLOPT_HEADER, 1);
-            curl_setopt($ch, CURLOPT_USERPWD, $this->userName . ":" . $this->password);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $request['data']);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-            $rawApiResponse = curl_exec($ch);
-            if (curl_errno($ch)) {
-                // request couldn't be sent
-                $response['errorMessage'] = 'Couldn\'t send request: ' . curl_error($ch);
-                $response['response'] = $rawApiResponse;
-                $response['status'] = 0;
-            } else {
-                $resultStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-                if ($resultStatus == 200) {
-                    //good response
-                    $response['response'] = $rawApiResponse;
-                    $response['status'] = 1;
-                } else {
-                    //server responded with a http error
-                    $response['errorMessage'] = 'Request failed: HTTP status code: ' . $resultStatus;
-                    $response['response'] = $rawApiResponse;
-                    $response['status'] = 0;
-                }
-            }
-        } else {
-            //unauth access
-        }
 
-        return $response;
-    }
 
-    public function processApiResponse(String $apiMethodName, array $apiResponseData): array
-    {
-        if ($apiMethodName !== '' && $apiMethodName !== NULL && (is_array($apiResponseData) == true) && isset($apiResponseData['status']) && $apiResponseData['status'] === 1) {
-            switch ($apiMethodName) {
-                case 'GetAvailablePlansOTAWithRiders':
-                    $response = $this->process_GetAvailablePlansOTAWithRidersResponse($apiResponseData);
-                    break;
-                default:
-            }
-            return $response;
-        } else {
-            // bad request and unauth accesss
-
-        }
-    }
 
     private function process_GetAvailablePlansOTAWithRidersResponse(array $rawApiResponse)
     {
