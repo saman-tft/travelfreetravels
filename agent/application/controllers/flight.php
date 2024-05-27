@@ -1523,18 +1523,18 @@ $insuranceAmount = 0;
     //params: none
         private function getAuthHeaderArko(): String
     {
+        $authHeader = '<web:Authentication>
+        <web:Username>' . PROTECT_TEST_USERNAME . '</web:Username>
+        <web:Password>' . PROTECT_TEST_PASSWORD . '</web:Password>
+     </web:Authentication>';
+return $authHeader;
+    }
+    private function getAuthHeader(): String
+    {
         $authHeader = '<Authentication>
                     <Username>' . PROTECT_TEST_USERNAME . '</Username>
                     <Password>' . PROTECT_TEST_PASSWORD . '</Password>
                  </Authentication>';
-        return $authHeader;
-    }
-    private function getAuthHeader(): String
-    {
-        $authHeader = '<web:Authentication>
-                    <web:Username>' . PROTECT_TEST_USERNAME . '</web:Username>
-                    <web:Password>' . PROTECT_TEST_PASSWORD . '</web:Password>
-                 </web:Authentication>';
         return $authHeader;
     }
     public function getCountryDetailsFromCityName($cityName = '')
@@ -1559,7 +1559,7 @@ $insuranceAmount = 0;
         $departureAirlineCode = $segmentDetails[0][0]['AirlineDetails']['AirlineCode'];
         $departureFlightNumber = $segmentDetails[0][0]['AirlineDetails']['FlightNumber'];
 
-        // $request = "<web:Flights>
+        // $request = "<Flights>
         //     <web:DepartCountryCode>$departureCountryCode</web:DepartCountryCode>
         //     <web:DepartStationCode></web:DepartStationCode>
         //     <web:ArrivalCountryCode>$arrivalCountryCode</web:ArrivalCountryCode>
@@ -1616,18 +1616,18 @@ $insuranceAmount = 0;
         //     <web:ReturnFlightNo></web:ReturnFlightNo>
         //  </web:Flights>";
         $request = '
-    <web:Flights>   
-    <web:DepartCountryCode>AE</web:DepartCountryCode>
-    <web:DepartStationCode></web:DepartStationCode>
-    <web:ArrivalCountryCode>IN</web:ArrivalCountryCode>
-    <web:ArrivalStationCode></web:ArrivalStationCode>
-    <web:DepartAirlineCode>AI</web:DepartAirlineCode>
-    <web:DepartDateTime>2025-01-01 06:30:00</web:DepartDateTime>
-    <web:ReturnAirlineCode></web:ReturnAirlineCode>
-    <web:ReturnDateTime></web:ReturnDateTime>
-    <web:DepartFlightNo>638</web:DepartFlightNo>
-    <web:ReturnFlightNo></web:ReturnFlightNo>
- </web:Flights>';
+    <Flights>   
+    <DepartCountryCode>AE</DepartCountryCode>
+    <DepartStationCode></DepartStationCode>
+    <ArrivalCountryCode>IN</ArrivalCountryCode>
+    <ArrivalStationCode></ArrivalStationCode>
+    <DepartAirlineCode>AI</DepartAirlineCode>
+    <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
+    <ReturnAirlineCode></ReturnAirlineCode>
+    <ReturnDateTime></ReturnDateTime>
+    <DepartFlightNo>638</DepartFlightNo>
+    <ReturnFlightNo></ReturnFlightNo>
+ </Flights>';
 
         return $request;
     }
@@ -1639,16 +1639,17 @@ $insuranceAmount = 0;
             $authHeader = $this->getAuthHeader();
             $header = $this->getHeader($searchId);
             $currentFlightInformation = $this->formatFlightInformationToXML($searchId, $segmentDetails);
+         
             $response['request'] = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://ZEUSTravelInsuranceGateway/WebServices">
         <soapenv:Header/>
         <soapenv:Body>
-            <web:GetAvailablePlansOTAWithRiders>
-                <web:GenericRequestOTALite>'
+            <GetAvailablePlansOTAWithRiders xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
+                <GenericRequestOTALite>'
                 . $authHeader .
                 $header['request'] .
                 $currentFlightInformation
-                . '</web:GenericRequestOTALite>
-        </web:GetAvailablePlansOTAWithRiders>
+                . '</GenericRequestOTALite>
+        </GetAvailablePlansOTAWithRiders>
      </soapenv:Body>
   </soapenv:Envelope>';
         } else {
@@ -1674,15 +1675,15 @@ $insuranceAmount = 0;
                 $numberOfInfants = ($searchData['data']['infant_config'] == 0 || $searchData['data']['infant_config'] == NULL || $searchData['data']['infant_config'] == '') ? 0 : $searchData['data']['infant_config'];
 
                 //prepare the request to return
-                $response['request'] = "<web:Header>
-            <web:Channel>" . PROTECT_TEST_CHANNEL_CODE . "</web:Channel>
-            <web:Currency>AED</web:Currency>
-            <web:CountryCode>EN</web:CountryCode>
-            <web:CultureCode>EN</web:CultureCode>
-            <web:TotalAdults>$numberOfAdults</web:TotalAdults>
-            <web:TotalChild>$numberOfChildren</web:TotalChild>
-            <web:TotalInfants>$numberOfInfants </web:TotalInfants>
-         </web:Header>";
+                $response['request'] = "<Header>
+            <Channel>" . PROTECT_TEST_CHANNEL_CODE . "</Channel>
+            <Currency>AED</Currency>
+            <CountryCode>EN</CountryCode>
+            <CultureCode>EN</CultureCode>
+            <TotalAdults>$numberOfAdults</TotalAdults>
+            <TotalChild>$numberOfChildren</TotalChild>
+            <TotalInfants>$numberOfInfants </TotalInfants>
+         </Header>";
 
                 $response['status'] = 1;
             } else {
@@ -1769,6 +1770,9 @@ $insuranceAmount = 0;
             $segmentDetails = json_decode(base64_decode($SegmentDetails), true);
             if (count($segmentDetails) > 0 && valid_array($segmentDetails) == true) {
                 $request = $this->get_GetAvailablePlansOTAWithRiders_Request($searchId, $segmentDetails);
+                   $testFile = fopen("newfile.xml", "w") or die("Unable to open file!");
+                            fwrite($testFile, $request['request']);
+                            fclose($testFile);
                 $request_url = "https://uat-tpe.tune2protect.com/ZeusAPI/Zeus.asmx";
                 $username = PROTECT_TEST_USERNAME;
                 $password = PROTECT_TEST_PASSWORD;

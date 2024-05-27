@@ -1,8 +1,7 @@
 <?php
 interface InsuranceInterface{
-    public function getApiResponse(Array $request): Array;
-    public function getApiRequest(String $requestName, Array $requestData): Array;
-    public function getHeader(String $headerName, Array $headerData): Array;
-    public function processApiResponse(String $apiMethodName, Array $apiResponseData):Array;
-    
+    public function getFormattedHeader(Array $headerData): Array;
+    public function getFormattedApiRequest(Array $requestData): Array;
+    public function getRawApiResponse(Array $request):Array;
+    public function getFormattedApiResponse(Array $rawApiResponseData): Array;
 }
