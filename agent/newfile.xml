@@ -1,25 +1,10 @@
+HTTP/2 200 
+cache-control: private, max-age=0
+content-type: text/xml; charset=utf-8
+server: Microsoft-IIS/10.0
+x-aspnet-version: 4.0.30319
+x-powered-by: ASP.NET
+date: Mon, 27 May 2024 08:04:23 GMT
+content-length: 521
 
-                    <web:Flights>
-                    <web:DepartCountryCode>NP</web:DepartCountryCode>
-                    <web:DepartStationCode></web:DepartStationCode>
-                    <web:ArrivalCountryCode>MY</web:ArrivalCountryCode>
-                    <web:ArrivalStationCode></web:ArrivalStationCode>
-                    <web:DepartAirlineCode>MH</web:DepartAirlineCode>
-                    <web:DepartDateTime>2024-05-30 23:30:00</web:DepartDateTime>
-                    <web:ReturnAirlineCode>MH</web:ReturnAirlineCode>
-                    <web:ReturnDateTime>2024-06-04 09:30:00</web:ReturnDateTime>
-                    <web:DepartFlightNo>115</web:DepartFlightNo>
-                    <web:ReturnFlightNo>170</web:ReturnFlightNo>
-                 </web:Flights>
-                    <web:Flights>
-                    <web:DepartCountryCode>MY</web:DepartCountryCode>
-                    <web:DepartStationCode></web:DepartStationCode>
-                    <web:ArrivalCountryCode>AU</web:ArrivalCountryCode>
-                    <web:ArrivalStationCode></web:ArrivalStationCode>
-                    <web:DepartAirlineCode>MH</web:DepartAirlineCode>
-                    <web:DepartDateTime>2024-05-31 09:10:00</web:DepartDateTime>
-                    <web:ReturnAirlineCode>MH</web:ReturnAirlineCode>
-                    <web:ReturnDateTime>2024-06-03 22:10:00</web:ReturnDateTime>
-                    <web:DepartFlightNo>141</web:DepartFlightNo>
-                    <web:ReturnFlightNo>140</web:ReturnFlightNo>
-                 </web:Flights>
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ConfirmPurchaseResponse xmlns="http://ZEUSTravelInsuranceGateway/WebServices"><PurchaseResponse><ProposalState>PROPOSAL</ProposalState><ErrorCode>10123</ErrorCode><ErrorMessage>At least 1 passenger must be present.</ErrorMessage></PurchaseResponse></ConfirmPurchaseResponse></soap:Body></soap:Envelope>

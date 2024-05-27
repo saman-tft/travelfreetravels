@@ -2015,7 +2015,8 @@ for (const planKey in plans) {
                             planId: plan.PlanCode,
                             planType: plan.planType,
                             passengerAge: passengerAge,
-                            passengerGender: passengerGender
+                            passengerGender: passengerGender,
+                            passengerDOB: passengerDOB
                         });
                         appendSelectedPlan(plan.PlanTitle, plan.PlanCode, passengerName);
                         if (passenger < totalPassengers) {

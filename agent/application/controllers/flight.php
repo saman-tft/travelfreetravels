@@ -770,6 +770,9 @@ $insuranceAmount = 0;
                             $selectedPlanDetails[$k]['passengerDetails']['name'] = $selectedPlanDetails[$k]['passenger']; 
                             $selectedPlanDetails[$k]['passengerDetails']['identificationType'] = $post_params['identification_type'][$k];
                             $selectedPlanDetails[$k]['passengerDetails']['identificationNumber'] = $post_params['passenger_passport_number'][$k];
+                            $selectedPlanDetails[$k]['passengerDetails']['age'] = $selectedPlanDetails[$k]['passengerAge'];
+                            $selectedPlanDetails[$k]['passengerDetails']['gender'] = $selectedPlanDetails[$k]['passengerGender'];
+                            $selectedPlanDetails[$k]['passengerDetails']['dob'] = $selectedPlanDetails[$k]['passengerDOB'];
                             $passengerDetails[] = $selectedPlanDetails[$k]['passengerDetails'];
                           
                         }
@@ -1073,7 +1076,7 @@ $insuranceAmount = 0;
                 }
                 // $this->ConfirmPurchase();
                 $updateCondition['app_reference'] = $book_id;
-                $bookingId = $array['data']['ticket']['TicketDetails'][0]['CommitBooking']['BookingDetails']['BookingId'];
+                $bookingId = $booking['data']['ticket']['TicketDetails'][0]['CommitBooking']['BookingDetails']['BookingId'];
                 $updateData['source'] = $insuranceTotalAmount;
                 $this->custom_db->update_record('flight_booking_transaction_details', $updateData, $updateCondition);
                 $this->ConfirmPurchase($insuranceDetails, $insuranceTotalAmount, $bookingId);
@@ -1158,13 +1161,59 @@ $insuranceAmount = 0;
         }
         // redirect(base_url().'index.php/flight/exception?op=Remote IO error @ FLIGHT Secure Booking&notification=validation');
     }
+    function formatPassengerInformationToXML($insuranceInformation){
+        $passengerInformation = $insuranceInformation['passengerDetails'];
+        $planDetails = $insuranceInformation['planDetails'];
+        $request = '<Passengers>';
+        foreach($passengerInformation as $k=>$v){
+            $nameArray = explode(' ', $passengerInformation[$k]['name']);
+            $firstName = $nameArray[0];
+            $lastName = $nameArray[1];
+            $age = $passengerInformation[$k]['age'];
+            $dob = $passengerInformation[$k]['dob'];
+            $gender = $passengerInformation[$k]['gender'];
+            if($passengerInformation[$k]['identificationType'] == 'passport'){
+                $documentType = "Passport";
+            }else{
+                $documentType = "IdentificationCard";
+            }
+            $currencyCode = $planDetails[$passengerInformation[$k]['name']]['CurrencyCode'];
+            $identityNumber = $passengerInformation[$k]['identificationNumber']; 
+            $ssrFeeCode = $planDetails[$passengerInformation[$k]['name']]['SSRFeeCode'];
+            $planCode = $planDetails[$passengerInformation[$k]['name']]['PlanCode'];
+            $paxTotalAmount = round($planDetails[$passengerInformation[$k]['name']]['TotalPremiumAmount']);
+            
+            $request .= "<Passenger>
+            <IsInfant>0</IsInfant>
+            <FirstName>$firstName</FirstName>
+            <LastName>$lastName</LastName>
+            <Gender>$gender</Gender>
+            <DOB>$dob 00:00:00</DOB>
+            <Age>$age</Age>
+            <IdentityType>$documentType</IdentityType>
+            <IdentityNo>$identityNumber</IdentityNo>
+            <IsQualified>true</IsQualified>
+            <Nationality>NP</Nationality>
+            <CountryOfResidence>NP</CountryOfResidence>
+            <SelectedPlanCode>$planCode</SelectedPlanCode>
+            <SelectedSSRFeeCode>$ssrFeeCode</SelectedSSRFeeCode>
+            <CurrencyCode>$currencyCode</CurrencyCode>
+            <PassengerPremiumAmount>$paxTotalAmount</PassengerPremiumAmount>
+            </Passenger>";
+        }
+
+        $request .= '</Passengers>';
+        return $request;
+    }
     function ConfirmPurchase($insuranceDetails, $amount, $pnr)
     {
-        $authHeader = $this->getAuthHeader();
+       
+        $authHeader = $this->getAuthHeaderArko();
         $searchId = $insuranceDetails['searchId'];
         $segmentDetails = $insuranceDetails['SegmentDetails'];
         $header = $this->getArkoHeader($searchId, $amount, $pnr);
-        $currentFlightInformation = $this->formatFlightInformationToXML($searchId, $segmentDetails);
+        $currentFlightInformation = $this->formatFlightInformationToXMLArko($searchId, $segmentDetails);
+        $passengerInformation = $this->formatPassengerInformationToXML($insuranceDetails);
         $request = '<?xml version="1.0" encoding="utf-8"?>
         <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
@@ -1175,104 +1224,27 @@ $insuranceAmount = 0;
         . $authHeader .
         $header['request'] .
         '<ContactDetails>
-        <ContactPerson>Lawrence Yeoh</ContactPerson>
-        <Address1>9, JALAN 32/63D, SRI DAMAI</Address1>
-        <Address2>BUKIT RIMAU, SEKSYEN 32</Address2>
+        <ContactPerson>'.$insuranceDetails['bookingPassengerDetails']['name'].'</ContactPerson>
+        <Address1></Address1>
+        <Address2></Address2>
         <Address3/>
         <HomePhoneNum/>
-        <MobilePhoneNum>60132210101</MobilePhoneNum>
+        <MobilePhoneNum>'.$insuranceDetails['bookingPassengerDetails']['phoneNumber'].'</MobilePhoneNum>
         <OtherPhoneNum/>
-        <PostCode>40460</PostCode>
-        <City>SHAH ALAM</City>
-        <State>SELANGOR</State>
-        <Country>MALAYSIA</Country>
-        <EmailAddress>chichern.yeoh@tuneinsurance.com</EmailAddress>
-        </ContactDetails>
-        <Flights>
-        <Flight>
-        <DepartCountryCode>AE</DepartCountryCode>
-        <DepartStationCode>SHJ</DepartStationCode>
-        <ArrivalCountryCode>RU</ArrivalCountryCode>
-        <ArrivalStationCode>ODS</ArrivalStationCode>
-        <DepartAirlineCode>G9</DepartAirlineCode>
-        <DepartDateTime>2024-11-01 09:05:00</DepartDateTime>
-        <ReturnAirlineCode>G9</ReturnAirlineCode>
-        <ReturnDateTime>2024-11-29 13:05:00</ReturnDateTime>
-        <DepartFlightNo>293</DepartFlightNo>
-        <ReturnFlightNo>294</ReturnFlightNo>
-        </Flight>
-        </Flights>
-        <Passengers>
-        <Passenger>
-        <IsInfant>1</IsInfant><FirstName>Edward</FirstName>
-        <LastName>Yeoh</LastName>
-        <Gender>Male</Gender>
-        <DOB>2024-01-01 00:00:00</DOB>
-        <Age>0</Age>
-        <IdentityType>Passport</IdentityType>
-        <IdentityNo>A12341230</IdentityNo>
-        <IsQualified>false</IsQualified>
-        <Nationality>MY</Nationality>
-        <CountryOfResidence>AE</CountryOfResidence>
-        <SelectedPlanCode>AEINT2WAYADVANCED</SelectedPlanCode>
-        <SelectedSSRFeeCode>INSC</SelectedSSRFeeCode>
-        <CurrencyCode>AED</CurrencyCode>
-        <PassengerPremiumAmount>0.00</PassengerPremiumAmount>
-        </Passenger>
-        <Passenger>
-        <IsInfant>0</IsInfant>
-        <FirstName>Eleanor</FirstName>
-        <LastName>Yeoh</LastName>
-        <Gender>Female</Gender>
-        <DOB>2010-01-01 00:00:00</DOB>
-        <Age>3</Age>
-        <IdentityType>Passport</IdentityType>
-        <IdentityNo>A12341231</IdentityNo>
-        <IsQualified>false</IsQualified>
-        <Nationality>MY</Nationality>
-        <CountryOfResidence>AE</CountryOfResidence>
-        <SelectedPlanCode>AEINT2WAYADVANCED</SelectedPlanCode>
-        <SelectedSSRFeeCode>INSC</SelectedSSRFeeCode>
-        <CurrencyCode>AED</CurrencyCode>
-        <PassengerPremiumAmount>40.00</PassengerPremiumAmount>
-        </Passenger>
-        <Passenger>
-        <IsInfant>0</IsInfant>
-        <FirstName>Lawrence</FirstName>
-        <LastName>Yeoh</LastName>
-        <Gender>Male</Gender>
-        <DOB>1979-10-16 00:00:00</DOB>
-        <Age>34</Age>
-        <IdentityType>Passport</IdentityType>
-        <IdentityNo>A12341232</IdentityNo>
-        <IsQualified>false</IsQualified>
-        <Nationality>MY</Nationality>
-        <CountryOfResidence>AE</CountryOfResidence>
-        <SelectedPlanCode>AEINT2WAYADVANCED</SelectedPlanCode>
-        <SelectedSSRFeeCode>INSC</SelectedSSRFeeCode>
-        <CurrencyCode>AED</CurrencyCode>
-        <PassengerPremiumAmount>60.00</PassengerPremiumAmount></Passenger>
-        <Passenger>
-        <IsInfant>0</IsInfant>
-        <FirstName>Sue</FirstName>
-        <LastName>Soo</LastName>
-        <Gender>Female</Gender>
-        <DOB>1979-06-23 00:00:00</DOB>
-        <Age>34</Age>
-        <IdentityType>Passport</IdentityType>
-        <IdentityNo>A12341233</IdentityNo>
-        <IsQualified>false</IsQualified>
-        <Nationality>MY</Nationality>
-        <CountryOfResidence>AE</CountryOfResidence>
-        <SelectedPlanCode>AEINT2WAYADVANCED</SelectedPlanCode><SelectedSSRFeeCode>INSC</SelectedSSRFeeCode>
-        <CurrencyCode>AED</CurrencyCode>
-        <PassengerPremiumAmount>60.00</PassengerPremiumAmount>
-        </Passenger>
-        </Passengers>
+        <PostCode></PostCode>
+        <City></City>
+        <State></State>
+        <Country></Country>
+        <EmailAddress>'.$insuranceDetails['bookingPassengerDetails']['email'].'</EmailAddress>
+        </ContactDetails>'.
+        $currentFlightInformation
+        .$passengerInformation.'
         </GenericRequest>
         </ConfirmPurchase>
         </soap:Body>
         </soap:Envelope>';
+  
+        
         $request_url = "https://uat-tpe.tune2protect.com/ZeusAPI/Zeus.asmx";
         $username = PROTECT_TEST_USERNAME;
         $password = PROTECT_TEST_PASSWORD;
@@ -1292,7 +1264,10 @@ $insuranceAmount = 0;
             // check the HTTP status code of the request
             $resultStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             if ($resultStatus == 200) {
-                debug($res);die;
+                $testFile = fopen("newfile.xml", "w") or die("Unable to open file!");
+                fwrite($testFile, $res);
+                fclose($testFile);
+               
             } else {
 
 
@@ -1546,6 +1521,14 @@ $insuranceAmount = 0;
     }
     //returns the basic auth header
     //params: none
+        private function getAuthHeaderArko(): String
+    {
+        $authHeader = '<Authentication>
+                    <Username>' . PROTECT_TEST_USERNAME . '</Username>
+                    <Password>' . PROTECT_TEST_PASSWORD . '</Password>
+                 </Authentication>';
+        return $authHeader;
+    }
     private function getAuthHeader(): String
     {
         $authHeader = '<web:Authentication>
@@ -1562,6 +1545,50 @@ $insuranceAmount = 0;
         return $countryDetails;
     }
 
+    private function formatFlightInformationToXMLArko($searchId, $segmentDetails = array())
+    {
+        $searchData = $this->flight_model->get_safe_search_data($searchId);
+        $departureCityName = $segmentDetails[0][0]['OriginDetails']['CityName'];
+        $departureCountryDetails = $this->getCountryDetailsFromCityName($departureCityName);
+        $departureCountryCode = $departureCountryDetails['iso_country_code'];
+        $arrivalCityName = $segmentDetails[0][0]['DestinationDetails']['CityName'];
+        $arrivalCountryDetails = $this->getCountryDetailsFromCityName($arrivalCityName);
+        $arrivalCountryCode = $arrivalCountryDetails['iso_country_code'];
+        $departureDateTime = $segmentDetails[0][0]['OriginDetails']['DateTime'];
+        $arrivalDateTime =  $segmentDetails[0][0]['DestinationDetails']['DateTime'];
+        $departureAirlineCode = $segmentDetails[0][0]['AirlineDetails']['AirlineCode'];
+        $departureFlightNumber = $segmentDetails[0][0]['AirlineDetails']['FlightNumber'];
+
+        // $request = "<web:Flights>
+        //     <web:DepartCountryCode>$departureCountryCode</web:DepartCountryCode>
+        //     <web:DepartStationCode></web:DepartStationCode>
+        //     <web:ArrivalCountryCode>$arrivalCountryCode</web:ArrivalCountryCode>
+        //     <web:ArrivalStationCode></web:ArrivalStationCode>
+        //     <web:DepartAirlineCode>$departureAirlineCode</web:DepartAirlineCode>
+        //     <web:DepartDateTime>$departureDateTime</web:DepartDateTime>
+        //     <web:ReturnAirlineCode></web:ReturnAirlineCode>
+        //     <web:ReturnDateTime></web:ReturnDateTime>
+        //     <web:DepartFlightNo>$departureFlightNumber</web:DepartFlightNo>
+        //     <web:ReturnFlightNo></web:ReturnFlightNo>
+        //  </web:Flights>";
+        $request = '
+    <Flights>   
+    <Flight>   
+    <DepartCountryCode>AE</DepartCountryCode>
+    <DepartStationCode></DepartStationCode>
+    <ArrivalCountryCode>IN</ArrivalCountryCode>
+    <ArrivalStationCode></ArrivalStationCode>
+    <DepartAirlineCode>AI</DepartAirlineCode>
+    <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
+    <ReturnAirlineCode></ReturnAirlineCode>
+    <ReturnDateTime></ReturnDateTime>
+    <DepartFlightNo>638</DepartFlightNo>
+    <ReturnFlightNo></ReturnFlightNo>
+    </Flight>
+ </Flights>';
+
+        return $request;
+    }
     private function formatFlightInformationToXML($searchId, $segmentDetails = array())
     {
         $searchData = $this->flight_model->get_safe_search_data($searchId);
@@ -1589,7 +1616,7 @@ $insuranceAmount = 0;
         //     <web:ReturnFlightNo></web:ReturnFlightNo>
         //  </web:Flights>";
         $request = '
-    <web:Flights>
+    <web:Flights>   
     <web:DepartCountryCode>AE</web:DepartCountryCode>
     <web:DepartStationCode></web:DepartStationCode>
     <web:ArrivalCountryCode>IN</web:ArrivalCountryCode>
@@ -1701,20 +1728,21 @@ $insuranceAmount = 0;
                 $numberOfInfants = ($searchData['data']['infant_config'] == 0 || $searchData['data']['infant_config'] == NULL || $searchData['data']['infant_config'] == '') ? 0 : $searchData['data']['infant_config'];
 
                 //prepare the request to return
-                $response['request'] = "<web:Header>
-            <web:Channel>" . PROTECT_TEST_CHANNEL_CODE . "</web:Channel>
-            <web:ItineraryID><web:ItineraryID>
-            <web:PNR>$pnr</web:PNR>
-            <web:PolicyNo/>
-            <web:PurchaseDate>2024-05-23 18:00:00</web:PurchaseDate>
-            <web:Currency>AED</web:Currency>
+                $response['request'] = "<Header>
+            <Channel>" . PROTECT_TEST_CHANNEL_CODE . "</Channel>
+            <ItineraryID></ItineraryID>
+            <PNR>$pnr</PNR>
+            <PolicyNo/>
+            <PurchaseDate>2024-05-23 18:00:00</PurchaseDate>
+            <SSRFeeCode>INSC</SSRFeeCode>
+            <Currency>AED</Currency>
             <TotalPremium>$totalPrice</TotalPremium>
-            <web:CountryCode>EN</web:CountryCode>
-            <web:CultureCode>EN</web:CultureCode>
-            <web:TotalAdults>$numberOfAdults</web:TotalAdults>
-            <web:TotalChild>$numberOfChildren</web:TotalChild>
-            <web:TotalInfants>$numberOfInfants </web:TotalInfants>
-         </web:Header>";
+            <CountryCode>EN</CountryCode>
+            <CultureCode>EN</CultureCode>
+            <TotalAdults>$numberOfAdults</TotalAdults>
+            <TotalChild>$numberOfChildren</TotalChild>
+            <TotalInfants>$numberOfInfants </TotalInfants>
+         </Header>";
 
                 $response['status'] = 1;
             } else {
