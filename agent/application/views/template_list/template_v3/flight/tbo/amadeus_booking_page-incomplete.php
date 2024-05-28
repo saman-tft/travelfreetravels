@@ -1,4 +1,4 @@
-<style>
+<!-- <style>
     #modal-container {
         display: none;
         position: fixed;
@@ -32,9 +32,7 @@
 
     .insurance-modal {
         position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        display: block;
         font-family: "Roboto", sans-serif;
         min-width: 40%;
         min-height: 90%;
@@ -57,6 +55,12 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+    }
+    .plans__button-container{
+        display:none;
+        justify-content:space-between;
+        align-items:flex-start;
+        padding:2em 5em;
     }
 
     @media (max-width: 280px) {
@@ -102,6 +106,10 @@
                 <path fill="#ffffff" d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
             </svg>
         </div>
+        <div class="plans__button-container">
+            <button onclick="showFamilyPlans()">Family Plans</button>
+            <button onclick="showPerPassengerPlans()">Individual Plans</button>
+        </div>
         <div class="loading__insurance">
             <img src="<?php echo SYSTEM_IMAGE_DIR . "loading.gif" ?>" alt="Loading..." />
             <p>Getting available insurance plan for your trip...</p>
@@ -109,8 +117,118 @@
         <div class="insurance__list">
 
         </div>
+
     </div>
-</div>
+</div> -->
+<style>
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    #loading {
+        display: block;
+        margin: 0 auto;
+    }
+</style>
+<!-- <style>
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .plan-container {
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin-bottom: 10px;
+    }
+
+    .plan-container.silver {
+        background-color: silver;
+    }
+
+    .plan-container.gold {
+        background-color: gold;
+    }
+
+    .plan-container.platinum {
+        background-color: purple;
+    }
+
+    .hidden {
+        display: none;
+    }
+</style> -->
+<!-- <div id="modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="modal-body">
+          
+        </div>
+    </div>
+</div> -->
+
 <?php
 $total_seg_cnt = 0;
 foreach ($pre_booking_summery['SegmentDetails'] as $segk => $segv) {
@@ -181,8 +299,9 @@ echo generate_low_balance_popup($FareDetails['_CustomerBuying'] + $FareDetails['
     .farehd {
         margin: 0 15px 15px 15px !important;
     }
-        /* CSS to center the modal */
-        .modal-dialog {
+
+    /* CSS to center the modal */
+    .modal-dialog {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -195,8 +314,8 @@ echo generate_low_balance_popup($FareDetails['_CustomerBuying'] + $FareDetails['
 </style>
 <div class="fldealsec">
     <div class="container">
-             <!-- Bootstrap modal for loading -->
-             <div class="modal" id="loadingModal" tabindex="-1">
+        <!-- Bootstrap modal for loading -->
+        <div class="modal" id="loadingModal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body text-center">
@@ -423,6 +542,8 @@ echo generate_low_balance_popup($FareDetails['_CustomerBuying'] + $FareDetails['
                                 return ($pax_count == 1 ? true : false);
                             }
                             ?>
+                              <input type="hidden" id="selectedPlanInput" name="selectedPlan">
+                            <input type="hidden" id="selectedPlanIdInput" name="selectedPlanId">
                             <form action="<?= base_url() . 'index.php/flight/pre_booking/' . $search_data['search_id'] ?>" method="POST" autocomplete="off" id="pre-booking-form">
                                 <div class="hide">
                                     <input type="hidden" required="required" name="search_id" value="<?= $search_data['search_id']; ?>" />
@@ -435,6 +556,10 @@ echo generate_low_balance_popup($FareDetails['_CustomerBuying'] + $FareDetails['
                                     <input type="text" name="redeem_points_post" class="redeem_points_post" value="0">
                                     <input type="hidden" name="reward_usable" value="<?= round($reward_usable) ?>">
                                     <input type="hidden" name="reward_earned" value="<?= round($reward_earned) ?>">
+                                    <input type="hidden" id="selectedPlanInput" name="selectedPlan">
+                                    <input type="hidden" id="selectedPlanIdInput" name="selectedPlanId">
+                                    <input type="hidden" id="selectedPlansJson" name="selectedPlansJson">
+
                                     <input type="hidden" name="total_price_with_rewards" value="<?= round($total_price_with_rewards) ?>">
                                     <input type="hidden" name="reducing_amount" class="reduceamount" value="<?= round($reducing_amount) ?>" <!--<input type="hidden" required="required" name="provab_auth_key" value="?=$ProvabAuthKey ?>" readonly>
                                     -->
@@ -480,7 +605,7 @@ echo generate_low_balance_popup($FareDetails['_CustomerBuying'] + $FareDetails['
                                                         <div class="inptalbox">
                                                             <div class="col-xs-3 spllty">
                                                                 <div class="selectedwrap">
-                                                                    <select class="mySelectBoxClass flyinputsnor name_title" name="name_title[]" required="required">
+                                                                    <select id="passenger-title-<?= $pax_index ?>" class="mySelectBoxClass flyinputsnor name_title" name="name_title[]" required="required">
                                                                         <?php echo (is_adult($pax_index, $total_adult_count) ? $adult_title_options : $child_title_options) ?>
                                                                     </select>
                                                                 </div>
@@ -914,236 +1039,259 @@ echo generate_low_balance_popup($FareDetails['_CustomerBuying'] + $FareDetails['
                                     </div>
                                     <!--changes start agent booking page and sidebar: commented code block-->
                                     <!-- Insurance section -->
+                                    <?php
+                                    $requestData = array();
+                                    $requestData['segmentDetails'] = $SegmentDetails;
+                                    $requestData['search_id'] = $search_data['search_id'];
+                                    $segmentDetails = base64_encode(json_encode($SegmentDetails, true));
+                                    $searchId = $search_data['search_id'];
+                                    ?>
                                     <div id="insuranceSection">
                                         <p>Would you like to purchase insurance for this flight?</p>
-                                        <a href='<?php echo base_url() ."flight/GetAvailablePlansOTAWithRiders/".$search_data['search_id']?>'>Insure Trip</a>
-                                        <button type="button" onclick="showModal()" class="btn btn-primary" id="yesBtn">Yes</button>
+                                        <a href='<?php echo base_url() . "insurance/GetAvailablePlansOTAWithRiders/" . $search_data['search_id'] . '/' . $segmentDetails ?>'>Insure Trip</a>
+                                        <a href='<?php echo base_url() . "insurance/index" ?>'>Confirm Insurance</a>
+                                        <button type="button" class="btn btn-primary" id="yesBtn">Yes</button>
                                         <button type="button" class="btn btn-danger" id="noBtn">No</button>
                                     </div>
+                                   
+                                            <div id="errorDiv"></div>
+                                    <!-- Spinner -->
+                                    <img id="loading" src="<?php echo SYSTEM_IMAGE_DIR . 'loading.gif'; ?>" alt="Loading..." style="display:none;">
+
+                                    <!-- Modal -->
+                                    <div id="insuranceModal" class="modal" style="display:none;">
+                                        <div class="modal-content">
+                                            <span class="close">&times;</span>
+                                            <div id="modalBody"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Placeholder for displaying selected plans -->
+                                    <div id="selectedPlans"></div>
 
                                     <!-- Insurance plans section -->
-                                    <div id="insurancePlans" style="display: none;">
-                                        <!-- Placeholder for plans -->
-                                    </div>
-                                    <!--<div class="panel-group" role="tablist" aria-multiselectable="true">-->
-                                    <!--<div class="panel panel-default for_gst flight_special_req">-->
-                                    <!--    <div class="panel-heading" role="tab" id="gst_opt">-->
-                                    <!--        <h4 class="panel-title">-->
-                                    <!--            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#gst_optnl" aria-expanded="true" aria-controls="gst_optnl">-->
+                                    <!-- <div id="insurancePlans" style="display: none;"> -->
+                                    <!-- Placeholder for plans -->
+                                </div>
+                                <!--<div class="panel-group" role="tablist" aria-multiselectable="true">-->
+                                <!--<div class="panel panel-default for_gst flight_special_req">-->
+                                <!--    <div class="panel-heading" role="tab" id="gst_opt">-->
+                                <!--        <h4 class="panel-title">-->
+                                <!--            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#gst_optnl" aria-expanded="true" aria-controls="gst_optnl">-->
 
-                                    <!--                <div class="labltowr arimobold">GST Information(Optional) <i class="more-less glyphicon glyphicon-plus"></i></div>-->
-                                    <!--            </a>-->
-                                    <!--        </h4>-->
-                                    <!--    </div>-->
-                                    <!--    <div id="gst_optnl" class="panel-collapse collapse" role="tabpanel" aria-labelledby="gst_opt">-->
-                                    <!-- <div class="contcthdngs">GST Information(Optional)</div> -->
-                                    <!--    <div class="col-xs-12 gst_det" id="gst_form_div">-->
-                                    <!--       <div class="row">-->
-                                    <!--          <div class="col-xs-3"> GST Number </div>-->
-                                    <!--          <div class="col-xs-7"> -->
-                                    <!--             <input type="text" class="newslterinput clainput nputbrd" id="gst_number" name="gst_number" value="">    -->
-                                    <!--             <div class="clearfix"></div>-->
-                                    <!--             <div class="gst_number_error alert-danger hide" style="width:250px;">Please Enter Valid GST Number</div>-->
-                                    <!--          </div>-->
-                                    <!--       </div>-->
-                                    <!--       <div class="row">-->
-                                    <!--          <div class="col-xs-3"> GST company Name </div>-->
-                                    <!--          <div class="col-xs-7"> -->
-                                    <!--             <input type="text" class="newslterinput nputbrd" id="gst_company_name" name="gst_company_name" vaule="">  -->
-                                    <!--              <div class="clearfix"></div>-->
-                                    <!--             <div class="gst_name_error alert-danger hide" style="width:250px;">Please Enter Valid Company Name</div>  -->
-                                    <!--          </div>-->
-                                    <!--       </div>-->
-                                    <!--       <div class="row">-->
-                                    <!--          <div class="col-xs-3"> Email </div>-->
-                                    <!--          <div class="col-xs-7"> -->
-                                    <!--             <input type="email" class="newslterinput nputbrd" id="gst_email" name="gst_email" value="">  -->
-                                    <!--    <div class="clearfix"></div>-->
-                                    <!--    <div class="gst_email_error alert-danger hide" style="width:250px;">Please Enter Valid Email</div>    -->
-                                    <!--          </div>-->
-                                    <!--       </div>                                          -->
-                                    <!--       <div class="row">-->
-                                    <!--          <div class="col-xs-3"> Phone Number </div>-->
-                                    <!--          <div class="col-xs-7"> -->
-                                    <!--             <input type="text" class="newslterinput nputbrd _numeric_only" id="gst_phone" name="gst_phone"  value="">    -->
-                                    <!--     <div class="clearfix"></div>-->
-                                    <!--    <div class="gst_phone_error alert-danger hide" style="width:250px;">Please Enter Valid Phone Number</div>        -->
-                                    <!--          </div>-->
-                                    <!--       </div>-->
-                                    <!--       <div class="row">-->
-                                    <!--          <div class="col-xs-3"> Address </div>-->
-                                    <!--          <div class="col-xs-7"> -->
-                                    <!--             <input type="text" class="newslterinput nputbrd" name="gst_address" id="gst_address" value="">    -->
-                                    <!--              <div class="clearfix"></div>-->
-                                    <!--    <div class="gst_address_error alert-danger hide" style="width:250px;">Please Enter Valid Address</div>-->
-                                    <!--          </div>-->
-                                    <!--       </div>-->
-                                    <!--       <div class="row">-->
-                                    <!--          <div class="col-xs-3"> State </div>-->
-                                    <!--          <div class="col-xs-7">-->
-                                    <!--          <php $state_list = generate_options($state_list);?>-->
-                                    <!--          <select name="gst_state" class="clainput" id="gst_state">-->
-                                    <!--                <option value="INVALIDIP">Please Select</option>-->
-                                    <!--                <=$state_list?>-->
-                                    <!--            </select>-->
-                                    <!--            <div class="clearfix"></div>-->
-                                    <!--    <div class="gst_state_error alert-danger hide" style="width:250px;">Please Enter Valid State</div>-->
-                                    <!--          </div>-->
-                                    <!--       </div>-->
-                                    <!--    </div>-->
-                                    <!--    </div>-->
-                                    <!--</div>-->
-                                    <!--</div>-->
-                                    <!--changes end agent booking page and sidebar: commented code block-->
-                                    <div class="clikdiv">
-                                        <div class="squaredThree">
-                                            <input id="terms_cond1" type="checkbox" name="tc" checked="checked" required="required">
-                                            <label for="terms_cond1"></label>
-                                        </div>
-                                        <span class="clikagre" id="clikagre">
-                                            <!--changes start agent booking page and sidebar: added <a> tag with url for terms and conditions-->
-                                            <a href="<?php echo DOMAIN_LINK_URL; ?>/terms">Terms and Conditions</a>
-                                            <!--changes end agent booking page and sidebar: added <a> tag with url for terms and conditions-->
-                                        </span>
+                                <!--                <div class="labltowr arimobold">GST Information(Optional) <i class="more-less glyphicon glyphicon-plus"></i></div>-->
+                                <!--            </a>-->
+                                <!--        </h4>-->
+                                <!--    </div>-->
+                                <!--    <div id="gst_optnl" class="panel-collapse collapse" role="tabpanel" aria-labelledby="gst_opt">-->
+                                <!-- <div class="contcthdngs">GST Information(Optional)</div> -->
+                                <!--    <div class="col-xs-12 gst_det" id="gst_form_div">-->
+                                <!--       <div class="row">-->
+                                <!--          <div class="col-xs-3"> GST Number </div>-->
+                                <!--          <div class="col-xs-7"> -->
+                                <!--             <input type="text" class="newslterinput clainput nputbrd" id="gst_number" name="gst_number" value="">    -->
+                                <!--             <div class="clearfix"></div>-->
+                                <!--             <div class="gst_number_error alert-danger hide" style="width:250px;">Please Enter Valid GST Number</div>-->
+                                <!--          </div>-->
+                                <!--       </div>-->
+                                <!--       <div class="row">-->
+                                <!--          <div class="col-xs-3"> GST company Name </div>-->
+                                <!--          <div class="col-xs-7"> -->
+                                <!--             <input type="text" class="newslterinput nputbrd" id="gst_company_name" name="gst_company_name" vaule="">  -->
+                                <!--              <div class="clearfix"></div>-->
+                                <!--             <div class="gst_name_error alert-danger hide" style="width:250px;">Please Enter Valid Company Name</div>  -->
+                                <!--          </div>-->
+                                <!--       </div>-->
+                                <!--       <div class="row">-->
+                                <!--          <div class="col-xs-3"> Email </div>-->
+                                <!--          <div class="col-xs-7"> -->
+                                <!--             <input type="email" class="newslterinput nputbrd" id="gst_email" name="gst_email" value="">  -->
+                                <!--    <div class="clearfix"></div>-->
+                                <!--    <div class="gst_email_error alert-danger hide" style="width:250px;">Please Enter Valid Email</div>    -->
+                                <!--          </div>-->
+                                <!--       </div>                                          -->
+                                <!--       <div class="row">-->
+                                <!--          <div class="col-xs-3"> Phone Number </div>-->
+                                <!--          <div class="col-xs-7"> -->
+                                <!--             <input type="text" class="newslterinput nputbrd _numeric_only" id="gst_phone" name="gst_phone"  value="">    -->
+                                <!--     <div class="clearfix"></div>-->
+                                <!--    <div class="gst_phone_error alert-danger hide" style="width:250px;">Please Enter Valid Phone Number</div>        -->
+                                <!--          </div>-->
+                                <!--       </div>-->
+                                <!--       <div class="row">-->
+                                <!--          <div class="col-xs-3"> Address </div>-->
+                                <!--          <div class="col-xs-7"> -->
+                                <!--             <input type="text" class="newslterinput nputbrd" name="gst_address" id="gst_address" value="">    -->
+                                <!--              <div class="clearfix"></div>-->
+                                <!--    <div class="gst_address_error alert-danger hide" style="width:250px;">Please Enter Valid Address</div>-->
+                                <!--          </div>-->
+                                <!--       </div>-->
+                                <!--       <div class="row">-->
+                                <!--          <div class="col-xs-3"> State </div>-->
+                                <!--          <div class="col-xs-7">-->
+                                <!--          <php $state_list = generate_options($state_list);?>-->
+                                <!--          <select name="gst_state" class="clainput" id="gst_state">-->
+                                <!--                <option value="INVALIDIP">Please Select</option>-->
+                                <!--                <=$state_list?>-->
+                                <!--            </select>-->
+                                <!--            <div class="clearfix"></div>-->
+                                <!--    <div class="gst_state_error alert-danger hide" style="width:250px;">Please Enter Valid State</div>-->
+                                <!--          </div>-->
+                                <!--       </div>-->
+                                <!--    </div>-->
+                                <!--    </div>-->
+                                <!--</div>-->
+                                <!--</div>-->
+                                <!--changes end agent booking page and sidebar: commented code block-->
+                                <div class="clikdiv">
+                                    <div class="squaredThree">
+                                        <input id="terms_cond1" type="checkbox" name="tc" checked="checked" required="required">
+                                        <label for="terms_cond1"></label>
                                     </div>
-                                    <div class="clearfix"></div>
-                                    <div class="sepertr"></div>
-                                    <div class="clearfix"></div>
-                                    <!-- Dyanamic Baggage&Meals Section Starts -->
-                                    <?php
-                                    if (valid_array($extra_services) == true) {
-                                        if (isset($extra_services['ExtraServiceDetails']['Baggage'])) {
-                                            $baggage_meal_seat_details['baggage_meal_details']['Baggage'] = $extra_services['ExtraServiceDetails']['Baggage'];
-                                        }
-                                        if (isset($extra_services['ExtraServiceDetails']['Meals'])) {
-                                            $baggage_meal_seat_details['baggage_meal_details']['Meals'] = $extra_services['ExtraServiceDetails']['Meals'];
-                                        }
-                                        if (isset($extra_services['ExtraServiceDetails']['Seat'])) {
-                                            $baggage_meal_seat_details['baggage_meal_details']['Seat'] = $extra_services['ExtraServiceDetails']['Seat'];
-                                        }
-                                        $baggage_meal_seat_details['total_adult_count'] = $total_adult_count;
-                                        $baggage_meal_seat_details['total_child_count'] = $total_child_count;
-                                        $baggage_meal_seat_details['total_infant_count'] = $total_infant_count;
-                                        $baggage_meal_seat_details['total_pax_count'] = $total_pax_count;
-                                        echo $GLOBALS['CI']->template->isolated_view('flight/dynamic_baggage_meal_seat_details', $baggage_meal_seat_details);
+                                    <span class="clikagre" id="clikagre">
+                                        <!--changes start agent booking page and sidebar: added <a> tag with url for terms and conditions-->
+                                        <a href="<?php echo DOMAIN_LINK_URL; ?>/terms">Terms and Conditions</a>
+                                        <!--changes end agent booking page and sidebar: added <a> tag with url for terms and conditions-->
+                                    </span>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="sepertr"></div>
+                                <div class="clearfix"></div>
+                                <!-- Dyanamic Baggage&Meals Section Starts -->
+                                <?php
+                                if (valid_array($extra_services) == true) {
+                                    if (isset($extra_services['ExtraServiceDetails']['Baggage'])) {
+                                        $baggage_meal_seat_details['baggage_meal_details']['Baggage'] = $extra_services['ExtraServiceDetails']['Baggage'];
                                     }
-                                    ?>
-                                    <!-- Dyanamic Baggage&Meals Section Ends -->
-                                    <!-- Seats&Meals Preference Section Starts -->
-                                    <?php
-                                    if (valid_array($extra_services) == true) {
-                                        if (isset($extra_services['ExtraServiceDetails']['MealPreference'])) {
-                                            $seat_meal_preference_details['seat_meal_preference_details']['MealPreference'] = $extra_services['ExtraServiceDetails']['MealPreference'];
-                                        }
-                                        if (isset($extra_services['ExtraServiceDetails']['SeatPreference'])) {
-                                            $seat_meal_preference_details['seat_meal_preference_details']['SeatPreference'] = $extra_services['ExtraServiceDetails']['SeatPreference'];
-                                        }
-                                        $seat_meal_preference_details['total_adult_count'] = $total_adult_count;
-                                        $seat_meal_preference_details['total_child_count'] = $total_child_count;
-                                        $seat_meal_preference_details['total_infant_count'] = $total_infant_count;
-                                        $seat_meal_preference_details['total_pax_count'] = $total_pax_count;
-                                        echo $GLOBALS['CI']->template->isolated_view('flight/seat_meal_preference_details', $seat_meal_preference_details);
+                                    if (isset($extra_services['ExtraServiceDetails']['Meals'])) {
+                                        $baggage_meal_seat_details['baggage_meal_details']['Meals'] = $extra_services['ExtraServiceDetails']['Meals'];
                                     }
-                                    ?>
-                                    <!-- Seats&Meals Preference Section Ends -->
-                                    <div class="clearfix"></div>
-                                    <div class="loginspld">
-                                        <div class="collogg">
-                                            <?php
-                                            //If single payment option then hide selection and select by default
-                                            if (count($active_payment_options) == 1) {
-                                                $payment_option_visibility = 'hide';
-                                                $default_payment_option = 'checked="checked"';
-                                            } else {
-                                                $payment_option_visibility = 'show';
-                                                $default_payment_option = '';
-                                            }
-                                            ?>
-                                            <div class="row <?= $payment_option_visibility ?>">
-                                                <?php if (in_array(PAY_NOW, $active_payment_options)) { ?>
-                                                    <!--changes start agent booking page and sidebar: added: class form-inline and styles for class form-group, style for input field, moved input field above label-->
-                                                    <!--<div class="col-md-3">-->
-                                                    <!--    <div class="form-group">-->
-                                                    <!--        <label for="payment-mode-<= PAY_NOW ?>">-->
-                                                    <!--            <input <= $default_payment_option ?> name="payment_method" type="radio" required="required" value="<= PAY_NOW ?>" id="payment-mode-<= PAY_NOW ?>" class="form-control b-r-0" placeholder="Payment Mode">-->
-                                                    <!--            Pay Now-->
-                                                    <!--        </label>-->
-                                                    <!--    </div>-->
-                                                    <!--</div>-->
-                                                    <div class="col-md-3">
-                                                        <div class="form-group form-inline" style="font-size: large; color: black;">
-                                                            <input <?= $default_payment_option ?> name="payment_method" type="radio" required="required" value="<?= PAY_NOW ?>" id="payment-mode-<?= PAY_NOW ?>" class="form-control b-r-0" style="width:15px; height:15px!important; scale:1.2; border-color:black;" placeholder="Payment Mode">
-                                                            <label for="payment-mode-<?= PAY_NOW ?>">
-                                                                Pay Now
-                                                            </label>
-                                                        </div>
+                                    if (isset($extra_services['ExtraServiceDetails']['Seat'])) {
+                                        $baggage_meal_seat_details['baggage_meal_details']['Seat'] = $extra_services['ExtraServiceDetails']['Seat'];
+                                    }
+                                    $baggage_meal_seat_details['total_adult_count'] = $total_adult_count;
+                                    $baggage_meal_seat_details['total_child_count'] = $total_child_count;
+                                    $baggage_meal_seat_details['total_infant_count'] = $total_infant_count;
+                                    $baggage_meal_seat_details['total_pax_count'] = $total_pax_count;
+                                    echo $GLOBALS['CI']->template->isolated_view('flight/dynamic_baggage_meal_seat_details', $baggage_meal_seat_details);
+                                }
+                                ?>
+                                <!-- Dyanamic Baggage&Meals Section Ends -->
+                                <!-- Seats&Meals Preference Section Starts -->
+                                <?php
+                                if (valid_array($extra_services) == true) {
+                                    if (isset($extra_services['ExtraServiceDetails']['MealPreference'])) {
+                                        $seat_meal_preference_details['seat_meal_preference_details']['MealPreference'] = $extra_services['ExtraServiceDetails']['MealPreference'];
+                                    }
+                                    if (isset($extra_services['ExtraServiceDetails']['SeatPreference'])) {
+                                        $seat_meal_preference_details['seat_meal_preference_details']['SeatPreference'] = $extra_services['ExtraServiceDetails']['SeatPreference'];
+                                    }
+                                    $seat_meal_preference_details['total_adult_count'] = $total_adult_count;
+                                    $seat_meal_preference_details['total_child_count'] = $total_child_count;
+                                    $seat_meal_preference_details['total_infant_count'] = $total_infant_count;
+                                    $seat_meal_preference_details['total_pax_count'] = $total_pax_count;
+                                    echo $GLOBALS['CI']->template->isolated_view('flight/seat_meal_preference_details', $seat_meal_preference_details);
+                                }
+                                ?>
+                                <!-- Seats&Meals Preference Section Ends -->
+                                <div class="clearfix"></div>
+                                <div class="loginspld">
+                                    <div class="collogg">
+                                        <?php
+                                        //If single payment option then hide selection and select by default
+                                        if (count($active_payment_options) == 1) {
+                                            $payment_option_visibility = 'hide';
+                                            $default_payment_option = 'checked="checked"';
+                                        } else {
+                                            $payment_option_visibility = 'show';
+                                            $default_payment_option = '';
+                                        }
+                                        ?>
+                                        <div class="row <?= $payment_option_visibility ?>">
+                                            <?php if (in_array(PAY_NOW, $active_payment_options)) { ?>
+                                                <!--changes start agent booking page and sidebar: added: class form-inline and styles for class form-group, style for input field, moved input field above label-->
+                                                <!--<div class="col-md-3">-->
+                                                <!--    <div class="form-group">-->
+                                                <!--        <label for="payment-mode-<= PAY_NOW ?>">-->
+                                                <!--            <input <= $default_payment_option ?> name="payment_method" type="radio" required="required" value="<= PAY_NOW ?>" id="payment-mode-<= PAY_NOW ?>" class="form-control b-r-0" placeholder="Payment Mode">-->
+                                                <!--            Pay Now-->
+                                                <!--        </label>-->
+                                                <!--    </div>-->
+                                                <!--</div>-->
+                                                <div class="col-md-3">
+                                                    <div class="form-group form-inline" style="font-size: large; color: black;">
+                                                        <input <?= $default_payment_option ?> name="payment_method" type="radio" required="required" value="<?= PAY_NOW ?>" id="payment-mode-<?= PAY_NOW ?>" class="form-control b-r-0" style="width:15px; height:15px!important; scale:1.2; border-color:black;" placeholder="Payment Mode">
+                                                        <label for="payment-mode-<?= PAY_NOW ?>">
+                                                            Pay Now
+                                                        </label>
                                                     </div>
-                                                    <!--changes end agent booking page and sidebar: added: class form-inline and styles for class form-group, style for input field, moved input field above label-->
-                                                <?php } ?>
-                                                <!--changes start agent booking page and sidebar: commented code block-->
-                                                <!--<php if (in_array(PAY_AT_BANK, $active_payment_options)) { ?>-->
-                                                <!--                                                    <div class="col-md-3">-->
-                                                <!--                                                        <div class="form-group">-->
-                                                <!--                                                            <label for="payment-mode-<= PAY_AT_BANK ?>">-->
-                                                <!--                                                                <input <= $default_payment_option ?> name="payment_method" type="radio" required="required" value="<= PAY_AT_BANK ?>" id="payment-mode-<= PAY_AT_BANK ?>" class="form-control b-r-0" placeholder="Payment Mode">-->
-                                                <!--                                                                Pay At Bank-->
-                                                <!--                                                            </label>-->
-                                                <!--                                                        </div>-->
-                                                <!--                                                    </div>-->
-                                                <!--                                            <php } ?>-->
-                                                <!--changes end agent booking page and sidebar: commented code block-->
-                                            </div>
-                                            <input type="hidden" name="ticket_method" value="" id="ticket_method" />
-                                            <?php if ($hold_ticket == true) { ?>
-                                                <div class="continye col-sm-3 col-xs-6">
-                                                    <button type="button" id="" name="flight" value="direct_ticket" class="continue_booking_button ticket_type_cls bookcont">Direct Ticket</button>
                                                 </div>
-                                                <div class="continye col-sm-3 col-xs-6">
-                                                    <button type="submit" id="" name="flight" value="hold_ticket" class="continue_booking_button ticket_type_cls book_hold_ticket">Hold Ticket</button>
-                                                </div>
-                                            <?php } else {
-                                            ?>
-                                                <div class="continye col-sm-3 col-xs-6">
-                                                    <button type="submit" id="" name="flight" class="bookcont continue_booking_button">Continue</button>
-                                                </div>
-                                               
+                                                <!--changes end agent booking page and sidebar: added: class form-inline and styles for class form-group, style for input field, moved input field above label-->
                                             <?php } ?>
-
-                                            <div class="clearfix"></div>
-                                            <div class="sepertr"></div>
-                                            <div class="temsandcndtn">
-                                                Most countries require travellers to have a passport valid for more than 3 to 6 months from the date of entry into or exit from the country. Please check the exact rules for your destination country before completing the booking.
+                                            <!--changes start agent booking page and sidebar: commented code block-->
+                                            <!--<php if (in_array(PAY_AT_BANK, $active_payment_options)) { ?>-->
+                                            <!--                                                    <div class="col-md-3">-->
+                                            <!--                                                        <div class="form-group">-->
+                                            <!--                                                            <label for="payment-mode-<= PAY_AT_BANK ?>">-->
+                                            <!--                                                                <input <= $default_payment_option ?> name="payment_method" type="radio" required="required" value="<= PAY_AT_BANK ?>" id="payment-mode-<= PAY_AT_BANK ?>" class="form-control b-r-0" placeholder="Payment Mode">-->
+                                            <!--                                                                Pay At Bank-->
+                                            <!--                                                            </label>-->
+                                            <!--                                                        </div>-->
+                                            <!--                                                    </div>-->
+                                            <!--                                            <php } ?>-->
+                                            <!--changes end agent booking page and sidebar: commented code block-->
+                                        </div>
+                                        <input type="hidden" name="ticket_method" value="" id="ticket_method" />
+                                        <?php if ($hold_ticket == true) { ?>
+                                            <div class="continye col-sm-3 col-xs-6">
+                                                <button type="button" id="" name="flight" value="direct_ticket" class="continue_booking_button ticket_type_cls bookcont">Direct Ticket</button>
                                             </div>
+                                            <div class="continye col-sm-3 col-xs-6">
+                                                <button type="submit" id="" name="flight" value="hold_ticket" class="continue_booking_button ticket_type_cls book_hold_ticket">Hold Ticket</button>
+                                            </div>
+                                        <?php } else {
+                                        ?>
+                                            <div class="continye col-sm-3 col-xs-6">
+                                                <button type="submit" id="" name="flight" class="bookcont continue_booking_button">Continue</button>
+                                            </div>
+
+                                        <?php } ?>
+
+                                        <div class="clearfix"></div>
+                                        <div class="sepertr"></div>
+                                        <div class="temsandcndtn">
+                                            Most countries require travellers to have a passport valid for more than 3 to 6 months from the date of entry into or exit from the country. Please check the exact rules for your destination country before completing the booking.
                                         </div>
                                     </div>
                                 </div>
-                            </form>
                         </div>
+                        </form>
                     </div>
-                    <div class="col-xs-4 nopadding rit_summery">
-                        <!--changes start agent booking page and sidebar: replaced variable $reward_usable with false in this condition-->
-                        <?php if (false) { ?>
-                            <!--changes end agent booking page and sidebar: replaced variable $reward_usable with false in this condition-->
-                            <div>
-                                <div class="col-xs-6 ">Redeem rewards
+                </div>
+                <div class="col-xs-4 nopadding rit_summery">
+                    <!--changes start agent booking page and sidebar: replaced variable $reward_usable with false in this condition-->
+                    <?php if (false) { ?>
+                        <!--changes end agent booking page and sidebar: replaced variable $reward_usable with false in this condition-->
+                        <div>
+                            <div class="col-xs-6 ">Redeem rewards
 
-                                    <label class="switch"> <input type="checkbox" id="redeem_points" checked data-toggle="toggle" data-size="mini" name="redeem_points"> <span class="slider_rew
+                                <label class="switch"> <input type="checkbox" id="redeem_points" checked data-toggle="toggle" data-size="mini" name="redeem_points"> <span class="slider_rew
 round"></span> </label>
-                                </div>
-                                <div class="col-xs-6 "><span id="booking_amount"><?= round($reward_usable) . " Points" ?></span></div> <?php } ?>
-                            <!--changes start agent booking page and sidebar: replaced variable $reward_earned with false in this condition-->
-                            <?php if (false) { ?>
-                                <!--changes end agent booking page and sidebar: replaced variable $reward_earned with false in this condition-->
-                                <div class="col-xs-6 ">Earning reward</div>
-                                <div class="col-xs-6 "><span class="label label-primary"><?= $reward_earned . " Points" ?></span></div>
-                            <?php } ?>
                             </div>
-                            <?php echo get_fare_summary($FareDetails, $PassengerFareBreakdown, $discount); ?>
-                    </div>
+                            <div class="col-xs-6 "><span id="booking_amount"><?= round($reward_usable) . " Points" ?></span></div> <?php } ?>
+                        <!--changes start agent booking page and sidebar: replaced variable $reward_earned with false in this condition-->
+                        <?php if (false) { ?>
+                            <!--changes end agent booking page and sidebar: replaced variable $reward_earned with false in this condition-->
+                            <div class="col-xs-6 ">Earning reward</div>
+                            <div class="col-xs-6 "><span class="label label-primary"><?= $reward_earned . " Points" ?></span></div>
+                        <?php } ?>
+                        </div>
+                        <?php echo get_fare_summary($FareDetails, $PassengerFareBreakdown, $discount); ?>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 <span class="hide">
     <input type="hidden" id="pri_passport_min_exp" value="<?= $passport_minimum_expiry_date ?>">
@@ -1572,7 +1720,10 @@ Js_Loader::$css[] = array('href' => $GLOBALS['CI']->template->template_css_dir('
     var start_time = "<?php echo $session_expiry_details['session_start_time']; ?>";
     var session_time_out_function_call = 1;
 </script>
-<script>
+<!-- <script>
+       //need these variables for global use
+       var availablePerPassengerPlansList;
+       var availableFamilyPlansList;
     function showModal() {
         let popupContainer = document.getElementById("modal-container");
         const couponContainer = document.querySelector(".insurance-modal");
@@ -1580,13 +1731,18 @@ Js_Loader::$css[] = array('href' => $GLOBALS['CI']->template->template_css_dir('
         const loadingContainer = document.querySelector(".loading__insurance");
         const plansContainer = document.querySelector('.insurance__list');
         const unorderedList = document.createElement("ul");
+        const buttonContainer = document.querySelector(".plans__button-container");
+        const insuranceIdInput = document.getElementById("insurance_id");
+
         plansContainer.appendChild(unorderedList);
         popupContainer.style.display = "flex";
         couponContainer.classList.add("active");
+        buttonContainer.style.display = "none";
+     
 
         const baseUrl = "<?php echo base_url(); ?>";
-        const fetchUrl = baseUrl + "index.php/flight/getAvailablePlans";
-        console.log(fetchUrl);
+        const fetchUrl = baseUrl + `index.php/flight/GetAvailablePlansOTAWithRiders/<?php echo $searchId ?>/<?php echo $segmentDetails ?>`;
+        
 
         // Send request to fetch available insurance plans
         fetch(fetchUrl)
@@ -1594,38 +1750,21 @@ Js_Loader::$css[] = array('href' => $GLOBALS['CI']->template->template_css_dir('
             .then(plans => {
                 // Hide loading animation
                 loadingContainer.style.display = "none";
+                buttonContainer.style.display ="flex";
+                availablePerPassengerPlansList = plans.perPassengerPlans;
+                availableFamilyPlansList = plans.familyPlans;
+                insuranceIdInput.value = plans.id;
 
-                // Display available plans
-                plans.forEach(plan => {
-                    const planItem = document.createElement("li");
-                    planItem.textContent = plan.name;
-                    unorderedList.appendChild(planItem);
-                });
-
-                // Append plans to modal
-                couponContainer.appendChild(plansContainer);
+                showFamilyPlans();
             })
             .catch(error => {
                 console.error("Error fetching available plans:", error);
-                // Handle error if necessary
+                // Handle error k garney
             });
 
-        // $.ajax({
-		// 	type: 'GET',
-		// 	url: app_base_url + 'index.php/insurance/getAvailablePlans',
-		// 	async: true,
-		// 	cache: true,
-		// 	dataType: 'json',
-		// 	success: function(res) {
-        //         console.log(res);
-				
-                       
-		// 	}
-		// });
         closeBtn.addEventListener("click", () => {
             popupContainer.classList.remove("active");
             popupContainer.style.display = "none";
-            sessionStorage.setItem("popupDisplayed", true);
         });
         // Close the popup when clicking outside of it
         window.addEventListener("click", function(event) {
@@ -1634,6 +1773,530 @@ Js_Loader::$css[] = array('href' => $GLOBALS['CI']->template->template_css_dir('
             }
 
 
+        });
+    }
+function showFamilyPlans(){
+const planContainer = document.querySelector(".insurance__list");
+planContainer.innerHTML='';
+const plans = availableFamilyPlansList;
+for (const planKey in plans) {
+  if (plans.hasOwnProperty(planKey)) {
+    const plan = plans[planKey];
+    const planDiv = document.createElement("div");
+    planDiv.classList.add("plan");
+
+    // Create HTML content for the plan
+    const planHTML = `
+    
+      <h2>${plan.PlanTitle}</h2>
+      <p><strong>Plan Code:</strong> ${plan.PlanCode}</p>
+      <p><strong>Total Premium Amount:</strong> ${plan.CurrencyCode} ${plan.TotalPremiumAmount}</p>
+    `;
+
+    // Set the HTML content for the plan div
+    planDiv.innerHTML = planHTML;
+
+    // Append the plan div to the container
+    planContainer.appendChild(planDiv);
+  }
+}
+
+    }
+    function showPerPassengerPlans(){
+        console.log(availablePerPassengerPlansList);
+        const planContainer = document.querySelector(".insurance__list");
+        planContainer.innerHTML='';
+        // const plans = availableFamilyPlansList;
+         // Iterate through each plan
+//   for (const planType in plans) {
+//     if (plans.hasOwnProperty(planType)) {
+//       const plan = plans[planType];
+      
+//       // Create HTML elements for plan details
+//       const planDiv = document.createElement('div');
+//       planDiv.classList.add('plan');
+      
+//       const planTitle = document.createElement('h3');
+//       planTitle.textContent = plan.PlanTitle;
+      
+    //   const planButton = document.createElement('button');
+    //   planButton.textContent = 'Select Plan';
+    //   planButton.addEventListener('click', function() {
+    //     // Append selected plan code to input value
+    //     const selectedPlansInput = document.querySelector('#selected_plans');
+    //     selectedPlansInput.value = plan.PlanCode;
+    //     console.log(plan);
+    //   });
+      
+//       // Append elements to container
+//       planDiv.appendChild(planTitle);
+//       planDiv.appendChild(planButton);
+//       planContainer.appendChild(planDiv);
+//     }
+//   }
+        const plans = availablePerPassengerPlansList;
+for (const planKey in plans) {
+  if (plans.hasOwnProperty(planKey)) {
+    const plan = plans[planKey];
+    console.log(plan);
+    const planDiv = document.createElement("div");
+    planDiv.classList.add("plan");
+
+    // Create HTML content for the plan
+    const planHTML = `
+      <p>${plan.PlanTitle}</p>
+      <p><strong>Total Premium Amount:</strong> ${plan.CurrencyCode} ${plan.TotalPremiumAmount}</p>
+      ${plan.PlanContent}
+    `;
+    const planButton = document.createElement('button');
+      planButton.textContent = 'Select Plan';
+      planButton.addEventListener('click', function() {
+        // Append selected plan code to input value
+        const selectedPlansInput = document.querySelector('#selected_plans');
+        selectedPlansInput.value = plan.PlanCode;
+        console.log(plan);
+      });
+    // Set the HTML content for the plan div
+    planDiv.innerHTML = planHTML;
+    planDiv.appendChild(planButton);
+
+    // Append the plan div to the container
+    planContainer.appendChild(planDiv);
+  }
+}
+    }
+</script> -->
+<!-- const baseUrl = "<?php echo base_url(); ?>";
+        const fetchUrl = baseUrl + `index.php/flight/GetAvailablePlansOTAWithRiders/<?php echo $searchId ?>/<?php echo $segmentDetails ?>`;
+        modalBody.innerHTML = ' <img id ="loading" src="<?php echo SYSTEM_IMAGE_DIR . "loading.gif" ?>" alt="Loading..." />'; -->
+<script>
+    document.getElementById('yesBtn').addEventListener('click', checkInputsBeforeShowingPlansModal);
+    document.getElementById('noBtn').addEventListener('click', hideInsuranceSection);
+    const modal = document.getElementById('insuranceModal');
+    const closeModal = document.getElementsByClassName('close')[0];
+    let selectedPlans = [];
+    let modalHistory = [];
+    const childrenCount = <?php echo $total_child_count ?>;
+    const infantCount = <?php echo $total_infant_count ?>;
+    const adultCount = <?php echo $total_adult_count ?>;
+    const totalPassengers = childrenCount + adultCount + childrenCount;
+    let passengerNames = [];
+    let passengerTypes = [];
+    closeModal.onclick = function() {
+        closeModalAndReset();
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            closeModalAndReset();
+        }
+    }
+
+    function displayErrorMessage(message) {
+        console.log(`Reached with ${message}`);
+        const errorDiv = document.getElementById("errorDiv");
+        if (errorDiv) {
+            errorDiv.innerText = message;
+        } else {
+            const errorMessage = document.createElement("div");
+            errorMessage.id = "errorDiv";
+            errorMessage.style.color = "red";
+            errorMessage.innerText = message;
+            document.getElementById("yesNoBtnDiv").appendChild(errorMessage);
+        }
+    }
+
+    function arePassengerNamesEntered() {
+        console.log(`Adult: ${adultCount}`);
+        console.log(`Child: ${childrenCount}`);
+
+        console.log(`Infant: ${infantCount}`);
+
+        if (adultCount > 0) {
+            for (let i = 1; i <= adultCount; i++) {
+                const firstName = document.getElementById(`passenger-first-name-${i}`).value.trim();
+                const lastName = document.getElementById(`passenger-last-name-${i}`).value.trim();
+                if (!firstName || !lastName) {
+                    return false;
+                }
+                
+
+            }
+        }
+        if (childrenCount > 0) {
+            for (let i = 1; i <= childrenCount; i++) {
+                const firstName = document.getElementById(`passenger-first-name-${i}`).value.trim();
+                const lastName = document.getElementById(`passenger-last-name-${i}`).value.trim();
+                if (!firstName || !lastName) {
+                    return false;
+                }
+                
+            }
+        }
+        if (infantCount > 0) {
+            for (let i = 1; i <= infantCount; i++) {
+                const firstName = document.getElementById(`passenger-first-name-${i}`).value.trim();
+                const lastName = document.getElementById(`passenger-last-name-${i}`).value.trim();
+                if (!firstName || !lastName) {
+                    return false;
+                }
+            }
+        }
+        return true;
+
+    }
+
+    function arePassengerDOBEntered() {
+        let passengerIndex = 1;
+        if (adultCount > 0) {
+            for (let i = 1; i <= adultCount; i++) {
+                const dateOfBirth = document.getElementById(`adult-date-picker-${passengerIndex}`).value.trim();
+                passengerTypes.push('adult');
+                passengerIndex++;
+                if (!dateOfBirth) {
+                    return false;
+                }
+            }
+        }
+        if (childrenCount > 0) {
+            for (let i = 1; i <= childrenCount; i++) {
+                const dateOfBirth = document.getElementById(`child-date-picker-${passengerIndex}`).value.trim();
+                passengerTypes.push('child');
+                passengerIndex++;
+                if (!dateOfBirth) {
+                    return false;
+                }
+            }
+        }
+        if (infantCount > 0) {
+            for (let i = 1; i <= infantCount; i++) {
+                const dateOfBirth = document.getElementById(`infant-date-picker-${passengerIndex}`).value.trim();
+                passengerTypes.push('infant');
+                passengerIndex++;
+                if (!dateOfBirth) {
+                    return false;
+                }
+            }
+        }
+        console.log(passengerTypes);
+        return true;
+    }
+
+    function checkInputsBeforeShowingPlansModal() {
+        if (!arePassengerNamesEntered()) {
+            displayErrorMessage("Please enter the names first.");
+            passengerNames = [];
+            passengerTypes = [];
+            return;
+        }
+        if (!arePassengerDOBEntered()) {
+            displayErrorMessage("Please fill the date of birth first.");
+            passengerNames = [];
+            passengerTypes = [];
+            return;
+        }
+        showPlansModal();
+    }
+
+    function showLoading() {
+        modalBody.innerHTML = '<img id="loading" src="<?php echo SYSTEM_IMAGE_DIR . "loading.gif"; ?>" alt="Loading...">';
+    }
+
+    function hideLoading() {
+        const loadingImg = document.getElementById("loading");
+        if (loadingImg) {
+            loadingImg.style.display = "none";
+        }
+    }
+
+
+    function showPlansModal() {
+        modal.style.display = "block";
+        showLoading();
+        fetchPlans().then(plans => {
+            if (plans) {
+                console.log(plans);
+                hideLoading();
+                displayPlanOptions(plans);
+            } else {
+                document.getElementById('errorDiv').innerText = 'No plans available.';
+            }
+        }).catch(error => {
+            console.error('Error fetching data:', error);
+            hideLoading();
+            modalBody.innerHTML = '<p>Error loading data. Please try again later.</p>';
+        });
+    }
+
+    function hideInsuranceSection() {
+        document.getElementById('insuranceSection').style.display = 'none';
+    }
+
+    function fetchPlans() {
+        const baseUrl = "<?php echo base_url(); ?>";
+        const searchId = "<?php echo $searchId; ?>";
+        const segmentDetails = "<?php echo $segmentDetails; ?>";
+        const endpoint = `${baseUrl}index.php/insurance/GetAvailablePlansOTAWithRiders/${searchId}/${segmentDetails}`;
+        return fetch(endpoint)
+            .then(response => response.json());
+    }
+
+    function displayPlanOptions(plans) {
+        const modalBody = document.getElementById('modalBody');
+        modalHistory.push(modalBody.innerHTML);
+        modalBody.innerHTML = `
+        <h3>Select the type of plan you would like to purchase:</h3>
+        <button id="familyPlanBtn" class="btn">Family Plan</button>
+        <button id="individualPlanBtn" class="btn">Individual Plan</button>
+    `;
+
+        document.getElementById('familyPlanBtn').addEventListener('click', () => showFamilyPlans(plans.familyPlans));
+        document.getElementById('individualPlanBtn').addEventListener('click', () => showIndividualPlans(plans.perPassengerPlans));
+    }
+
+    function showFamilyPlans(familyPlans) {
+        const modalBody = document.getElementById('modalBody');
+        modalHistory.push(modalBody.innerHTML);
+        modalBody.innerHTML = '<h3>Family Plans:</h3>';
+        if (!familyPlans || arePlansEmpty(familyPlans)) {
+            modalBody.innerHTML += '<p>No family plans available for this package.</p>';
+        } else {
+            renderPlans(familyPlans, modalBody, true);
+        }
+        addGoBackButton(modalBody);
+    }
+
+    function showIndividualPlans(perPassengerPlans, passengerIndex = 0) {
+        if (passengerIndex >= totalPassengers) {
+            closeModalAndDisplaySelected();
+            return;
+        }
+        const passengerName = getPassengerName(passengerIndex);
+        const modalBody = document.getElementById('modalBody');
+        modalHistory.push(modalBody.innerHTML);
+        modalBody.innerHTML = `<h3>Select the plan for ${passengerName}</h3>`;
+        if (!perPassengerPlans || arePlansEmpty(perPassengerPlans)) {
+            modalBody.innerHTML += '<p>Sorry, no individual plans are currently available for you.</p>';
+        } else {
+            renderPlans(perPassengerPlans, passengerIndex , modalBody, false);
+        }
+
+        const nextBtn = document.createElement('button');
+        nextBtn.classList.add('btn');
+        nextBtn.innerText = 'Next';
+        nextBtn.addEventListener('click', () => {
+            modalHistory.push(modalBody.innerHTML);
+            renderIndividualPlans(perPassengerPlans, modalBody, passengerIndex + 1);
+        });
+        modalBody.appendChild(nextBtn);
+
+        addGoBackButton(modalBody);
+    }
+
+    function arePlansEmpty(plans) {
+        return (!plans.silverPlans || plans.silverPlans.length === 0) &&
+            (!plans.goldPlans || plans.goldPlans.length === 0) &&
+            (!plans.platinumPlans || plans.platinumPlans.length === 0);
+    }
+
+    function getPassengerName(index) {
+        index = index+1;
+        const firstName = document.getElementById(`passenger-first-name-${index}`).value;
+        const lastName = document.getElementById(`passenger-last-name-${index}`).value;
+        return `${firstName} ${lastName}`;
+    }
+
+    function getPassengerDOB(index) {
+        const dob = document.getElementById(`${passengerTypes[index]}-date-picker-${index+1}`).value;
+        return dob;
+    }
+
+    function getPassengerAge(currentPassengerDOB) {
+        currentPassengerDOB = new Date(currentPassengerDOB);
+        const now = new Date();
+        const diff = now - currentPassengerDOB;
+        const age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+
+        return age;
+
+    }
+    function getPassengerGender(index) {
+        index = index+1;
+        const title = document.getElementById(`passenger-title-${index}`).value;
+        if(title == 1 || title == 3){
+            gender = "Male"
+        }else{
+            gender = "Female"
+        }
+        return gender; 
+
+    }
+
+
+    function renderPlans(plans, passenger, container, isFamilyPlan) {
+        const planTypes = ['silverPlans', 'goldPlans', 'platinumPlans'];
+
+        planTypes.forEach(planType => {
+            if (plans[planType] && plans[planType].length) {
+                plans[planType].forEach(plan => renderPlan(plan,passenger, container, isFamilyPlan, planType));
+            }
+        });
+    }
+
+    function renderPlan(plan,passenger, container, isFamilyPlan, planType) {
+        const passengerName = getPassengerName(passenger);
+        const passengerDOB = getPassengerDOB(passenger);
+        const passengerAge = getPassengerAge(passengerDOB);
+        const passengerGender = getPassengerGender(passenger);
+        const planContainer = document.createElement('div');
+        planContainer.classList.add('plan-container', planType.slice(0, -5)); // Remove 'Plans' and use the plan type
+        planContainer.innerHTML = `
+        <h4>${plan.PlanTitle || 'No Title Available'}</h4>
+        <p>Price: ${plan.TotalPremiumAmount ? `${plan.TotalPremiumAmount} ${plan.CurrencyCode}` : 'N/A'}</p>
+        <button class="selectBtn">Select</button>
+        <button class="viewDetailsBtn">View Details</button>
+        <div class="planContent hidden">${plan.PlanContent || 'No Details Available'}</div>
+    `;
+        container.appendChild(planContainer);
+
+        planContainer.querySelector('.viewDetailsBtn').addEventListener('click', () => toggleDetails(planContainer));
+        planContainer.querySelector('.selectBtn').addEventListener('click', () => {
+            if (isFamilyPlan) {
+                selectedPlans = [plan];
+                closeModalAndDisplaySelected();
+            } else {
+                console.log(plan);
+                selectedPlans = selectedPlans.filter(p => !(p.type === 'Individual' && p.passenger === passengerName));
+                selectedPlans.push({
+                    type: 'Individual',
+                    passenger: passengerName,
+                    plan: plan.PlanTitle,
+                    planId: plan.PlanCode,
+                    planType: plan.planType,
+                    passengerAge: passengerAge,
+                    passengerGender: passengerGender,
+                    passengerDOB: passengerDOB
+                });
+
+            }
+            appendSelectedPlan(plan.PlanTitle, plan.PlanCode, passengerName);
+        });
+
+    }
+    function appendSelectedPlan(planTitle, planId, passenger) {
+        const selectedPlanInput = document.getElementById("selectedPlanInput");
+        const selectedPlanIdInput = document.getElementById("selectedPlanIdInput");
+
+        selectedPlanInput.value += `${passenger}: ${planTitle}; `;
+        selectedPlanIdInput.value += `${passenger}: ${planId}; `;
+    }
+
+    function finishSelection() {
+        const selectedPlansInput = document.getElementById("selectedPlansJson");
+        selectedPlansInput.value = JSON.stringify(selectedPlans);
+
+        document.getElementById("insuranceSection").style.display = "none";
+        document.getElementById("insurancePlans").style.display = "none";
+        isInsuranceSelected.value = 1;
+
+        const selectedPlansDiv = document.createElement('div');
+        selectedPlansDiv.innerHTML = `
+        <h2>Selected Plans</h2>
+        <ul>
+            ${selectedPlans.map(plan => `<li>${plan.type === 'Individual' ? plan.passenger : 'Family'}: ${plan.plan}</li>`).join('')}
+        </ul>
+        <button id="cancelBtn">Cancel</button>
+    `;
+        document.getElementById("insuranceSection").parentNode.appendChild(selectedPlansDiv);
+
+        document.getElementById("cancelBtn").addEventListener("click", () => {
+            selectedPlansDiv.remove();
+            isInsuranceSelected.value = 0;
+            selectedPlans = [];
+            const selectedPlansInput = document.getElementById("selectedPlansJson");
+            selectedPlansInput.value = '';
+
+            document.getElementById("insuranceSection").style.display = "block";
+            resetModal();
+        });
+
+        // Close the modal
+        resetModal();
+        modal.style.display = "none";
+    }
+    function resetModal() {
+        modalBody.innerHTML = "";
+        selectedPlans = [];
+        currentPassenger = 1;
+        familyPlanSelected = false;
+        selectedPlanInput.value = "";
+        selectedPlanIdInput.value = "";
+    }
+
+    function renderIndividualPlans(plans, container, passengerIndex) {
+        if (passengerIndex >= passengerNames.length) {
+            closeModalAndDisplaySelected();
+            return;
+        }
+
+        container.innerHTML = `<h3>Select the plan for ${passengerNames[passengerIndex]}</h3>`;
+        renderPlans(plans, container, false);
+
+        const nextBtn = document.createElement('button');
+        nextBtn.classList.add('btn');
+        nextBtn.innerText = 'Next';
+        container.appendChild(nextBtn);
+
+        nextBtn.addEventListener('click', () => {
+            modalHistory.push(container.innerHTML);
+            renderIndividualPlans(plans, container, passengerIndex + 1);
+        });
+
+        addGoBackButton(container);
+    }
+
+    function toggleDetails(planContainer) {
+        const planContent = planContainer.querySelector('.planContent');
+        const viewDetailsBtn = planContainer.querySelector('.viewDetailsBtn');
+        if (planContent.classList.contains('hidden')) {
+            planContent.classList.remove('hidden');
+            viewDetailsBtn.innerText = 'Show Less Details';
+        } else {
+            planContent.classList.add('hidden');
+            viewDetailsBtn.innerText = 'View Details';
+        }
+    }
+
+    function addGoBackButton(container) {
+        const goBackBtn = document.createElement('button');
+        goBackBtn.classList.add('btn');
+        goBackBtn.innerText = 'Go Back';
+        goBackBtn.addEventListener('click', goBack);
+        container.appendChild(goBackBtn);
+    }
+
+    function goBack() {
+        const modalBody = document.getElementById('modalBody');
+        if (modalHistory.length > 0) {
+            modalBody.innerHTML = modalHistory.pop();
+        }
+    }
+
+    function closeModalAndReset() {
+        modal.style.display = 'none';
+        document.getElementById('modalBody').innerHTML = '';
+        modalHistory = [];
+        selectedPlans = [];
+    }
+
+    function closeModalAndDisplaySelected() {
+        modal.style.display = 'none';
+        const selectedPlansContainer = document.getElementById('selectedPlans');
+        selectedPlansContainer.innerHTML = '<h3>Selected Plans:</h3>';
+        selectedPlans.forEach((plan, index) => {
+            const planDiv = document.createElement('div');
+            planDiv.innerHTML = `<p>${plan.PlanTitle || 'No Title Available'} - ${plan.TotalPremiumAmount ? `${plan.TotalPremiumAmount} ${plan.CurrencyCode}` : 'N/A'}</p>`;
+            selectedPlansContainer.appendChild(planDiv);
         });
     }
 </script>

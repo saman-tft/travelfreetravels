@@ -509,9 +509,9 @@ define('PROVAB_SECRET_IV','fdbe2d90bb96e6c334dc1eb308985f9e');
 
 //changes added new keys for CIPS payment
 //Merchant details CIPS
-define('IPSCONNCT_MID', 199);
-define('IPSCONNCT_APPID', 'MER-199-APP-5');
-define('IPSCONNCT_VALIDATION_URL', 'https://login.connectips.com/connectipswebws/api/creditor/validatetxn');
+// define('IPSCONNCT_MID', 199);
+// define('IPSCONNCT_APPID', 'MER-199-APP-5');
+// define('IPSCONNCT_VALIDATION_URL', 'https://login.connectips.com/connectipswebws/api/creditor/validatetxn');
 //changes added new keys for nicasia payment
 // TEST NIC ASIA CREDS PS: also comment and uncomment live and test creds in verify_nica function in payment_gateway.php file
 // define('NICA_SECRET_KEY', '9c0d3ded679b4eb6a5ea4a4bc8b26d67ac6d36f66b47455a8b1d88dca028a5867c206dcc2e554d74bb00b6e9ebde0267df4b4a6b7036470d9d443e7437924e35f9c5da6f12a04bf9a8468136e3bec1d9bf59395b60d5481db6dc5395f455a736645505a1d2c541e98b3578d59a00327cb92e920c8fb44bbaa64e3ad08907208e');

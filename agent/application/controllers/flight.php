@@ -1788,6 +1788,7 @@ $insuranceAmount = 0;
                                 $platinumPlans[] = $plan;
                             }
                         }
+                        // debug($availablePlans);die;
                         // Initialize arrays to hold categorized data based on PlanPremiumChargeType
                         $goldPlansPerPassenger = [];
                         $goldPlansOther = [];
@@ -1804,7 +1805,6 @@ $insuranceAmount = 0;
                                 $goldPlansOther[] = $plan;
                             }
                         }
-
                         foreach ($silverPlans as $plan) {
                             if ($plan['PlanPremiumChargeType'] === 'PerPassenger') {
                                 $silverPlansPerPassenger[] = $plan;
@@ -1831,102 +1831,102 @@ $insuranceAmount = 0;
 
 
 
-                        foreach ($silverPlansPerPassenger as $plan) {
+                        foreach ($silverPlansPerPassenger as $key=>$plan) {
                             // debug($plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][0]['AmountValue']);die;
                             $gender = ($plan['PlanPricingBreakdown']['PricingBreakdown']['Gender'] === 'B') ? "Both" : (($plan['PlanPricingBreakdown']['PricingBreakdown']['Gender'] === 'M') ? "Male" : "Female");
-                            $silverPlansPerPassengerForView['PlanCode'] = $plan['PlanCode'];
-                            $silverPlansPerPassengerForView['PlanTitle'] = $plan['PlanTitle'];
-                            $silverPlansPerPassengerForView['planType'] = "silver";
+                            $silverPlansPerPassengerForView[$key]['PlanCode'] = $plan['PlanCode'];
+                            $silverPlansPerPassengerForView[$key]['PlanTitle'] = $plan['PlanTitle'];
+                            $silverPlansPerPassengerForView[$key]['planType'] = "silver";
 
-                            $silverPlansPerPassengerForView['CurrencyCode'] = $plan['CurrencyCode'];
-                            $silverPlansPerPassengerForView['TotalPremiumAmount'] = $plan['TotalPremiumAmount'];
-                            $silverPlansPerPassengerForView['PlanContent'] = $plan['PlanContent'];
-                            $silverPlansPerPassengerForView['MinAge'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['MinAge'];
-                            $silverPlansPerPassengerForView['MaxAge'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['MaxAge'];
-                            $silverPlansPerPassengerForView['Gender'] = $gender;
-                            $silverPlansPerPassengerForView['BaseInsurancePrice'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][0]['AmountValue'];
-                            $silverPlansPerPassengerForView['VATDetails']['Amount'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][1]['AmountValue'];
-                            $silverPlansPerPassengerForView['VATDetails']['Percentage'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][1]['PercentageValue'];
+                            $silverPlansPerPassengerForView[$key]['CurrencyCode'] = $plan['CurrencyCode'];
+                            $silverPlansPerPassengerForView[$key]['TotalPremiumAmount'] = $plan['TotalPremiumAmount'];
+                            $silverPlansPerPassengerForView[$key]['PlanContent'] = $plan['PlanContent'];
+                            $silverPlansPerPassengerForView[$key]['MinAge'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['MinAge'];
+                            $silverPlansPerPassengerForView[$key]['MaxAge'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['MaxAge'];
+                            $silverPlansPerPassengerForView[$key]['Gender'] = $gender;
+                            $silverPlansPerPassengerForView[$key]['BaseInsurancePrice'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][0]['AmountValue'];
+                            $silverPlansPerPassengerForView[$key]['VATDetails']['Amount'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][1]['AmountValue'];
+                            $silverPlansPerPassengerForView[$key]['VATDetails']['Percentage'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][1]['PercentageValue'];
                         }
-                        // debug($silverPlansForView);die;
-                        foreach ($goldPlansPerPassenger as $plan) {
+                       
+                        foreach ($goldPlansPerPassenger as $key=>$plan) {
                             // debug($plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][0]['AmountValue']);die;
                             $gender = ($plan['PlanPricingBreakdown']['PricingBreakdown']['Gender'] === 'B') ? "Both" : (($plan['PlanPricingBreakdown']['PricingBreakdown']['Gender'] === 'M') ? "Male" : "Female");
-                            $goldPlansPerPassengerForView['PlanCode'] = $plan['PlanCode'];
-                            $goldPlansPerPassengerForView['PlanTitle'] = $plan['PlanTitle'];
-                            $goldPlansPerPassengerForView['planType'] = "gold";
+                            $goldPlansPerPassengerForView[$key]['PlanCode'] = $plan['PlanCode'];
+                            $goldPlansPerPassengerForView[$key]['PlanTitle'] = $plan['PlanTitle'];
+                            $goldPlansPerPassengerForView[$key]['planType'] = "gold";
 
-                            $goldPlansPerPassengerForView['CurrencyCode'] = $plan['CurrencyCode'];
-                            $goldPlansPerPassengerForView['TotalPremiumAmount'] = $plan['TotalPremiumAmount'];
-                            $goldPlansPerPassengerForView['PlanContent'] = $plan['PlanContent'];
-                            $goldPlansPerPassengerForView['MinAge'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['MinAge'];
-                            $goldPlansPerPassengerForView['MaxAge'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['MaxAge'];
-                            $goldPlansPerPassengerForView['Gender'] = $gender;
-                            $goldPlansPerPassengerForView['BaseInsurancePrice'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][0]['AmountValue'];
-                            $goldPlansPerPassengerForView['VATDetails']['Amount'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][1]['AmountValue'];
-                            $goldPlansPerPassengerForView['VATDetails']['Percentage'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][1]['PercentageValue'];
+                            $goldPlansPerPassengerForView[$key]['CurrencyCode'] = $plan['CurrencyCode'];
+                            $goldPlansPerPassengerForView[$key]['TotalPremiumAmount'] = $plan['TotalPremiumAmount'];
+                            $goldPlansPerPassengerForView[$key]['PlanContent'] = $plan['PlanContent'];
+                            $goldPlansPerPassengerForView[$key]['MinAge'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['MinAge'];
+                            $goldPlansPerPassengerForView[$key]['MaxAge'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['MaxAge'];
+                            $goldPlansPerPassengerForView[$key]['Gender'] = $gender;
+                            $goldPlansPerPassengerForView[$key]['BaseInsurancePrice'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][0]['AmountValue'];
+                            $goldPlansPerPassengerForView[$key]['VATDetails']['Amount'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][1]['AmountValue'];
+                            $goldPlansPerPassengerForView[$key]['VATDetails']['Percentage'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][1]['PercentageValue'];
                         }
-                        foreach ($platinumPlansPerPassenger as $plan) {
+                        foreach ($platinumPlansPerPassenger as $key=>$plan) {
                             // debug($plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][0]['AmountValue']);die;
                             $gender = ($plan['PlanPricingBreakdown']['PricingBreakdown']['Gender'] === 'B') ? "Both" : (($plan['PlanPricingBreakdown']['PricingBreakdown']['Gender'] === 'M') ? "Male" : "Female");
-                            $platinumPlansPerPassengerForView['PlanCode'] = $plan['PlanCode'];
-                            $platinumPlansPerPassengerForView['PlanTitle'] = $plan['PlanTitle'];
-                            $platinumPlansOtherForView['planType'] = "platinum";
+                            $platinumPlansPerPassengerForView[$key]['PlanCode'] = $plan['PlanCode'];
+                            $platinumPlansPerPassengerForView[$key]['PlanTitle'] = $plan['PlanTitle'];
+                            $platinumPlansPerPassengerForView[$key]['planType'] = "platinum";
 
-                            $platinumPlansPerPassengerForView['CurrencyCode'] = $plan['CurrencyCode'];
-                            $platinumPlansPerPassengerForView['TotalPremiumAmount'] = $plan['TotalPremiumAmount'];
-                            $platinumPlansPerPassengerForView['PlanContent'] = $plan['PlanContent'];
-                            $platinumPlansPerPassengerForView['MinAge'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['MinAge'];
-                            $platinumPlansPerPassengerForView['MaxAge'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['MaxAge'];
-                            $platinumPlansPerPassengerForView['Gender'] = $gender;
+                            $platinumPlansPerPassengerForView[$key]['CurrencyCode'] = $plan['CurrencyCode'];
+                            $platinumPlansPerPassengerForView[$key]['TotalPremiumAmount'] = $plan['TotalPremiumAmount'];
+                            $platinumPlansPerPassengerForView[$key]['PlanContent'] = $plan['PlanContent'];
+                            $platinumPlansPerPassengerForView[$key]['MinAge'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['MinAge'];
+                            $platinumPlansPerPassengerForView[$key]['MaxAge'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['MaxAge'];
+                            $platinumPlansPerPassengerForView[$key]['Gender'] = $gender;
                             $platinumPlansPerPassengerForView['BaseInsurancePrice'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][0]['AmountValue'];
-                            $platinumPlansPerPassengerForView['VATDetails']['Amount'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][1]['AmountValue'];
-                            $platinumPlansPerPassengerForView['VATDetails']['Percentage'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][1]['PercentageValue'];
+                            $platinumPlansPerPassengerForView[$key]['VATDetails']['Amount'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][1]['AmountValue'];
+                            $platinumPlansPerPassengerForView[$key]['VATDetails']['Percentage'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][1]['PercentageValue'];
                         }
-                        foreach ($silverPlansOther as $plan) {
+                        foreach ($silverPlansOther as $key=>$plan) {
                             // debug($plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][0]['AmountValue']);die;
                             $gender = ($plan['PlanPricingBreakdown']['PricingBreakdown']['Gender'] === 'B') ? "Both" : (($plan['PlanPricingBreakdown']['PricingBreakdown']['Gender'] === 'M') ? "Male" : "Female");
-                            $silverPlansOtherForView['PlanCode'] = $plan['PlanCode'];
-                            $silverPlansOtherForView['PlanTitle'] = $plan['PlanTitle'];
-                            $silverPlansOtherForView['CurrencyCode'] = $plan['CurrencyCode'];
-                            $silverPlansOtherForView['TotalPremiumAmount'] = $plan['TotalPremiumAmount'];
-                            $silverPlansOtherForView['PlanContent'] = $plan['PlanContent'];
-                            $silverPlansOtherForView['MinAge'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['MinAge'];
-                            $silverPlansOtherForView['MaxAge'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['MaxAge'];
-                            $silverPlansOtherForView['Gender'] = $gender;
-                            $silverPlansOtherForView['BaseInsurancePrice'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][0]['AmountValue'];
-                            $silverPlansOtherForView['VATDetails']['Amount'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][1]['AmountValue'];
-                            $silverPlansOtherForView['VATDetails']['Percentage'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][1]['PercentageValue'];
+                            $silverPlansOtherForView[$key]['PlanCode'] = $plan['PlanCode'];
+                            $silverPlansOtherForView[$key]['PlanTitle'] = $plan['PlanTitle'];
+                            $silverPlansOtherForView[$key]['CurrencyCode'] = $plan['CurrencyCode'];
+                            $silverPlansOtherForView[$key]['TotalPremiumAmount'] = $plan['TotalPremiumAmount'];
+                            $silverPlansOtherForView[$key]['PlanContent'] = $plan['PlanContent'];
+                            $silverPlansOtherForView[$key]['MinAge'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['MinAge'];
+                            $silverPlansOtherForView[$key]['MaxAge'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['MaxAge'];
+                            $silverPlansOtherForView[$key]['Gender'] = $gender;
+                            $silverPlansOtherForView[$key]['BaseInsurancePrice'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][0]['AmountValue'];
+                            $silverPlansOtherForView[$key]['VATDetails']['Amount'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][1]['AmountValue'];
+                            $silverPlansOtherForView[$key]['VATDetails']['Percentage'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][1]['PercentageValue'];
                         }
-                        foreach ($goldPlansOther as $plan) {
+                        foreach ($goldPlansOther as $key=>$plan) {
                             // debug($plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][0]['AmountValue']);die;
                             $gender = ($plan['PlanPricingBreakdown']['PricingBreakdown']['Gender'] === 'B') ? "Both" : (($plan['PlanPricingBreakdown']['PricingBreakdown']['Gender'] === 'M') ? "Male" : "Female");
-                            $goldPlansOtherForView['PlanCode'] = $plan['PlanCode'];
-                            $goldPlansOtherForView['PlanTitle'] = $plan['PlanTitle'];
-                            $goldPlansOtherForView['CurrencyCode'] = $plan['CurrencyCode'];
-                            $goldPlansOtherForView['TotalPremiumAmount'] = $plan['TotalPremiumAmount'];
-                            $goldPlansOtherForView['PlanContent'] = $plan['PlanContent'];
-                            $goldPlansOtherForView['MinAge'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['MinAge'];
-                            $goldPlansOtherForView['MaxAge'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['MaxAge'];
-                            $goldPlansOtherForView['Gender'] = $gender;
-                            $goldPlansOtherForView['BaseInsurancePrice'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][0]['AmountValue'];
-                            $goldPlansOtherForView['VATDetails']['Amount'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][1]['AmountValue'];
-                            $goldPlansOtherForView['VATDetails']['Percentage'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][1]['PercentageValue'];
+                            $goldPlansOtherForView[$key]['PlanCode'] = $plan['PlanCode'];
+                            $goldPlansOtherForView[$key]['PlanTitle'] = $plan['PlanTitle'];
+                            $goldPlansOtherForView[$key]['CurrencyCode'] = $plan['CurrencyCode'];
+                            $goldPlansOtherForView[$key]['TotalPremiumAmount'] = $plan['TotalPremiumAmount'];
+                            $goldPlansOtherForView[$key]['PlanContent'] = $plan['PlanContent'];
+                            $goldPlansOtherForView[$key]['MinAge'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['MinAge'];
+                            $goldPlansOtherForView[$key]['MaxAge'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['MaxAge'];
+                            $goldPlansOtherForView[$key]['Gender'] = $gender;
+                            $goldPlansOtherForView[$key]['BaseInsurancePrice'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][0]['AmountValue'];
+                            $goldPlansOtherForView[$key]['VATDetails']['Amount'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][1]['AmountValue'];
+                            $goldPlansOtherForView[$key]['VATDetails']['Percentage'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][1]['PercentageValue'];
                         }
-                        foreach ($platinumPlansOther as $plan) {
+                        foreach ($platinumPlansOther as $key=>$plan) {
                             // debug($plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][0]['AmountValue']);die;
                             $gender = ($plan['PlanPricingBreakdown']['PricingBreakdown']['Gender'] === 'B') ? "Both" : (($plan['PlanPricingBreakdown']['PricingBreakdown']['Gender'] === 'M') ? "Male" : "Female");
-                            $platinumPlansOtherForView['PlanCode'] = $plan['PlanCode'];
-                            $platinumPlansOtherForView['PlanTitle'] = $plan['PlanTitle'];
-                            $platinumPlansOtherForView['CurrencyCode'] = $plan['CurrencyCode'];
-                            $platinumPlansOtherForView['TotalPremiumAmount'] = $plan['TotalPremiumAmount'];
-                            $platinumPlansOtherForView['PlanContent'] = $plan['PlanContent'];
-                            $platinumPlansOtherForView['MinAge'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['MinAge'];
-                            $platinumPlansOtherForView['MaxAge'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['MaxAge'];
-                            $platinumPlansOtherForView['Gender'] = $gender;
-                            $platinumPlansOtherForView['BaseInsurancePrice'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][0]['AmountValue'];
-                            $platinumPlansOtherForView['VATDetails']['Amount'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][1]['AmountValue'];
-                            $platinumPlansOtherForView['VATDetails']['Percentage'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][1]['PercentageValue'];
+                            $platinumPlansOtherForView[$key]['PlanCode'] = $plan['PlanCode'];
+                            $platinumPlansOtherForView[$key]['PlanTitle'] = $plan['PlanTitle'];
+                            $platinumPlansOtherForView[$key]['CurrencyCode'] = $plan['CurrencyCode'];
+                            $platinumPlansOtherForView[$key]['TotalPremiumAmount'] = $plan['TotalPremiumAmount'];
+                            $platinumPlansOtherForView[$key]['PlanContent'] = $plan['PlanContent'];
+                            $platinumPlansOtherForView[$key]['MinAge'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['MinAge'];
+                            $platinumPlansOtherForView[$key]['MaxAge'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['MaxAge'];
+                            $platinumPlansOtherForView[$key]['Gender'] = $gender;
+                            $platinumPlansOtherForView[$key]['BaseInsurancePrice'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][0]['AmountValue'];
+                            $platinumPlansOtherForView[$key]['VATDetails']['Amount'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][1]['AmountValue'];
+                            $platinumPlansOtherForView[$key]['VATDetails']['Percentage'] = $plan['PlanPricingBreakdown']['PricingBreakdown']['PremiumBreakdown']['PremiumCharges']['Charges']['Charge'][1]['PercentageValue'];
                         }
 
                         $sortedPlans = [
@@ -1945,6 +1945,9 @@ $insuranceAmount = 0;
                         $insertionRecord = $this->custom_db->insert_record('plan_retirement', array('message' => $sortedPlans));
                         $id = $insertionRecord['insert_id'];
                         //store in database later kun table ma haalney ho
+                        // debug($platinumPlansPerPassengerForView);
+                        // debug($platinumPlansOtherForView);
+                        // die;
 
                         // plans for view
                         $sortedPlansforView = [

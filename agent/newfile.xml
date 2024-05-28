@@ -1,25 +1,142 @@
-
-                    <web:Flights>
-                    <web:DepartCountryCode>NP</web:DepartCountryCode>
-                    <web:DepartStationCode></web:DepartStationCode>
-                    <web:ArrivalCountryCode>MY</web:ArrivalCountryCode>
-                    <web:ArrivalStationCode></web:ArrivalStationCode>
-                    <web:DepartAirlineCode>MH</web:DepartAirlineCode>
-                    <web:DepartDateTime>2024-05-30 23:30:00</web:DepartDateTime>
-                    <web:ReturnAirlineCode>MH</web:ReturnAirlineCode>
-                    <web:ReturnDateTime>2024-06-04 09:30:00</web:ReturnDateTime>
-                    <web:DepartFlightNo>115</web:DepartFlightNo>
-                    <web:ReturnFlightNo>170</web:ReturnFlightNo>
-                 </web:Flights>
-                    <web:Flights>
-                    <web:DepartCountryCode>MY</web:DepartCountryCode>
-                    <web:DepartStationCode></web:DepartStationCode>
-                    <web:ArrivalCountryCode>AU</web:ArrivalCountryCode>
-                    <web:ArrivalStationCode></web:ArrivalStationCode>
-                    <web:DepartAirlineCode>MH</web:DepartAirlineCode>
-                    <web:DepartDateTime>2024-05-31 09:10:00</web:DepartDateTime>
-                    <web:ReturnAirlineCode>MH</web:ReturnAirlineCode>
-                    <web:ReturnDateTime>2024-06-03 22:10:00</web:ReturnDateTime>
-                    <web:DepartFlightNo>141</web:DepartFlightNo>
-                    <web:ReturnFlightNo>140</web:ReturnFlightNo>
-                 </web:Flights>
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><GetAvailablePlansOTAWithRidersResponse xmlns="http://ZEUSTravelInsuranceGateway/WebServices"><GenericResponse><InsuranceTitle/><InsuranceDesc/><TotalPlansAvailable>5</TotalPlansAvailable><ErrorCode>0</ErrorCode><ErrorMessage/><AvailablePlans><AvailablePlan><PlanCode>AE2-API-OUTBOUND-GOLD</PlanCode><SSRFeeCode>INSB1_API_AE2_GO_OB</SSRFeeCode><CurrencyCode>AED</CurrencyCode><TotalPremiumAmount>77.07</TotalPremiumAmount><TotalCoverageAmount>0</TotalCoverageAmount><PlanPremiumChargeType>PerPassenger</PlanPremiumChargeType><PlanTitle>Travel Assurance- Gold Covid Plus Plan</PlanTitle><PlanDesc>Outbound, Gold (Covid Plus)</PlanDesc><PlanMarketingPointers><PlanMarketingPointer><PointID>0</PointID></PlanMarketingPointer></PlanMarketingPointers><PlanAdditionalInfoTitle>Travel Assurance- Gold Covid Plus Plan</PlanAdditionalInfoTitle><PlanAdditionalInfoDesc>&lt;![CDATA[]]&gt;</PlanAdditionalInfoDesc><PlanYesDesc>&lt;![CDATA[]]&gt;</PlanYesDesc><PlanNoDesc>&lt;![CDATA[]]&gt;</PlanNoDesc><PlanNoConsideration>&lt;![CDATA[]]&gt;</PlanNoConsideration><PlanTnC/><IsDefaultPlan>false</IsDefaultPlan><PlanContent>&lt;table width="100%" cellspacing="0" cellpadding="3" border="0" style="font-family: Tahoma, Arial, Sans-Serif; font-size: 1em;"&gt;
+&lt;td width="3%" align="center"&gt;&lt;img src="https://s3-ap-southeast-1.amazonaws.com/tuneprotect.com-emeia/images/dot_black.gif" /&gt;&lt;/td&gt;
+&lt;td width="97%"&gt;&lt;b&gt;Accidental and Sickness Medical Reimbursement&lt;/b&gt; Up to USD 100,000&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td width="3%" align="center"&gt;&lt;img src="https://s3-ap-southeast-1.amazonaws.com/tuneprotect.com-emeia/images/dot_black.gif" /&gt;&lt;/td&gt;
+&lt;td width="97%"&gt;&lt;b&gt;Emergency Medical Evacuation&lt;/b&gt; Up to USD 100,000&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td width="3%" align="center"&gt;&lt;img src="https://s3-ap-southeast-1.amazonaws.com/tuneprotect.com-emeia/images/dot_black.gif" /&gt;&lt;/td&gt;
+&lt;td width="97%"&gt;&lt;b&gt;Accidental Death and Permanent Disablement&lt;/b&gt; Up to USD 30,000&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="2" height="5px"&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="2" style="font-size:0.8em"&gt;Tune Protect Travel Assurance is underwritten by Union Insurance Company P.S.C.For Schedule of Benefits &amp; Terms &amp; Conditions. Click &lt;a href="https://www.tuneprotect.com/emeia/products/uae/UIC/travel-assurance/" target="_blank" style="color:blue;text-decoration:underline;"&gt;here&lt;/a&gt; 
+&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</PlanContent><PlanQualifiedPassengers/><PlanPricingBreakdown><PricingBreakdown><MinAge>2</MinAge><MaxAge>75</MaxAge><Gender>B</Gender><CurrencyCode>AED</CurrencyCode><PremiumAmount>77.07</PremiumAmount><PremiumBreakdown><PremiumCharges><Charges><Charge><SequenceNo>1</SequenceNo><RateType>Base Premium</RateType><PercentageValue/><AmountValue>73.40</AmountValue></Charge><Charge><SequenceNo>2</SequenceNo><RateType>VAT</RateType><PercentageValue>5.00</PercentageValue><AmountValue>3.67</AmountValue></Charge></Charges></PremiumCharges></PremiumBreakdown></PricingBreakdown></PlanPricingBreakdown><PlanType>Travel Assurance (Covid Plus)</PlanType></AvailablePlan><AvailablePlan><PlanCode>AE2-API-OUTBOUND-SILVER</PlanCode><SSRFeeCode>INSB1_API_AE2_SL_OB</SSRFeeCode><CurrencyCode>AED</CurrencyCode><TotalPremiumAmount>42.39</TotalPremiumAmount><TotalCoverageAmount>0</TotalCoverageAmount><PlanPremiumChargeType>PerPassenger</PlanPremiumChargeType><PlanTitle>Travel Assurance- Silver Covid Plus Plan</PlanTitle><PlanDesc>Outbound, Silver (Covid Plus)</PlanDesc><PlanMarketingPointers><PlanMarketingPointer><PointID>0</PointID></PlanMarketingPointer></PlanMarketingPointers><PlanAdditionalInfoTitle>Travel Assurance- Silver Covid Plus Plan</PlanAdditionalInfoTitle><PlanAdditionalInfoDesc>&lt;![CDATA[]]&gt;</PlanAdditionalInfoDesc><PlanYesDesc>&lt;![CDATA[]]&gt;</PlanYesDesc><PlanNoDesc>&lt;![CDATA[]]&gt;</PlanNoDesc><PlanNoConsideration>&lt;![CDATA[]]&gt;</PlanNoConsideration><PlanTnC/><IsDefaultPlan>false</IsDefaultPlan><PlanContent>&lt;table width="100%" cellspacing="0" cellpadding="3" border="0" style="font-family: Tahoma, Arial, Sans-Serif; font-size: 1em;"&gt;
+&lt;td width="3%" align="center"&gt;&lt;img src="https://s3-ap-southeast-1.amazonaws.com/tuneprotect.com-emeia/images/dot_black.gif" /&gt;&lt;/td&gt;
+&lt;td width="97%"&gt;&lt;b&gt;Accidental and Sickness Medical Reimbursement&lt;/b&gt; Up to USD 50,000&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td width="3%" align="center"&gt;&lt;img src="https://s3-ap-southeast-1.amazonaws.com/tuneprotect.com-emeia/images/dot_black.gif" /&gt;&lt;/td&gt;
+&lt;td width="97%"&gt;&lt;b&gt;Emergency Medical Evacuation&lt;/b&gt; Up to USD 50,000&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td width="3%" align="center"&gt;&lt;img src="https://s3-ap-southeast-1.amazonaws.com/tuneprotect.com-emeia/images/dot_black.gif" /&gt;&lt;/td&gt;
+&lt;td width="97%"&gt;&lt;b&gt;Accidental Death and Permanent Disablement&lt;/b&gt; Up to USD 20,000&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="2" height="5px"&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="2" style="font-size:0.8em"&gt;Tune Protect Travel Assurance is underwritten by Union Insurance Company P.S.C.For Schedule of Benefits &amp; Terms &amp; Conditions. Click &lt;a href="https://www.tuneprotect.com/emeia/products/uae/UIC/travel-assurance/" target="_blank" style="color:blue;text-decoration:underline;"&gt;here&lt;/a&gt; 
+&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</PlanContent><PlanQualifiedPassengers/><PlanPricingBreakdown><PricingBreakdown><MinAge>2</MinAge><MaxAge>75</MaxAge><Gender>B</Gender><CurrencyCode>AED</CurrencyCode><PremiumAmount>42.39</PremiumAmount><PremiumBreakdown><PremiumCharges><Charges><Charge><SequenceNo>1</SequenceNo><RateType>Base Premium</RateType><PercentageValue/><AmountValue>40.37</AmountValue></Charge><Charge><SequenceNo>2</SequenceNo><RateType>VAT</RateType><PercentageValue>5.00</PercentageValue><AmountValue>2.02</AmountValue></Charge></Charges></PremiumCharges></PremiumBreakdown></PricingBreakdown></PlanPricingBreakdown><PlanType>Travel Assurance (Covid Plus)</PlanType></AvailablePlan><AvailablePlan><PlanCode>AE2-API-OUTBOUND-GOLD</PlanCode><SSRFeeCode>INSB1_API_AE2_GO_OB</SSRFeeCode><CurrencyCode>AED</CurrencyCode><TotalPremiumAmount>77.07</TotalPremiumAmount><TotalCoverageAmount>0</TotalCoverageAmount><PlanPremiumChargeType>PerPassenger</PlanPremiumChargeType><PlanTitle>Travel Assurance- Gold Covid Plus Plan</PlanTitle><PlanDesc>Outbound, Gold (Covid Plus)</PlanDesc><PlanMarketingPointers><PlanMarketingPointer><PointID>0</PointID></PlanMarketingPointer></PlanMarketingPointers><PlanAdditionalInfoTitle>Travel Assurance- Gold Covid Plus Plan</PlanAdditionalInfoTitle><PlanAdditionalInfoDesc>&lt;![CDATA[]]&gt;</PlanAdditionalInfoDesc><PlanYesDesc>&lt;![CDATA[]]&gt;</PlanYesDesc><PlanNoDesc>&lt;![CDATA[]]&gt;</PlanNoDesc><PlanNoConsideration>&lt;![CDATA[]]&gt;</PlanNoConsideration><PlanTnC/><IsDefaultPlan>false</IsDefaultPlan><PlanContent>&lt;table width="100%" cellspacing="0" cellpadding="3" border="0" style="font-family: Tahoma, Arial, Sans-Serif; font-size: 1em;"&gt;
+&lt;td width="3%" align="center"&gt;&lt;img src="https://s3-ap-southeast-1.amazonaws.com/tuneprotect.com-emeia/images/dot_black.gif" /&gt;&lt;/td&gt;
+&lt;td width="97%"&gt;&lt;b&gt;Accidental and Sickness Medical Reimbursement&lt;/b&gt; Up to USD 100,000&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td width="3%" align="center"&gt;&lt;img src="https://s3-ap-southeast-1.amazonaws.com/tuneprotect.com-emeia/images/dot_black.gif" /&gt;&lt;/td&gt;
+&lt;td width="97%"&gt;&lt;b&gt;Emergency Medical Evacuation&lt;/b&gt; Up to USD 100,000&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td width="3%" align="center"&gt;&lt;img src="https://s3-ap-southeast-1.amazonaws.com/tuneprotect.com-emeia/images/dot_black.gif" /&gt;&lt;/td&gt;
+&lt;td width="97%"&gt;&lt;b&gt;Accidental Death and Permanent Disablement&lt;/b&gt; Up to USD 30,000&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="2" height="5px"&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="2" style="font-size:0.8em"&gt;Tune Protect Travel Assurance is underwritten by Union Insurance Company P.S.C.For Schedule of Benefits &amp; Terms &amp; Conditions. Click &lt;a href="https://www.tuneprotect.com/emeia/products/uae/UIC/travel-assurance/" target="_blank" style="color:blue;text-decoration:underline;"&gt;here&lt;/a&gt; 
+&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</PlanContent><PlanQualifiedPassengers/><PlanPricingBreakdown><PricingBreakdown><MinAge>2</MinAge><MaxAge>75</MaxAge><Gender>B</Gender><CurrencyCode>AED</CurrencyCode><PremiumAmount>77.07</PremiumAmount><PremiumBreakdown><PremiumCharges><Charges><Charge><SequenceNo>1</SequenceNo><RateType>Base Premium</RateType><PercentageValue/><AmountValue>73.40</AmountValue></Charge><Charge><SequenceNo>2</SequenceNo><RateType>VAT</RateType><PercentageValue>5.00</PercentageValue><AmountValue>3.67</AmountValue></Charge></Charges></PremiumCharges></PremiumBreakdown></PricingBreakdown></PlanPricingBreakdown><PlanType>Travel Assurance (Covid Plus)</PlanType></AvailablePlan><AvailablePlan><PlanCode>AE2-API-OUTBOUND-SILVER</PlanCode><SSRFeeCode>INSB1_API_AE2_SL_OB</SSRFeeCode><CurrencyCode>AED</CurrencyCode><TotalPremiumAmount>42.39</TotalPremiumAmount><TotalCoverageAmount>0</TotalCoverageAmount><PlanPremiumChargeType>PerPassenger</PlanPremiumChargeType><PlanTitle>Travel Assurance- Silver Covid Plus Plan</PlanTitle><PlanDesc>Outbound, Silver (Covid Plus)</PlanDesc><PlanMarketingPointers><PlanMarketingPointer><PointID>0</PointID></PlanMarketingPointer></PlanMarketingPointers><PlanAdditionalInfoTitle>Travel Assurance- Silver Covid Plus Plan</PlanAdditionalInfoTitle><PlanAdditionalInfoDesc>&lt;![CDATA[]]&gt;</PlanAdditionalInfoDesc><PlanYesDesc>&lt;![CDATA[]]&gt;</PlanYesDesc><PlanNoDesc>&lt;![CDATA[]]&gt;</PlanNoDesc><PlanNoConsideration>&lt;![CDATA[]]&gt;</PlanNoConsideration><PlanTnC/><IsDefaultPlan>false</IsDefaultPlan><PlanContent>&lt;table width="100%" cellspacing="0" cellpadding="3" border="0" style="font-family: Tahoma, Arial, Sans-Serif; font-size: 1em;"&gt;
+&lt;td width="3%" align="center"&gt;&lt;img src="https://s3-ap-southeast-1.amazonaws.com/tuneprotect.com-emeia/images/dot_black.gif" /&gt;&lt;/td&gt;
+&lt;td width="97%"&gt;&lt;b&gt;Accidental and Sickness Medical Reimbursement&lt;/b&gt; Up to USD 50,000&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td width="3%" align="center"&gt;&lt;img src="https://s3-ap-southeast-1.amazonaws.com/tuneprotect.com-emeia/images/dot_black.gif" /&gt;&lt;/td&gt;
+&lt;td width="97%"&gt;&lt;b&gt;Emergency Medical Evacuation&lt;/b&gt; Up to USD 50,000&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td width="3%" align="center"&gt;&lt;img src="https://s3-ap-southeast-1.amazonaws.com/tuneprotect.com-emeia/images/dot_black.gif" /&gt;&lt;/td&gt;
+&lt;td width="97%"&gt;&lt;b&gt;Accidental Death and Permanent Disablement&lt;/b&gt; Up to USD 20,000&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="2" height="5px"&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="2" style="font-size:0.8em"&gt;Tune Protect Travel Assurance is underwritten by Union Insurance Company P.S.C.For Schedule of Benefits &amp; Terms &amp; Conditions. Click &lt;a href="https://www.tuneprotect.com/emeia/products/uae/UIC/travel-assurance/" target="_blank" style="color:blue;text-decoration:underline;"&gt;here&lt;/a&gt; 
+&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</PlanContent><PlanQualifiedPassengers/><PlanPricingBreakdown><PricingBreakdown><MinAge>2</MinAge><MaxAge>75</MaxAge><Gender>B</Gender><CurrencyCode>AED</CurrencyCode><PremiumAmount>42.39</PremiumAmount><PremiumBreakdown><PremiumCharges><Charges><Charge><SequenceNo>1</SequenceNo><RateType>Base Premium</RateType><PercentageValue/><AmountValue>40.37</AmountValue></Charge><Charge><SequenceNo>2</SequenceNo><RateType>VAT</RateType><PercentageValue>5.00</PercentageValue><AmountValue>2.02</AmountValue></Charge></Charges></PremiumCharges></PremiumBreakdown></PricingBreakdown></PlanPricingBreakdown><PlanType>Travel Assurance (Covid Plus)</PlanType></AvailablePlan><AvailablePlan><PlanCode>AE2-API-OUTBOUND-PLATINUM</PlanCode><SSRFeeCode>INSB1_API_AE2_PL_OB</SSRFeeCode><CurrencyCode>AED</CurrencyCode><TotalPremiumAmount>117.44</TotalPremiumAmount><TotalCoverageAmount>0</TotalCoverageAmount><PlanPremiumChargeType>PerPassenger</PlanPremiumChargeType><PlanTitle>Travel Assurance- Platinum Covid Plus Plan</PlanTitle><PlanDesc>Outbound, Platinum (Covid Plus)</PlanDesc><PlanMarketingPointers><PlanMarketingPointer><PointID>0</PointID></PlanMarketingPointer></PlanMarketingPointers><PlanAdditionalInfoTitle>Travel Assurance- Platinum Covid Plus Plan</PlanAdditionalInfoTitle><PlanAdditionalInfoDesc>&lt;![CDATA[]]&gt;</PlanAdditionalInfoDesc><PlanYesDesc>&lt;![CDATA[]]&gt;</PlanYesDesc><PlanNoDesc>&lt;![CDATA[]]&gt;</PlanNoDesc><PlanNoConsideration>&lt;![CDATA[]]&gt;</PlanNoConsideration><PlanTnC/><IsDefaultPlan>false</IsDefaultPlan><PlanContent>&lt;table width="100%" cellspacing="0" cellpadding="3" border="0" style="font-family: Tahoma, Arial, Sans-Serif; font-size: 1em;"&gt;
+&lt;td width="3%" align="center"&gt;&lt;img src="https://s3-ap-southeast-1.amazonaws.com/tuneprotect.com-emeia/images/dot_black.gif" /&gt;&lt;/td&gt;
+&lt;td width="97%"&gt;&lt;b&gt;Accidental and Sickness Medical Reimbursement&lt;/b&gt; Up to USD 500,000&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td width="3%" align="center"&gt;&lt;img src="https://s3-ap-southeast-1.amazonaws.com/tuneprotect.com-emeia/images/dot_black.gif" /&gt;&lt;/td&gt;
+&lt;td width="97%"&gt;&lt;b&gt;Emergency Medical Evacuation&lt;/b&gt; Up to USD 500,000&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td width="3%" align="center"&gt;&lt;img src="https://s3-ap-southeast-1.amazonaws.com/tuneprotect.com-emeia/images/dot_black.gif" /&gt;&lt;/td&gt;
+&lt;td width="97%"&gt;&lt;b&gt;Accidental Death and Permanent Disablement&lt;/b&gt; Up to USD 200,000&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="2" height="5px"&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="2" style="font-size:0.8em"&gt;Tune Protect Travel Assurance is underwritten by Union Insurance Company P.S.C.For Schedule of Benefits &amp; Terms &amp; Conditions. Click &lt;a href="https://www.tuneprotect.com/emeia/products/uae/UIC/travel-assurance/" target="_blank"  style="color:blue;text-decoration:underline;"&gt;here&lt;/a&gt; 
+&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</PlanContent><PlanQualifiedPassengers/><PlanPricingBreakdown><PricingBreakdown><MinAge>2</MinAge><MaxAge>75</MaxAge><Gender>B</Gender><CurrencyCode>AED</CurrencyCode><PremiumAmount>117.44</PremiumAmount><PremiumBreakdown><PremiumCharges><Charges><Charge><SequenceNo>1</SequenceNo><RateType>Base Premium</RateType><PercentageValue/><AmountValue>111.86</AmountValue></Charge><Charge><SequenceNo>2</SequenceNo><RateType>VAT</RateType><PercentageValue>5.00</PercentageValue><AmountValue>5.58</AmountValue></Charge></Charges></PremiumCharges></PremiumBreakdown></PricingBreakdown></PlanPricingBreakdown><PlanType>Travel Assurance (Covid Plus)</PlanType></AvailablePlan></AvailablePlans><AvailableUpsellPlans><UpsellPlanGroup><UpsellPlans><UpsellPlan><PlanCode>AE2-API-OUTBOUND-PLATINUM</PlanCode><SSRFeeCode>INSB1_API_AE2_PL_OB</SSRFeeCode><CurrencyCode>AED</CurrencyCode><TotalPremiumAmount>117.44</TotalPremiumAmount><TotalCoverageAmount>0</TotalCoverageAmount><PlanPremiumChargeType>PerPassenger</PlanPremiumChargeType><PlanTitle>Travel Assurance- Platinum Covid Plus Plan</PlanTitle><PlanDesc>Outbound, Platinum (Covid Plus)</PlanDesc><PlanAdditionalInfoTitle>Travel Assurance- Platinum Covid Plus Plan</PlanAdditionalInfoTitle><PlanAdditionalInfoDesc/><PlanYesDesc/><PlanNoDesc/><PlanNoConsideration/><PlanTnC/><IsDefaultPlan>false</IsDefaultPlan><PlanContent>&lt;table width="100%" cellspacing="0" cellpadding="3" border="0" style="font-family: Tahoma, Arial, Sans-Serif; font-size: 1em;"&gt;
+&lt;td width="3%" align="center"&gt;&lt;img src="https://s3-ap-southeast-1.amazonaws.com/tuneprotect.com-emeia/images/dot_black.gif" /&gt;&lt;/td&gt;
+&lt;td width="97%"&gt;&lt;b&gt;Accidental and Sickness Medical Reimbursement&lt;/b&gt; Up to USD 500,000&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td width="3%" align="center"&gt;&lt;img src="https://s3-ap-southeast-1.amazonaws.com/tuneprotect.com-emeia/images/dot_black.gif" /&gt;&lt;/td&gt;
+&lt;td width="97%"&gt;&lt;b&gt;Emergency Medical Evacuation&lt;/b&gt; Up to USD 500,000&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td width="3%" align="center"&gt;&lt;img src="https://s3-ap-southeast-1.amazonaws.com/tuneprotect.com-emeia/images/dot_black.gif" /&gt;&lt;/td&gt;
+&lt;td width="97%"&gt;&lt;b&gt;Accidental Death and Permanent Disablement&lt;/b&gt; Up to USD 200,000&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="2" height="5px"&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="2" style="font-size:0.8em"&gt;Tune Protect Travel Assurance is underwritten by Union Insurance Company P.S.C.For Schedule of Benefits &amp; Terms &amp; Conditions. Click &lt;a href="https://www.tuneprotect.com/emeia/products/uae/UIC/travel-assurance/" target="_blank"  style="color:blue;text-decoration:underline;"&gt;here&lt;/a&gt; 
+&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</PlanContent><PlanQualifiedPassengers/><PlanPricingBreakdown><PricingBreakdown><MinAge>2</MinAge><MaxAge>75</MaxAge><Gender>B</Gender><CurrencyCode>AED</CurrencyCode><PremiumAmount>117.44</PremiumAmount><PremiumBreakdown><PremiumCharges><Charges><Charge><SequenceNo>1</SequenceNo><RateType>Base Premium</RateType><PercentageValue/><AmountValue>111.86</AmountValue></Charge><Charge><SequenceNo>2</SequenceNo><RateType>VAT</RateType><PercentageValue>5.00</PercentageValue><AmountValue>5.58</AmountValue></Charge></Charges></PremiumCharges></PremiumBreakdown></PricingBreakdown></PlanPricingBreakdown><PlanType>Travel Assurance (Covid Plus)</PlanType></UpsellPlan></UpsellPlans></UpsellPlanGroup><UpsellPlanGroup><UpsellPlans><UpsellPlan><PlanCode>AE2-API-OUTBOUND-SILVER PLUS</PlanCode><SSRFeeCode>INSB1_API2_AE_SLPLUS_OB</SSRFeeCode><CurrencyCode>AED</CurrencyCode><TotalPremiumAmount>127.17</TotalPremiumAmount><TotalCoverageAmount>0</TotalCoverageAmount><PlanPremiumChargeType>PerPassenger</PlanPremiumChargeType><PlanTitle>Travel Assurance - Silver Plus (Covid Plus)</PlanTitle><PlanDesc>Outbound, Silver Plus (Covid Plus)</PlanDesc><PlanAdditionalInfoTitle>Travel Assurance - Silver Plus (Covid Plus)</PlanAdditionalInfoTitle><PlanAdditionalInfoDesc>Travel Assurance - Silver Plus (Covid Plus)</PlanAdditionalInfoDesc><PlanYesDesc/><PlanNoDesc/><PlanNoConsideration/><PlanTnC/><IsDefaultPlan>false</IsDefaultPlan><PlanContent>&lt;table width="100%" cellspacing="0" cellpadding="3" border="0" style="font-family: Tahoma, Arial, Sans-Serif; font-size: 1em;"&gt;
+&lt;td width="3%" align="center"&gt;&lt;img src="https://s3-ap-southeast-1.amazonaws.com/tuneprotect.com-emeia/images/dot_black.gif" /&gt;&lt;/td&gt;
+&lt;td width="97%"&gt;&lt;b&gt;Accidental and Sickness Medical Reimbursement&lt;/b&gt; Up to USD 50,000&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td width="3%" align="center"&gt;&lt;img src="https://s3-ap-southeast-1.amazonaws.com/tuneprotect.com-emeia/images/dot_black.gif" /&gt;&lt;/td&gt;
+&lt;td width="97%"&gt;&lt;b&gt;Emergency Medical Evacuation&lt;/b&gt; Up to USD 50,000&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td width="3%" align="center"&gt;&lt;img src="https://s3-ap-southeast-1.amazonaws.com/tuneprotect.com-emeia/images/dot_black.gif" /&gt;&lt;/td&gt;
+&lt;td width="97%"&gt;&lt;b&gt;Accidental Death and Permanent Disablement&lt;/b&gt; Up to USD 20,000&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="2" height="5px"&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="2" style="font-size:0.8em"&gt;Tune Protect Travel Assurance is underwritten by Union Insurance Company P.S.C.For Schedule of Benefits &amp; Terms &amp; Conditions. Click &lt;a href="https://www.tuneprotect.com/emeia/products/uae/UIC/travel-assurance/" target="_blank" style="color:blue;text-decoration:underline;"&gt;here&lt;/a&gt; 
+&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</PlanContent><PlanQualifiedPassengers/><PlanPricingBreakdown><PricingBreakdown><MinAge>76</MinAge><MaxAge>85</MaxAge><Gender>B</Gender><CurrencyCode>AED</CurrencyCode><PremiumAmount>127.17</PremiumAmount><PremiumBreakdown><PremiumCharges><Charges><Charge><SequenceNo>1</SequenceNo><RateType>Base Premium</RateType><PercentageValue/><AmountValue>121.11</AmountValue></Charge><Charge><SequenceNo>2</SequenceNo><RateType>VAT</RateType><PercentageValue>5.00</PercentageValue><AmountValue>6.06</AmountValue></Charge></Charges></PremiumCharges></PremiumBreakdown></PricingBreakdown></PlanPricingBreakdown><PlanType>Travel Assurance (Covid Plus)</PlanType></UpsellPlan></UpsellPlans></UpsellPlanGroup><UpsellPlanGroup><UpsellPlans><UpsellPlan><PlanCode>AE2-API-CANCELLATION-OUTBOUND-COVID PLUS-PLATINUM</PlanCode><SSRFeeCode>INSB1_AE2APITC_CP_PL_OB</SSRFeeCode><CurrencyCode>AED</CurrencyCode><TotalPremiumAmount>161.85</TotalPremiumAmount><TotalCoverageAmount>0</TotalCoverageAmount><PlanPremiumChargeType>PerPassenger</PlanPremiumChargeType><PlanTitle>Travel Cancellation Assurance - Platinum Covid Plus Plan</PlanTitle><PlanDesc>Outbound, Platinum (Covid Plus)</PlanDesc><PlanAdditionalInfoTitle>Travel Cancellation Assurance - Platinum Covid Plus Plan</PlanAdditionalInfoTitle><PlanAdditionalInfoDesc/><PlanYesDesc/><PlanNoDesc/><PlanNoConsideration/><PlanTnC/><IsDefaultPlan>false</IsDefaultPlan><PlanContent>&lt;table width="100%" cellspacing="0" cellpadding="3" border="0" style="font-family: Tahoma, Arial, Sans-Serif; font-size: 1em;"&gt;
+&lt;td width="3%" align="center"&gt;&lt;img src="https://s3-ap-southeast-1.amazonaws.com/tuneprotect.com-emeia/images/dot_black.gif" /&gt;&lt;/td&gt;
+&lt;td width="97%"&gt;&lt;b&gt;1- 7 Days&lt;/b&gt; Up to USD 3,000&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td width="3%" align="center"&gt;&lt;img src="https://s3-ap-southeast-1.amazonaws.com/tuneprotect.com-emeia/images/dot_black.gif" /&gt;&lt;/td&gt;
+&lt;td width="97%"&gt;&lt;b&gt;8-15 Days&lt;/b&gt; Up to USD 3,500&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td width="3%" align="center"&gt;&lt;img src="https://s3-ap-southeast-1.amazonaws.com/tuneprotect.com-emeia/images/dot_black.gif" /&gt;&lt;/td&gt;
+&lt;td width="97%"&gt;&lt;b&gt;16-30 Days&lt;/b&gt; Up to USD 4,000&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="2" height="5px"&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="2" style="font-size:0.8em"&gt;Tune Protect Travel Cancellation Assurance is underwritten by Union Insurance Company P.S.C.For Schedule of Benefits &amp; Terms &amp; Conditions. Click &lt;a href="https://www.tuneprotect.com/emeia/products/uae/UIC/travel-cancellation-assurance" target="_blank" style="color:blue;text-decoration:underline;"&gt;here&lt;/a&gt; 
+&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</PlanContent><PlanQualifiedPassengers/><PlanPricingBreakdown><PricingBreakdown><MinAge>2</MinAge><MaxAge>999</MaxAge><Gender>B</Gender><CurrencyCode>AED</CurrencyCode><PremiumAmount>161.85</PremiumAmount><PremiumBreakdown><PremiumCharges><Charges><Charge><SequenceNo>1</SequenceNo><RateType>Base Premium</RateType><PercentageValue/><AmountValue>154.14</AmountValue></Charge><Charge><SequenceNo>2</SequenceNo><RateType>VAT</RateType><PercentageValue>5.00</PercentageValue><AmountValue>7.71</AmountValue></Charge></Charges></PremiumCharges></PremiumBreakdown></PricingBreakdown></PlanPricingBreakdown><PlanType>Travel Cancellation Assurance (Covid Plus)</PlanType></UpsellPlan></UpsellPlans></UpsellPlanGroup><UpsellPlanGroup><UpsellPlans><UpsellPlan><PlanCode>AE2-API-CANCELLATION-OUTBOUND-COVID PLUS-GOLD</PlanCode><SSRFeeCode>INSB1_AE2APITC_CP_GO_OB</SSRFeeCode><CurrencyCode>AED</CurrencyCode><TotalPremiumAmount>127.17</TotalPremiumAmount><TotalCoverageAmount>0</TotalCoverageAmount><PlanPremiumChargeType>PerPassenger</PlanPremiumChargeType><PlanTitle>Travel Cancellation Assurance - Gold Covid Plus Plan</PlanTitle><PlanDesc>Outbound, Gold (Covid Plus)</PlanDesc><PlanAdditionalInfoTitle>Travel Cancellation Assurance - Gold Covid Plus Plan</PlanAdditionalInfoTitle><PlanAdditionalInfoDesc/><PlanYesDesc/><PlanNoDesc/><PlanNoConsideration/><PlanTnC/><IsDefaultPlan>false</IsDefaultPlan><PlanContent>&lt;table width="100%" cellspacing="0" cellpadding="3" border="0" style="font-family: Tahoma, Arial, Sans-Serif; font-size: 1em;"&gt;
+&lt;td width="3%" align="center"&gt;&lt;img src="https://s3-ap-southeast-1.amazonaws.com/tuneprotect.com-emeia/images/dot_black.gif" /&gt;&lt;/td&gt;
+&lt;td width="97%"&gt;&lt;b&gt;1- 7 Days&lt;/b&gt; Up to USD 2,000&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td width="3%" align="center"&gt;&lt;img src="https://s3-ap-southeast-1.amazonaws.com/tuneprotect.com-emeia/images/dot_black.gif" /&gt;&lt;/td&gt;
+&lt;td width="97%"&gt;&lt;b&gt;8-15 Days&lt;/b&gt; Up to USD 2,500&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td width="3%" align="center"&gt;&lt;img src="https://s3-ap-southeast-1.amazonaws.com/tuneprotect.com-emeia/images/dot_black.gif" /&gt;&lt;/td&gt;
+&lt;td width="97%"&gt;&lt;b&gt;16-30 Days&lt;/b&gt; Up to USD 3,000&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="2" height="5px"&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="2" style="font-size:0.8em"&gt;Tune Protect Travel Cancellation Assurance is underwritten by Union Insurance Company P.S.C.For Schedule of Benefits &amp; Terms &amp; Conditions. Click &lt;a href="https://www.tuneprotect.com/emeia/products/uae/UIC/travel-cancellation-assurance" target="_blank" style="color:blue;text-decoration:underline;"&gt;here&lt;/a&gt; 
+&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</PlanContent><PlanQualifiedPassengers/><PlanPricingBreakdown><PricingBreakdown><MinAge>2</MinAge><MaxAge>999</MaxAge><Gender>B</Gender><CurrencyCode>AED</CurrencyCode><PremiumAmount>127.17</PremiumAmount><PremiumBreakdown><PremiumCharges><Charges><Charge><SequenceNo>1</SequenceNo><RateType>Base Premium</RateType><PercentageValue/><AmountValue>121.11</AmountValue></Charge><Charge><SequenceNo>2</SequenceNo><RateType>VAT</RateType><PercentageValue>5.00</PercentageValue><AmountValue>6.06</AmountValue></Charge></Charges></PremiumCharges></PremiumBreakdown></PricingBreakdown></PlanPricingBreakdown><PlanType>Travel Cancellation Assurance (Covid Plus)</PlanType></UpsellPlan></UpsellPlans></UpsellPlanGroup><UpsellPlanGroup><UpsellPlans><UpsellPlan><PlanCode>AE2-API-CANCELLATION-OUTBOUND-COVID PLUS-SILVER</PlanCode><SSRFeeCode>INSB1_AE2APITC_CP_SL_OB</SSRFeeCode><CurrencyCode>AED</CurrencyCode><TotalPremiumAmount>104.04</TotalPremiumAmount><TotalCoverageAmount>0</TotalCoverageAmount><PlanPremiumChargeType>PerPassenger</PlanPremiumChargeType><PlanTitle>Travel Cancellation Assurance - Silver Covid Plus Plan</PlanTitle><PlanDesc>Outbound, Silver (Covid Plus)</PlanDesc><PlanAdditionalInfoTitle>Travel Cancellation Assurance - Silver Covid Plus Plan</PlanAdditionalInfoTitle><PlanAdditionalInfoDesc/><PlanYesDesc/><PlanNoDesc/><PlanNoConsideration/><PlanTnC/><IsDefaultPlan>false</IsDefaultPlan><PlanContent>&lt;table width="100%" cellspacing="0" cellpadding="3" border="0" style="font-family: Tahoma, Arial, Sans-Serif; font-size: 1em;"&gt;
+&lt;td width="3%" align="center"&gt;&lt;img src="https://s3-ap-southeast-1.amazonaws.com/tuneprotect.com-emeia/images/dot_black.gif" /&gt;&lt;/td&gt;
+&lt;td width="97%"&gt;&lt;b&gt;1- 7 Days&lt;/b&gt; Up to USD 1,500&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td width="3%" align="center"&gt;&lt;img src="https://s3-ap-southeast-1.amazonaws.com/tuneprotect.com-emeia/images/dot_black.gif" /&gt;&lt;/td&gt;
+&lt;td width="97%"&gt;&lt;b&gt;8-15 Days&lt;/b&gt; Up to USD 2,000&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td width="3%" align="center"&gt;&lt;img src="https://s3-ap-southeast-1.amazonaws.com/tuneprotect.com-emeia/images/dot_black.gif" /&gt;&lt;/td&gt;
+&lt;td width="97%"&gt;&lt;b&gt;16-30 Days&lt;/b&gt; Up to USD 2,500&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="2" height="5px"&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="2" style="font-size:0.8em"&gt;Tune Protect Travel Cancellation Assurance is underwritten by Union Insurance Company P.S.C.For Schedule of Benefits &amp; Terms &amp; Conditions. Click &lt;a href="https://www.tuneprotect.com/emeia/products/uae/UIC/travel-cancellation-assurance" target="_blank" style="color:blue;text-decoration:underline;"&gt;here&lt;/a&gt; 
+&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</PlanContent><PlanQualifiedPassengers/><PlanPricingBreakdown><PricingBreakdown><MinAge>2</MinAge><MaxAge>999</MaxAge><Gender>B</Gender><CurrencyCode>AED</CurrencyCode><PremiumAmount>104.04</PremiumAmount><PremiumBreakdown><PremiumCharges><Charges><Charge><SequenceNo>1</SequenceNo><RateType>Base Premium</RateType><PercentageValue/><AmountValue>99.09</AmountValue></Charge><Charge><SequenceNo>2</SequenceNo><RateType>VAT</RateType><PercentageValue>5.00</PercentageValue><AmountValue>4.95</AmountValue></Charge></Charges></PremiumCharges></PremiumBreakdown></PricingBreakdown></PlanPricingBreakdown><PlanType>Travel Cancellation Assurance (Covid Plus)</PlanType></UpsellPlan></UpsellPlans></UpsellPlanGroup></AvailableUpsellPlans></GenericResponse></GetAvailablePlansOTAWithRidersResponse></soap:Body></soap:Envelope>
