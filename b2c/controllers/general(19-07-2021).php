@@ -120,7 +120,7 @@ class General extends CI_Controller {
           $filter = array (
         'top_destination' => ACTIVE 
     );
-          $data_list = $this->custom_db->single_table_records ( 'Car_Airport', '*', $filter, 0, 100000, array (
+          $data_list = $this->custom_db->single_table_records ( 'car_airport', '*', $filter, 0, 100000, array (
         'top_destination' => 'DESC'
          
     ) );
@@ -299,7 +299,7 @@ class General extends CI_Controller {
           $filter = array (
         'car_inner_top_destination' => ACTIVE 
     );
-          $data_list = $this->custom_db->single_table_records ( 'Car_Airport', '*', $filter, 0, 100000, array (
+          $data_list = $this->custom_db->single_table_records ( 'car_airport', '*', $filter, 0, 100000, array (
         'car_inner_top_destination' => 'DESC'
          
     ) );
@@ -471,7 +471,7 @@ class General extends CI_Controller {
           $filter = array (
         'top_destination' => ACTIVE 
     );
-          $data_list = $this->custom_db->single_table_records ( 'Car_Airport', '*', $filter, 0, 100000, array (
+          $data_list = $this->custom_db->single_table_records ( 'car_airport', '*', $filter, 0, 100000, array (
         'top_destination' => 'DESC'
          
     ) );
@@ -731,7 +731,7 @@ class General extends CI_Controller {
           $filter = array (
         'top_destination' => ACTIVE 
     );
-          $data_list = $this->custom_db->single_table_records ( 'Car_Airport', '*', $filter, 0, 100000, array (
+          $data_list = $this->custom_db->single_table_records ( 'car_airport', '*', $filter, 0, 100000, array (
         'top_destination' => 'DESC'
          
     ) );

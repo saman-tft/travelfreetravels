@@ -1,5 +1,8 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 require_once('InsuranceInterface.php');
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 // error_reporting(E_ALL);
 /**
  *
@@ -8,9 +11,9 @@ require_once('InsuranceInterface.php');
  * @author Saman <saman.teamtft@gmail.com>
  * @version V1
  */
-class InsuranceService implements InsuranceInterface
+class InsuranceService
 {
-    protected $insuranceService;
+    private $insuranceService;
 
     public function __construct(InsuranceInterface $insuranceService) {
         $this->insuranceService = $insuranceService;
@@ -28,7 +31,7 @@ class InsuranceService implements InsuranceInterface
     public function getFormattedApiRequest(Array $requestData): Array
     {
         try{
-            $formattedApiRequest = $this->insuranceService->getFormattedHeader($requestData);
+            $formattedApiRequest = $this->insuranceService->getFormattedApiRequest($requestData);
             return $formattedApiRequest;
             } catch(Exception $e){
                 throw $e;
@@ -37,7 +40,7 @@ class InsuranceService implements InsuranceInterface
     public function getRawApiResponse(Array $request): Array
     {
         try{
-            $rawApiResponse = $this->insuranceService->getFormattedHeader($request);
+            $rawApiResponse = $this->insuranceService->getRawApiResponse($request);
             return $rawApiResponse;
             } catch(Exception $e){
                 throw $e;
@@ -46,7 +49,7 @@ class InsuranceService implements InsuranceInterface
     public function getFormattedApiResponse(Array $rawApiResponseData): Array
     {
         try{
-            $formattedApiRequest = $this->insuranceService->getFormattedHeader($rawApiResponseData);
+            $formattedApiRequest = $this->insuranceService->getFormattedApiResponse($rawApiResponseData);
             return $formattedApiRequest;
             } catch(Exception $e){
                 throw $e;

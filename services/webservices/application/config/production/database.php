@@ -56,7 +56,7 @@ $db['default']['db_debug'] = FALSE;*/
 
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';
-$db['default']['password'] = 'test123';
+$db['default']['password'] = 'root';
 $db['default']['database'] = 'travelfreetravels_services';
 $db['default']['db_debug'] = TRUE;
 

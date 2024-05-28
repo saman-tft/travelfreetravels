@@ -1,5 +1,8 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 require_once('InsuranceInterface.php');
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 // error_reporting(E_ALL);
 /**
  *
@@ -38,11 +41,10 @@ class Protect implements InsuranceInterface
     public function getFormattedHeader(array $headerData): array
     {
         if (valid_array($headerData) == true && $headerData !== '' && $headerData !== NULL && (isset($headerData['status']) && $headerData['status'] === 1)) {
-            $headerName = $headerData['headerName'];
-            $rawHeaderData = $headerData['rawHeaderData'];
+            $headerName = $headerData['method_name'];
             switch ($headerName) {
                 case 'GetAvailablePlansOTAWithRiders':
-                    $formattedHeaderData = $this->get_GetAvailablePlansOTAWithRiders_Request_Header($rawHeaderData);
+                    $formattedHeaderData = $this->get_GetAvailablePlansOTAWithRiders_Request_Header($headerData);
                     break;
                 default:
                     throw new Exception("Invalid header name");
@@ -59,10 +61,9 @@ class Protect implements InsuranceInterface
 
         if ($requestData !== '' && $requestData !== NULL && (valid_array($requestData) == true) && isset($requestData['status']) && $requestData['status'] === 1) {
             $requestName = $requestData['method_name'];
-            $rawRequestData = $requestData['data'];
             switch ($requestName) {
                 case 'GetAvailablePlansOTAWithRiders':
-                    $formattedApiRequest = $this->get_GetAvailablePlansOTAWithRiders_Request($rawRequestData);
+                    $formattedApiRequest = $this->get_GetAvailablePlansOTAWithRiders_Request($requestData);
                     break;
                 default:
                     throw new Exception("Invalid request name provided");
@@ -86,10 +87,10 @@ class Protect implements InsuranceInterface
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
             $rawApiResponse = curl_exec($ch);
             if (curl_errno($ch)) {
-                // request couldn't be sent
                 $response['message'] = 'Couldn\'t send request: ' . curl_error($ch);
-                $response['data'] = $rawApiResponse;
+                $response['data'] = '';
                 $response['status'] = 0;
+                $this->insuranceLogger($request['id'], $request['data'], $response['message'], $request['method_name'], 'error', $response['status']);
             } else {
                 $resultStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
                 if ($resultStatus == 200) {
@@ -97,11 +98,13 @@ class Protect implements InsuranceInterface
                     $response['message'] = '';
                     $response['data'] = $rawApiResponse;
                     $response['status'] = 1;
+                    $this->insuranceLogger($request['id'], $request['data'], $response['data'], $request['method_name'], $request['log_type'], $response['status']);
                 } else {
                     //server responded with a http error
                     $response['message'] = 'Request failed: HTTP status code: ' . $resultStatus;
-                    $response['data'] = $rawApiResponse;
+                    $response['data'] = '';
                     $response['status'] = 0;
+                    $this->insuranceLogger($request['id'], $request['data'],  $response['message'], $request['method_name'], 'error', $response['status']);
                 }
             }
         } else {
@@ -115,10 +118,9 @@ class Protect implements InsuranceInterface
     {
         if ($rawApiResponse !== '' && $rawApiResponse !== NULL && (valid_array($rawApiResponse) == true) && isset($rawApiResponse['status']) && $rawApiResponse['status'] === 1) {
             $apiMethodName = $rawApiResponse['method_name'];
-            $rawApiResponseData = $rawApiResponse['data'];
             switch ($apiMethodName) {
                 case 'GetAvailablePlansOTAWithRiders':
-                    $response = $this->process_GetAvailablePlansOTAWithRidersResponse($rawApiResponseData);
+                    $response = $this->process_GetAvailablePlansOTAWithRidersResponse($rawApiResponse);
                     break;
                 default:
                     throw new Exception("Invalid api method name provided");
@@ -188,13 +190,13 @@ class Protect implements InsuranceInterface
 
 
 
-    private function get_GetAvailablePlansOTAWithRiders_Request($request = array()): array
+    private function get_GetAvailablePlansOTAWithRiders_Request(array $requestData): array
     {
-        if ((is_array($request) == true) && isset($request['status']) && $request['status'] === 1) {
+        if ((is_array($requestData) == true) && isset($requestData['status']) && $requestData['status'] === 1) {
             $response['status'] = 1;
-            $searchData = $request['data']['search_data'];
-            $segmentDetails = $request['data']['segment_details'];
-            $header = $request['data']['header'];
+            $searchData = $requestData['data']['search_data'];
+            $segmentDetails = $requestData['data']['segment_details'];
+            $header = $requestData['data']['header'];
             $authHeader = $this->getAuthHeader();
             $currentFlightInformation = $this->formatFlightInformationToXML($searchData, $segmentDetails);
             $response['data'] = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://ZEUSTravelInsuranceGateway/WebServices">
@@ -203,7 +205,7 @@ class Protect implements InsuranceInterface
                 <GetAvailablePlansOTAWithRiders xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
                 <GenericRequestOTALite>'
                 . $authHeader .
-                $header['data'] .
+                $header .
                 $currentFlightInformation
                 . '</GenericRequestOTALite>
             </GetAvailablePlansOTAWithRiders>
@@ -281,7 +283,6 @@ class Protect implements InsuranceInterface
         $request .= '</Flights>';
         $request = '
             <Flights>
-            <Flight>
             <DepartCountryCode>AE</DepartCountryCode>
             <DepartStationCode></DepartStationCode>
             <ArrivalCountryCode>IN</ArrivalCountryCode>
@@ -292,9 +293,8 @@ class Protect implements InsuranceInterface
             <ReturnDateTime></ReturnDateTime>
             <DepartFlightNo>638</DepartFlightNo>
             <ReturnFlightNo></ReturnFlightNo>
-            </Flight>
         </Flights>';
-        
+
         return $request;
     }
 
@@ -305,8 +305,8 @@ class Protect implements InsuranceInterface
 
     private function process_GetAvailablePlansOTAWithRidersResponse(array $rawApiResponse)
     {
-        $xmlStartPosition = strpos($rawApiResponse['response'], '<?xml');
-        $xmlResponse = substr($rawApiResponse['response'], $xmlStartPosition);
+        $xmlStartPosition = strpos($rawApiResponse['data'], '<?xml');
+        $xmlResponse = substr($rawApiResponse['data'], $xmlStartPosition);
         //conversion of xml to array starts here
         $xml = simplexml_load_string($xmlResponse);
         $rawResponseArray = $this->convertToArray($xml->asXML());
@@ -458,4 +458,43 @@ class Protect implements InsuranceInterface
 
         return ($xml_array);
     }
+    private function insuranceLogger($id, $request, $response, $methodName, $logType, $status) {
+        $log_entry = "\n========== BEGIN REQUEST/RESPONSE ==========\n";
+        $log_entry .= "$logType ID: $id\n";
+        $log_entry .= "Request Method Name: $methodName\n";
+        $log_entry .= "Response Status: $status\n";
+        $log_entry .= "Timestamp: " . date('Y-m-d H:i:s') . "\n";
+        $log_entry .= "----------BEGIN REQUEST ----------\n";
+        $log_entry .= $request . "\n";
+        $log_entry .= "----------END REQUEST ----------\n";
+        $log_entry .= "----------BEGIN RESPONSE ----------\n";
+        $log_entry .= $response . "\n";
+        $log_entry .= "----------END RESPONSE ----------\n";
+        $log_entry .= "========== END REQUEST/RESPONSE ==========\n";
+
+
+        $log_dir = BASEPATH . "../logs/insurance_logs/protect_logs";
+        $log_file = "{$log_dir}/" . "{$logType}_log" . '.log';
+    
+        if (!is_dir($log_dir)) {
+            if (!mkdir($log_dir, 0755, true)) {
+                log_message('error', 'Unable to create log directory: ' . $log_dir);
+                return;
+            }
+        }
+    
+        if (!file_exists($log_file)) {
+            if (!touch($log_file)) {
+                log_message('error', 'Unable to create log file: ' . $log_file);
+                return;
+            }
+        }
+    
+        if (!write_file($log_file, $log_entry, 'a')) {
+            log_message('error', 'Unable to write to log file: ' . $log_file);
+        } else {
+            log_message('debug', 'Successfully wrote to log file: ' . $log_file);
+        }
+    }  
+    
 }

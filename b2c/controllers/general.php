@@ -334,7 +334,7 @@ class General extends CI_Controller {
           $filter = array (
         'top_destination' => ACTIVE 
     );
-          $data_list = $this->custom_db->single_table_records ( 'Car_Airport', '*', $filter, 0, 100000, array (
+          $data_list = $this->custom_db->single_table_records ( 'car_airport', '*', $filter, 0, 100000, array (
         'top_destination' => 'DESC'
          
     ) );
@@ -536,7 +536,7 @@ class General extends CI_Controller {
                 $this->load->model('car_model');
     
                 $filter = array ('top_destination' => ACTIVE);
-                $data_list = $this->custom_db->single_table_records ( 'Car_Airport', '*', $filter, 0, 100000, array (
+                $data_list = $this->custom_db->single_table_records ( 'car_airport', '*', $filter, 0, 100000, array (
                 'top_destination' => 'DESC') );
                 $page_data['second_car_destination_package'] = $this->Package_Model->car_get_package_top_destination_home();
             }
@@ -770,7 +770,7 @@ class General extends CI_Controller {
             $this->load->model('car_model');
             
             $filter = array ('car_inner_top_destination' => ACTIVE );
-            $data_list = $this->custom_db->single_table_records ( 'Car_Airport', '*', $filter, 0, 100000, array ('car_inner_top_destination' => 'DESC'));
+            $data_list = $this->custom_db->single_table_records ( 'car_airport', '*', $filter, 0, 100000, array ('car_inner_top_destination' => 'DESC'));
             
             //This code added to bring view images in same format @start
             foreach ($data_list['data'] as $CarTopKey => $CarTopValue) {
@@ -781,7 +781,7 @@ class General extends CI_Controller {
             
             $perfect_car_filter = array ('car_perfect_package' => ACTIVE,'car_perfect_packages_status' => ACTIVE );
             
-            $perfect_car_data_list = $this->custom_db->single_table_records ( 'Car_Airport', '*', $perfect_car_filter, 0, 100000, array ('car_perfect_package' => 'DESC') );
+            $perfect_car_data_list = $this->custom_db->single_table_records ( 'car_airport', '*', $perfect_car_filter, 0, 100000, array ('car_perfect_package' => 'DESC') );
             
             foreach ($perfect_car_data_list['data'] as $perfect_CarTopKey => $perfect_CarTopValue) {
                 $perfect_car_data_list['data'][$perfect_CarTopKey]['image']=$perfect_CarTopValue['image2'];
@@ -971,7 +971,7 @@ class General extends CI_Controller {
           $filter = array (
         'top_destination' => ACTIVE 
     );
-          $data_list = $this->custom_db->single_table_records ( 'Car_Airport', '*', $filter, 0, 100000, array (
+          $data_list = $this->custom_db->single_table_records ( 'car_airport', '*', $filter, 0, 100000, array (
         'top_destination' => 'DESC'
          
     ) );
@@ -1241,7 +1241,7 @@ class General extends CI_Controller {
           $filter = array (
         'top_destination' => ACTIVE 
     );
-          $data_list = $this->custom_db->single_table_records ( 'Car_Airport', '*', $filter, 0, 100000, array (
+          $data_list = $this->custom_db->single_table_records ( 'car_airport', '*', $filter, 0, 100000, array (
         'top_destination' => 'DESC'
          
     ) );

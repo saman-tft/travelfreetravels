@@ -1,20 +1,42 @@
-<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://ZEUSTravelInsuranceGateway/WebServices">
-        <soapenv:Header/>
-        <soapenv:Body>
-            <GetAvailablePlansOTAWithRiders xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
-                <GenericRequestOTALite><Authentication>
-                    <Username>UAT_DEMO</Username>
-                    <Password>ypHALsJ3EG3p</Password>
-                 </Authentication><Header>
+<?xml version="1.0" encoding="utf-8"?>
+        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+        <soap:Body>
+        <ConfirmPurchase xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
+        <GenericRequest><web:Authentication>
+        <web:Username>UAT_DEMO</web:Username>
+        <web:Password>ypHALsJ3EG3p</web:Password>
+     </web:Authentication><Header>
             <Channel>IBE_B2BAE</Channel>
+            <ItineraryID></ItineraryID>
+            <PNR>V7NM9W</PNR>
+            <PolicyNo/>
+            <PurchaseDate>2024-05-23 18:00:00</PurchaseDate>
+            <SSRFeeCode>INSC</SSRFeeCode>
             <Currency>AED</Currency>
+            <TotalPremium>0</TotalPremium>
             <CountryCode>EN</CountryCode>
             <CultureCode>EN</CultureCode>
             <TotalAdults>1</TotalAdults>
             <TotalChild>0</TotalChild>
             <TotalInfants>0 </TotalInfants>
-         </Header>
+         </Header><ContactDetails>
+        <ContactPerson>asd dsa</ContactPerson>
+        <Address1></Address1>
+        <Address2></Address2>
+        <Address3/>
+        <HomePhoneNum/>
+        <MobilePhoneNum>9869555696</MobilePhoneNum>
+        <OtherPhoneNum/>
+        <PostCode></PostCode>
+        <City></City>
+        <State></State>
+        <Country></Country>
+        <EmailAddress>asd@gmail.com</EmailAddress>
+        </ContactDetails>
     <Flights>   
+    <Flight>   
     <DepartCountryCode>AE</DepartCountryCode>
     <DepartStationCode></DepartStationCode>
     <ArrivalCountryCode>IN</ArrivalCountryCode>
@@ -25,7 +47,25 @@
     <ReturnDateTime></ReturnDateTime>
     <DepartFlightNo>638</DepartFlightNo>
     <ReturnFlightNo></ReturnFlightNo>
- </Flights></GenericRequestOTALite>
-        </GetAvailablePlansOTAWithRiders>
-     </soapenv:Body>
-  </soapenv:Envelope>
+    </Flight>
+ </Flights><Passengers><Passenger>
+            <IsInfant>0</IsInfant>
+            <FirstName>asd</FirstName>
+            <LastName>dsa</LastName>
+            <Gender>Male</Gender>
+            <DOB> 00:00:00</DOB>
+            <Age>12</Age>
+            <IdentityType>Passport</IdentityType>
+            <IdentityNo>123456</IdentityNo>
+            <IsQualified>true</IsQualified>
+            <Nationality>NP</Nationality>
+            <CountryOfResidence>NP</CountryOfResidence>
+            <SelectedPlanCode></SelectedPlanCode>
+            <SelectedSSRFeeCode></SelectedSSRFeeCode>
+            <CurrencyCode></CurrencyCode>
+            <PassengerPremiumAmount>0</PassengerPremiumAmount>
+            </Passenger></Passengers>
+        </GenericRequest>
+        </ConfirmPurchase>
+        </soap:Body>
+        </soap:Envelope>

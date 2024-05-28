@@ -2446,7 +2446,7 @@ if(isset($_POST['id']))
 				$config ['max_height'] = '';
 				$config ['remove_spaces'] = false;
 				// UPDATE
-				$temp_record = $this->custom_db->single_table_records ( 'Car_Airport', 'image', array (
+				$temp_record = $this->custom_db->single_table_records ( 'car_airport', 'image', array (
 						'origin' => $city_origin 
 				) );
 				$top_destination_image = $temp_record ['data'] [0] ['image'];
@@ -2469,7 +2469,7 @@ if(isset($_POST['id']))
 				// exit;
 				// debug($image_data);exit;
 				
-				$this->custom_db->update_record ( 'Car_Airport', array (
+				$this->custom_db->update_record ( 'car_airport', array (
 						'top_destination' => ACTIVE,
 						'image' => $image_data ['file_name'] 
 				), array (
@@ -2483,18 +2483,18 @@ if(isset($_POST['id']))
 		$filter = array (
 				'top_destination' => ACTIVE 
 		);
-		// $country_list = $this->custom_db->single_table_records( 'Car_Airport', 'Country_Name_EN,Airport_ID,origin', array (
+		// $country_list = $this->custom_db->single_table_records( 'car_airport', 'Country_Name_EN,Airport_ID,origin', array (
 		// 		'top_destination !=' => '2' 
 		// ), 0, 1000000000, array (
 		// 		'Country_Name_EN' => 'ASC' 
 		// ) );
-		$country_list = $this->custom_db->single_table_records( 'Car_Airport', 'Airport_Name_EN,Airport_ID,origin', array (
+		$country_list = $this->custom_db->single_table_records( 'car_airport', 'Airport_Name_EN,Airport_ID,origin', array (
 				'top_destination !=' => '2' 
 		), 0, 1000000000, array (
 				'Airport_Name_EN' => 'ASC' 
 		) );
 		 //debug($country_list);exit;
-		$data_list = $this->custom_db->single_table_records ( 'Car_Airport', '*', $filter, 0, 100000, array (
+		$data_list = $this->custom_db->single_table_records ( 'car_airport', '*', $filter, 0, 100000, array (
 				'top_destination' => 'DESC'
 				 
 		) );
@@ -2531,7 +2531,7 @@ if(isset($_POST['id']))
 				$config ['remove_spaces'] = false;
 
 				// UPDATE
-				$temp_record = $this->custom_db->single_table_records ( 'Car_Airport', 'image2', array (
+				$temp_record = $this->custom_db->single_table_records ( 'car_airport', 'image2', array (
 						'origin' => $city_origin 
 				) );
 
@@ -2555,7 +2555,7 @@ if(isset($_POST['id']))
 				// exit;
 				// debug($image_data);exit;
 				
-				$this->custom_db->update_record ( 'Car_Airport', array (
+				$this->custom_db->update_record ( 'car_airport', array (
 						'car_inner_top_destination' => ACTIVE,
 						'image2' => $image_data ['file_name'] 
 				), array (
@@ -2569,18 +2569,18 @@ if(isset($_POST['id']))
 		$filter = array (
 				'car_inner_top_destination' => ACTIVE 
 		);
-		// $country_list = $this->custom_db->single_table_records( 'Car_Airport', 'Country_Name_EN,Airport_ID,origin', array (
+		// $country_list = $this->custom_db->single_table_records( 'car_airport', 'Country_Name_EN,Airport_ID,origin', array (
 		// 		'top_destination !=' => '2' 
 		// ), 0, 1000000000, array (
 		// 		'Country_Name_EN' => 'ASC' 
 		// ) );
-		$country_list = $this->custom_db->single_table_records( 'Car_Airport', 'Airport_Name_EN,Airport_ID,origin', array (
+		$country_list = $this->custom_db->single_table_records( 'car_airport', 'Airport_Name_EN,Airport_ID,origin', array (
 				'car_inner_top_destination !=' => '2' 
 		), 0, 1000000000, array (
 				'Airport_Name_EN' => 'ASC' 
 		) );
 		 //debug($country_list);exit;
-		$data_list = $this->custom_db->single_table_records ( 'Car_Airport', '*', $filter, 0, 100000, array (
+		$data_list = $this->custom_db->single_table_records ( 'car_airport', '*', $filter, 0, 100000, array (
 				'car_inner_top_destination' => 'DESC'
 				 
 		) );
@@ -2619,7 +2619,7 @@ if(isset($_POST['id']))
 				$config ['remove_spaces'] = false;
 
 				// UPDATE
-				$temp_record = $this->custom_db->single_table_records ( 'Car_Airport', 'image2', array (
+				$temp_record = $this->custom_db->single_table_records ( 'car_airport', 'image2', array (
 						'origin' => $city_origin 
 				) );
 
@@ -2643,7 +2643,7 @@ if(isset($_POST['id']))
 				// exit;
 				// debug($image_data);exit;
 				
-				$this->custom_db->update_record ( 'Car_Airport', array (
+				$this->custom_db->update_record ( 'car_airport', array (
 						'car_perfect_package' => ACTIVE,
 						'image2' => $image_data ['file_name'] 
 				), array (
@@ -2657,18 +2657,18 @@ if(isset($_POST['id']))
 		$filter = array (
 				'car_perfect_package' => ACTIVE
 		);
-		// $country_list = $this->custom_db->single_table_records( 'Car_Airport', 'Country_Name_EN,Airport_ID,origin', array (
+		// $country_list = $this->custom_db->single_table_records( 'car_airport', 'Country_Name_EN,Airport_ID,origin', array (
 		// 		'top_destination !=' => '2' 
 		// ), 0, 1000000000, array (
 		// 		'Country_Name_EN' => 'ASC' 
 		// ) );
-		$country_list = $this->custom_db->single_table_records( 'Car_Airport', 'Airport_Name_EN,Airport_ID,origin', array (
+		$country_list = $this->custom_db->single_table_records( 'car_airport', 'Airport_Name_EN,Airport_ID,origin', array (
 				'car_perfect_package !=' => '2' 
 		), 0, 1000000000, array (
 				'Airport_Name_EN' => 'ASC' 
 		) );
 		 //debug($country_list);exit;
-		$data_list = $this->custom_db->single_table_records ( 'Car_Airport', '*', $filter, 0, 100000, array (
+		$data_list = $this->custom_db->single_table_records ( 'car_airport', '*', $filter, 0, 100000, array (
 				'car_perfect_package' => 'DESC'
 				 
 		) );
@@ -2703,7 +2703,7 @@ if(isset($_POST['id']))
 				$config ['max_height'] = '';
 				$config ['remove_spaces'] = false;
 				// UPDATE
-				$temp_record = $this->custom_db->single_table_records ( 'Car_Airport', 'image', array (
+				$temp_record = $this->custom_db->single_table_records ( 'car_airport', 'image', array (
 						'origin' => $city_origin 
 				) );
 				$top_destination_image = $temp_record ['data'] [0] ['image'];
@@ -2779,7 +2779,7 @@ if(isset($_POST['id']))
 				$config ['max_height'] = '';
 				$config ['remove_spaces'] = false;
 				//UPDATE
-				$temp_record = $this->custom_db->single_table_records ( 'Car_Airport', 'image', array (
+				$temp_record = $this->custom_db->single_table_records ( 'car_airport', 'image', array (
 						'origin' => $city_origin 
 				) );
 				//debug($temp_record);exit;
@@ -2841,7 +2841,7 @@ if(isset($_POST['id']))
 				$config ['max_height'] = '';
 				$config ['remove_spaces'] = false;
 				// UPDATE
-				$temp_record = $this->custom_db->single_table_records ( 'Car_Airport', 'image', array (
+				$temp_record = $this->custom_db->single_table_records ( 'car_airport', 'image', array (
 						'origin' => $city_origin 
 				) );
 				$top_destination_image = $temp_record ['data'] [0] ['image'];
@@ -2938,7 +2938,7 @@ if(isset($_POST['id']))
 				$config ['max_height'] = '';
 				$config ['remove_spaces'] = false;
 				// UPDATE
-				$temp_record = $this->custom_db->single_table_records ( 'Car_Airport', 'image', array (
+				$temp_record = $this->custom_db->single_table_records ( 'car_airport', 'image', array (
 						'origin' => $city_origin 
 				) );
 				$top_destination_image = $temp_record ['data'] [0] ['image'];
@@ -3029,7 +3029,7 @@ if(isset($_POST['id']))
 				$config ['max_height'] = '';
 				$config ['remove_spaces'] = false;
 				//UPDATE
-				$temp_record = $this->custom_db->single_table_records ( 'Car_Airport', 'image', array (
+				$temp_record = $this->custom_db->single_table_records ( 'car_airport', 'image', array (
 						'origin' => $city_origin 
 				) );
 				//debug($temp_record);exit;

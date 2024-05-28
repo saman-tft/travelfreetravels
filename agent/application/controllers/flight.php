@@ -24,6 +24,7 @@ class Flight extends CI_Controller
         $this->load->model('user_model'); // we need to load user model to access provab sms library
         $this->load->library('provab_sms'); // we need this provab_sms library to send sms.
         $this->current_module = $this->config->item('current_module');
+        $this->load->model("insurance_model");
     }
     /**
      * FIXME : REMOVE THIS - Balu A
@@ -655,6 +656,7 @@ foreach($planId as $plan_k=>$plan_v){
             exit;
         }
         $post_params = $this->input->post();
+        // debug($post_params);die;
         if (valid_array($post_params) == false) {
             redirect(base_url());
         }
@@ -761,71 +763,19 @@ $insuranceAmount = 0;
                     $total_seg_cnt += count($segv);
                 }
                 if($post_params['isInsured'] == 1 && $post_params['insuranceId'] != NULL && $post_params['insuranceId'] != ''){
-                    $finalPlanDetails = [];
-                    $insurancePlansDetails= $this->custom_db->single_table_records('plan_retirement', '*', array('id'=>$post_params['insuranceId']));
-                    if($insurancePlansDetails['status'] == 1){
-                        $availableInsurancePlanDetails=json_decode($insurancePlansDetails['data'][0]['message'], true);
-                        $selectedPlanDetails = json_decode($post_params['selectedPlansJson'], true);
-                        foreach($post_params['identification_type'] as $k=>$v){
-                            $selectedPlanDetails[$k]['passengerDetails']['name'] = $selectedPlanDetails[$k]['passenger']; 
-                            $selectedPlanDetails[$k]['passengerDetails']['identificationType'] = $post_params['identification_type'][$k];
-                            $selectedPlanDetails[$k]['passengerDetails']['identificationNumber'] = $post_params['passenger_passport_number'][$k];
-                            $selectedPlanDetails[$k]['passengerDetails']['age'] = $selectedPlanDetails[$k]['passengerAge'];
-                            $selectedPlanDetails[$k]['passengerDetails']['gender'] = $selectedPlanDetails[$k]['passengerGender'];
-                            $selectedPlanDetails[$k]['passengerDetails']['dob'] = $selectedPlanDetails[$k]['passengerDOB'];
-                            $passengerDetails[] = $selectedPlanDetails[$k]['passengerDetails'];
-                          
-                        }
-                        $formattedArray['searchId'] = $search_id;
-                        $formattedArray['passengerDetails'] = $passengerDetails;
-                        $formattedArray['bookingPassengerDetails']['name'] = $selectedPlanDetails[0]['passenger']; 
-                         $formattedArray['bookingPassengerDetails']['email'] = $post_params['billing_email']; 
-                         $formattedArray['bookingPassengerDetails']['phoneNumber'] = $post_params['passenger_contact']; 
-                         $searchData = $this->flight_model->get_safe_search_data($search_id);
-                         $formattedArray['searchData'] = $searchData['data'];
-                         $formattedArray['SegmentDetails'] = $temp_token['token'][0]['SegmentDetails'];
-                        //  debug($selectedPlanDetails);
-                         $allAvailableInsurancePlans = json_decode($insurancePlansDetails['data'][0]['message'], true);
-                        //  debug($allAvailableInsurancePlans);
-                        //  die;
-                          foreach($selectedPlanDetails as $k=>$v){
-                            if($v['type'] == "Individual"){
-                                $planType = "perPassengerPlans";
-                            }else{
-                                $planType = "familyPlans";
-                            }
-                            $planCategory = $v['planType'];
-// $string = "Plans"
-
-// debug($formattedArray);die;
-                            foreach($allAvailableInsurancePlans[$planType][$planCategory.'Plans'] as $a_k=>$a_v){
-
-                                if($v['planId']== $a_v['PlanCode']){
-                                    $finalPlanDetails[$formattedArray['passengerDetails'][$k]['name']] = $a_v;
-
-                                    $insuranceAmount += (int) $a_v['TotalPremiumAmount'];
-                                    break;
-                                }
-
-                            }
-                         }
-                        $formattedArray['planDetails'] = $finalPlanDetails;
-                        $formattedArray['totalPrice'] = $insuranceAmount;
-                        $updateData['message'] = json_encode($formattedArray, true);
-                        $updateData['app_reference'] = $book_id;
-                        $updateData['sortcode'] = 1;
-                        $updateCondition['id'] = $post_params['insuranceId'];
-                         $upateStatus = $this->custom_db->update_record('plan_retirement', $updateData,$updateCondition);
-
-                        //  die("here");
-                        // $this->getSelectedInsuranceFullDetails($selectedPlanDetails, $availableInsurancePlanDetails);
-        
-                    }else{
-                        redirect(base_url() . 'index.php/flight/exception?op=Invalid Insurance Details&notification="Insurance Detils Not Found"');
+                    $insurancePlansDetails= json_decode(provab_decrypt($post_params['insuranceToken']), true);
+                    if($insurancePlansDetails['id'] !== $post_params['id']){
+                        //exceptio page
                     }
-                    
-        
-                    // $totalInsuranceAmount = $this->insurance_model->getTotalInsurancePrice($selectedPlans);
+                    $searchData = $this->flight_model->get_safe_search_data($search_id);
+                    if($searchData['status'] != 1){
+                        //no record found
+                    }
+                    $insuranceInsertion = $this->insurance_model->saveSelectedInsuranceDetails($book_id, $temp_token['token'][0]['SegmentDetails'], $post_params,$searchData);
+                   if($insuranceInsertion['status'] != 1){
+                    redirect(base_url() . 'index.php/flight/exception?op=Invalid Insurance Details&notification="Failed Insurance Creation"');
+                    }
+                    $insuranceAmount = $insuranceInsertion['total_amount'] ?? 0;
                 }
                 if ($post_params['booking_source'] == AMADEUS_FLIGHT_BOOKING_SOURCE) {
                     $discount_details = discount_details();
@@ -866,7 +816,6 @@ $insuranceAmount = 0;
             } else {
                 $domain_balance_status = $this->domain_management_model->verify_current_balance($agent_paybleamount['amount'], $agent_paybleamount['currency']);
             }
-            $this->custom_db->update_record('plan_retirement', array('app_reference' => $book_id), array('id' => $post_params['insurance_id']));
             // echo PAYU_PGI; exit;
             if ($domain_balance_status == true) {
                 //Save the Booking Data
@@ -1013,11 +962,14 @@ $insuranceAmount = 0;
         // run booking request and do booking
         $temp_booking = $this->module_model->unserialize_temp_booking_record($book_id, $temp_book_origin);
         $insuranceDetails = $this->custom_db->single_table_records('plan_retirement','message,sortcode', array('app_reference'=>$book_id));
-        // debug($insuranceDetails);
+        if($insuranceDetails['status'] == 1){
+        $insuranceStatus = $insuranceDetails['data'][0]['sortcode'] ?? 0;
         $insuranceDetails = json_decode($insuranceDetails['data'][0]['message'], true);
-        // $insuranceAmount = $insuranceDetails[''];
-        // debug($insuranceDetails);die;
-        $insuranceTotalAmount = $insuranceDetails['totalPrice'];
+        $insuranceTotalAmount = $insuranceDetails['totalPrice'] ?? 0;
+        }else{
+            $insuranceStatus = 0;
+            $insuranceTotalAmount = 0;
+        }
         //Delete the temp_booking record, after accessing
         //$this->module_model->delete_temp_booking_record ($book_id, $temp_book_origin);
 
@@ -1075,10 +1027,12 @@ $insuranceAmount = 0;
                         break;
                 }
                 // $this->ConfirmPurchase();
+                if($insuranceStatus == 1 && $booking['status'] == BOOKING_CONFIRMED){
                 $updateCondition['app_reference'] = $book_id;
                 $bookingId = $booking['data']['ticket']['TicketDetails'][0]['CommitBooking']['BookingDetails']['BookingId'];
                 $updateData['source'] = $insuranceTotalAmount;
                 $this->custom_db->update_record('flight_booking_transaction_details', $updateData, $updateCondition);
+                }
                 $this->ConfirmPurchase($insuranceDetails, $insuranceTotalAmount, $bookingId);
                 //Failed booking logs in separate file, FIXME ---------------------------
                 if (in_array($booking['status'], array(SUCCESS_STATUS, BOOKING_CONFIRMED, BOOKING_PENDING, BOOKING_FAILED, BOOKING_ERROR, BOOKING_HOLD, FAILURE_STATUS)) == true) {
@@ -1121,14 +1075,6 @@ $insuranceAmount = 0;
                         'BOOKING_PENDING',
                         'BOOKING_HOLD'
                     ))) {
-
-                        // Sms config & Checkpoint
-                        /* if (active_sms_checkpoint ( 'booking' )) {
-						$msg = "Dear " . $data ['name'] . " Thank you for Booking your ticket with us.Ticket Details will be sent to your email id";
-						$msg = urlencode ( $msg );
-						$sms_status = $this->provab_sms->send_msg ( $data ['phone'], $msg );
-						// return $sms_status;
-						} */
                         $this->session->set_userdata(array($book_id => '1'));
 
 
@@ -1139,9 +1085,15 @@ $insuranceAmount = 0;
                             $this->rewards->update_reward_earned_value($temp_booking, $book_id);
                             $this->rewards->update_earned_rewards_details($temp_booking, $book_id, "flight_booking_details");
                         }
+                        if($booking['status'] == BOOKING_CONFIRMED && $insuranceStatus == 1 && $data['status'] == 'BOOKING_CONFIRMED'){
+                            // redirect(base_url() . 'index.php/insurance/confirmPurchase/' . $book_id . '/' . $temp_booking['booking_source']);
+                            $this->ConfirmPurchase($insuranceDetails, $insuranceTotalAmount, $bookingId);
 
+                        }else{
+                            redirect(base_url() . 'index.php/voucher/flight/' . $book_id . '/' . $temp_booking['booking_source'] . '/' . $data['status'] . '/show_voucher');
 
-                        redirect(base_url() . 'index.php/voucher/flight/' . $book_id . '/' . $temp_booking['booking_source'] . '/' . $data['status'] . '/show_voucher');
+                        }
+
                     } else {
                         redirect(base_url() . 'index.php/flight/exception?op=booking_exception&notification=' . $booking['message']);
                     }
@@ -1243,8 +1195,10 @@ $insuranceAmount = 0;
         </ConfirmPurchase>
         </soap:Body>
         </soap:Envelope>';
-  
         
+        $testFile = fopen("newfile.xml", "w") or die("Unable to open file!");
+        fwrite($testFile, $request);
+        fclose($testFile);
         $request_url = "https://uat-tpe.tune2protect.com/ZeusAPI/Zeus.asmx";
         $username = PROTECT_TEST_USERNAME;
         $password = PROTECT_TEST_PASSWORD;
@@ -1770,7 +1724,7 @@ return $authHeader;
             $segmentDetails = json_decode(base64_decode($SegmentDetails), true);
             if (count($segmentDetails) > 0 && valid_array($segmentDetails) == true) {
                 $request = $this->get_GetAvailablePlansOTAWithRiders_Request($searchId, $segmentDetails);
-                   $testFile = fopen("newfile.xml", "w") or die("Unable to open file!");
+                   $testFile = fopen("newfile2.xml", "w") or die("Unable to open file!");
                             fwrite($testFile, $request['request']);
                             fclose($testFile);
                 $request_url = "https://uat-tpe.tune2protect.com/ZeusAPI/Zeus.asmx";

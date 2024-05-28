@@ -504,6 +504,9 @@ echo generate_low_balance_popup($FareDetails['_CustomerBuying'] + $FareDetails['
                                     <input type="hidden" id="selectedPlansJson" name="selectedPlansJson">
                                     <input type="hidden" id="isInsured" name="isInsured">
                                     <input type="hidden" id="insuranceId" name="insuranceId">
+                                    <input type="hidden" id="insuranceToken" name="insuranceToken">
+
+                                    
 
 
                                     <input type="hidden" name="total_price_with_rewards" value="<?= round($total_price_with_rewards) ?>">
@@ -551,10 +554,7 @@ echo generate_low_balance_popup($FareDetails['_CustomerBuying'] + $FareDetails['
                                                         <div class="inptalbox">
                                                             <div class="col-xs-3 spllty">
                                                                 <div class="selectedwrap">
-                                                                    <select 
-                                                                    class="mySelectBoxClass flyinputsnor name_title" name="name_title[]" 
-                                                                    id="passenger-title-<?= $pax_index ?>"
-                                                                    required="required">
+                                                                    <select class="mySelectBoxClass flyinputsnor name_title" name="name_title[]" id="passenger-title-<?= $pax_index ?>" required="required">
                                                                         <?php echo (is_adult($pax_index, $total_adult_count) ? $adult_title_options : $child_title_options) ?>
                                                                     </select>
                                                                 </div>
@@ -1804,6 +1804,8 @@ for (const planKey in plans) {
 <!-- const baseUrl = "<?php echo base_url(); ?>";
         const fetchUrl = baseUrl + `index.php/flight/GetAvailablePlansOTAWithRiders/<?php echo $searchId ?>/<?php echo $segmentDetails ?>`;
         modalBody.innerHTML = ' <img id ="loading" src="<?php echo SYSTEM_IMAGE_DIR . "loading.gif" ?>" alt="Loading..." />'; -->
+
+
 <script>
     document.getElementById("yesBtn").addEventListener("click", openModal);
     const modal = document.getElementById("modal");
@@ -1812,12 +1814,18 @@ for (const planKey in plans) {
 
     let selectedPlans = [];
     let currentPassenger = 1;
-    const totalPassengers = <?php echo $total_pax_count; ?>; // Get the total passenger count from PHP
-    let familyPlanSelected = false; // Flag to track if a family plan is already selected
+    const childrenCount = <?php echo $total_child_count ?>;
+    const infantCount = <?php echo $total_infant_count ?>;
+    const adultCount = <?php echo $total_adult_count ?>;
+    let passengerTypes = [];
+    const totalPassengers = <?php echo $total_pax_count; ?>;
+    let familyPlanSelected = false;
     const isInsuranceSelected = document.getElementById("isInsured");
     const insuranceIdInput = document.getElementById("insuranceId");
+    const insuranceTokenInput = document.getElementById("insuranceToken");
     const baseUrl = "<?php echo base_url(); ?>";
-    const fetchUrl = `${baseUrl}index.php/flight/GetAvailablePlansOTAWithRiders/<?php echo $searchId ?>/<?php echo $segmentDetails ?>`;
+    const fetchUrl = `${baseUrl}index.php/insurance/GetAvailablePlansOTAWithRiders/<?php echo $searchId ?>/<?php echo $segmentDetails ?>`;
+    const cache = {};
 
     closeBtn.onclick = function() {
         resetModal();
@@ -1838,33 +1846,93 @@ for (const planKey in plans) {
             displayErrorMessage("Please enter the names first.");
             return;
         }
+        if (!arePassengerDOBEntered()) {
+            displayErrorMessage("Please choose the date of birth first.");
+            return;
+        }
 
         modal.style.display = "block";
         showLoading();
-
-        fetch(fetchUrl)
-            .then(response => response.json())
-            .then(data => {
-                hideLoading();
-                showPlanOptions(data);
-                console.log(data);
-                insuranceIdInput.value = data.id ? data.id : 0;
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-                hideLoading();
-                modalBody.innerHTML = '<p>Error loading data. Please try again later.</p>';
-            });
+        if (cache['data']) {
+            data = cache['data'];
+                    id = data.id ?? 0;
+                    token = data.token ?? NULL;
+                    data = data.data ?? NULL;
+                    hideLoading();
+                    if (data && typeof data === 'object') {
+                        showPlanOptions(data);
+                        insuranceIdInput.value = id;
+                        insuranceTokenInput.value = token;
+                    } else {
+                        throw new Error('Invalid data format');
+                    }
+        } else {
+            fetch(fetchUrl)
+                .then(response => response.json())
+                .then(data => {
+                    cache['data'] = data;
+                    id = data.id ?? 0;
+                    token = data.token ?? NULL;
+                    data = data.data ?? NULL;
+                    hideLoading();
+                    if (data && typeof data === 'object') {
+                        showPlanOptions(data);
+                        insuranceIdInput.value = id;
+                        insuranceTokenInput.value = token;
+                    } else {
+                        throw new Error('Invalid data format');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    hideLoading();
+                    modalBody.innerHTML = '<p>Error loading data. Please try again later.</p>';
+                });
+        }
     }
 
     function arePassengerNamesEntered() {
         for (let i = 1; i <= totalPassengers; i++) {
             const firstName = document.getElementById(`passenger-first-name-${i}`).value.trim();
             const lastName = document.getElementById(`passenger-last-name-${i}`).value.trim();
-            const dateOfBirth = document.getElementById(`adult-date-picker-${i}`).value.trim();
 
-            if (!firstName || !lastName || !dateOfBirth) {
+            if (!firstName || !lastName) {
                 return false;
+            }
+        }
+        return true;
+    }
+
+    function arePassengerDOBEntered() {
+        let passengerIndex = 1;
+        if (adultCount > 0) {
+            for (let i = 1; i <= adultCount; i++) {
+                const dateOfBirth = document.getElementById(`adult-date-picker-${passengerIndex}`).value.trim();
+                passengerTypes.push('adult');
+                passengerIndex++;
+                if (!dateOfBirth) {
+                    return false;
+                }
+            }
+        }
+        if (childrenCount > 0) {
+            for (let i = 1; i <= childrenCount; i++) {
+                const dateOfBirth = document.getElementById(`child-date-picker-${passengerIndex}`).value.trim();
+                passengerTypes.push('child');
+                passengerIndex++;
+                if (!dateOfBirth) {
+                    return false;
+                }
+            }
+        }
+        if (infantCount > 0) {
+            for (let i = 1; i <= infantCount; i++) {
+                const dateOfBirth = document.getElementById(`infant-date-picker-${passengerIndex}`).value.trim();
+                passengerTypes.push('infant');
+                passengerIndex++;
+                if (!dateOfBirth) {
+                    return false;
+                }
             }
         }
         return true;
@@ -1900,7 +1968,13 @@ for (const planKey in plans) {
         <button id="familyPlanBtn">Family Plan</button>
         <button id="individualPlanBtn">Individual Plan</button>
     `;
+        if (!data.perPassengerPlans) {
+            data.perPassengerPlans = [];
 
+        }
+        if (!data.familyPlans) {
+            data.familyPlans = [];
+        }
         document.getElementById("familyPlanBtn").addEventListener("click", () => showFamilyPlans(data.familyPlans));
         document.getElementById("individualPlanBtn").addEventListener("click", () => showIndividualPlans(currentPassenger, data.perPassengerPlans));
     }
@@ -1919,7 +1993,7 @@ for (const planKey in plans) {
 
         let planExists = false;
         Object.values(familyPlans).forEach(plansArray => {
-            if (plansArray.length > 0) {
+            if (Array.isArray(plansArray) && plansArray.length > 0) {
                 planExists = true;
                 plansArray.forEach((plan, index) => {
                     const planElement = document.createElement('div');
@@ -1962,12 +2036,11 @@ for (const planKey in plans) {
     }
 
     function showIndividualPlans(passenger, individualPlans) {
-        console.log(individualPlans);
         const passengerName = getPassengerName(passenger);
         const passengerDOB = getPassengerDOB(passenger);
         const passengerAge = getPassengerAge(passengerDOB);
         const passengerGender = getPassengerGender(passenger);
-        
+
         modalBody.innerHTML = `
         <button id="goBackBtn">Go Back</button>
         <div id="individualPlans">
@@ -1987,52 +2060,98 @@ for (const planKey in plans) {
         const individualPlansContainer = document.getElementById("individualPlans");
 
         let planExists = false;
-        Object.values(individualPlans).forEach(plan => {
-            if (plan) {
-                if (passengerAge <= plan.MaxAge && passengerAge >= plan.MinAge &&(plan.Gender == "Both" || plan.Gender == passengerGender)) {
-                    planExists = true;
-                    const planElement = document.createElement('div');
-                    planElement.innerHTML = `
-                <h3>${plan.PlanTitle}</h3>
-                <p>${plan.CurrencyCode} ${plan.TotalPremiumAmount}</p>
-                <button id="selectIndividualPlan${plan.PlanCode}" class="individual-plan-select">Select</button>
-                <button id="viewDetailsIndividualPlan${plan.PlanCode}" class="view-details">View Details</button>
-                <div id="detailsIndividualPlan${plan.PlanCode}" style="display:none;">${plan.PlanContent}</div>
-            `;
-                    individualPlansContainer.appendChild(planElement);
+        Object.keys(individualPlans).forEach(planType => {
+            const planArray = individualPlans[planType];
+            if (Array.isArray(planArray)) {
+                planArray.forEach(plan => {
+                    if (plan) {
+                        if (passengerAge <= plan.MaxAge && passengerAge >= plan.MinAge && (plan.Gender == "Both" || plan.Gender == passengerGender)) {
+                            planExists = true;
+                            const planElement = document.createElement('div');
+                            planElement.innerHTML = `
+                                <h3>${plan.PlanTitle}</h3>
+                                <p>${plan.CurrencyCode} ${plan.TotalPremiumAmount}</p>
+                                <button id="selectIndividualPlan${plan.PlanCode}" class="individual-plan-select" data-passenger="${passenger}">Select</button>
+                                <button id="viewDetailsIndividualPlan${plan.PlanCode}" class="view-details">View Details</button>
+                                <div id="detailsIndividualPlan${plan.PlanCode}" style="display:none;">${plan.PlanContent}</div>
+                            `;
+                            individualPlansContainer.appendChild(planElement);
 
-                    document.getElementById(`viewDetailsIndividualPlan${plan.PlanCode}`).addEventListener("click", () => {
-                        const details = document.getElementById(`detailsIndividualPlan${plan.PlanCode}`);
-                        details.style.display = details.style.display === "none" ? "block" : "none";
-                    });
+                            document.getElementById(`viewDetailsIndividualPlan${plan.PlanCode}`).addEventListener("click", () => {
+                                const details = document.getElementById(`detailsIndividualPlan${plan.PlanCode}`);
+                                details.style.display = details.style.display === "none" ? "block" : "none";
+                            });
 
-                    document.getElementById(`selectIndividualPlan${plan.PlanCode}`).addEventListener("click", () => {
-                        selectedPlans = selectedPlans.filter(p => !(p.type === 'Individual' && p.passenger === passengerName));
-                        selectedPlans.push({
-                            type: 'Individual',
-                            passenger: passengerName,
-                            plan: plan.PlanTitle,
-                            planId: plan.PlanCode,
-                            planType: plan.planType,
-                            passengerAge: passengerAge,
-                            passengerGender: passengerGender,
-                            passengerDOB: passengerDOB
-                        });
-                        appendSelectedPlan(plan.PlanTitle, plan.PlanCode, passengerName);
-                        if (passenger < totalPassengers) {
-                            showIndividualPlans(passenger + 1, individualPlans);
-                        } else {
-                            finishSelection();
+                            document.getElementById(`selectIndividualPlan${plan.PlanCode}`).addEventListener("click", (event) => {
+                                const selectedPassenger = event.target.getAttribute("data-passenger");
+                                selectedPlans = selectedPlans.filter(p => !(p.type === 'Individual' && p.passenger === passengerName));
+                                selectedPlans.push({
+                                    type: 'Individual',
+                                    passenger: passengerName,
+                                    plan: plan.PlanTitle,
+                                    planId: plan.PlanCode,
+                                    planType: plan.planType,
+                                    passengerAge: passengerAge,
+                                    passengerGender: passengerGender,
+                                    isInfant: (passengerTypes[passenger] === 'infant') ? 1 : 0
+                                });
+                                appendSelectedPlan(plan.PlanTitle, plan.PlanCode, passengerName);
+                                if (selectedPassenger < totalPassengers) {
+                                    showIndividualPlans(parseInt(selectedPassenger) + 1, individualPlans);
+                                } else {
+                                    finishSelection();
+                                }
+                            });
                         }
-                    });
-                }
+                    }
+                });
+            } else if (typeof planArray === 'object' && planArray !== null) {
+                Object.values(planArray).forEach(plan => {
+                    if (plan) {
+                        if (passengerAge <= plan.MaxAge && passengerAge >= plan.MinAge && (plan.Gender == "Both" || plan.Gender == passengerGender)) {
+                            planExists = true;
+                            const planElement = document.createElement('div');
+                            planElement.innerHTML = `
+                                <h3>${plan.PlanTitle}</h3>
+                                <p>${plan.CurrencyCode} ${plan.TotalPremiumAmount}</p>
+                                <button id="selectIndividualPlan${plan.PlanCode}" class="individual-plan-select" data-passenger="${passenger}">Select</button>
+                                <button id="viewDetailsIndividualPlan${plan.PlanCode}" class="view-details">View Details</button>
+                                <div id="detailsIndividualPlan${plan.PlanCode}" style="display:none;">${plan.PlanContent}</div>
+                            `;
+                            individualPlansContainer.appendChild(planElement);
+
+                            document.getElementById(`viewDetailsIndividualPlan${plan.PlanCode}`).addEventListener("click", () => {
+                                const details = document.getElementById(`detailsIndividualPlan${plan.PlanCode}`);
+                                details.style.display = details.style.display === "none" ? "block" : "none";
+                            });
+
+                            document.getElementById(`selectIndividualPlan${plan.PlanCode}`).addEventListener("click", (event) => {
+                                const selectedPassenger = event.target.getAttribute("data-passenger");
+                                selectedPlans = selectedPlans.filter(p => !(p.type === 'Individual' && p.passenger === passengerName));
+                                selectedPlans.push({
+                                    type: 'Individual',
+                                    passenger: passengerName,
+                                    plan: plan.PlanTitle,
+                                    planId: plan.PlanCode,
+                                    planType: plan.planType,
+                                    passengerAge: passengerAge,
+                                    passengerGender: passengerGender
+                                });
+                                appendSelectedPlan(plan.PlanTitle, plan.PlanCode, passengerName);
+                                if (selectedPassenger < totalPassengers) {
+                                    showIndividualPlans(parseInt(selectedPassenger) + 1, individualPlans);
+                                } else {
+                                    finishSelection();
+                                }
+                            });
+                        }
+                    }
+                });
             }
         });
-
         if (!planExists) {
-            individualPlansContainer.innerHTML = '<p>No individual plans available.</p>';
+            individualPlansContainer.innerHTML += '<p>No individual plans available.</p>';
         }
-
         const skipButton = document.createElement('button');
         skipButton.innerText = 'Skip';
         skipButton.addEventListener('click', () => {
@@ -2051,41 +2170,42 @@ for (const planKey in plans) {
         individualPlansContainer.appendChild(skipButton);
     }
 
-    function getPassengerName(index) {
-        const firstName = document.getElementById(`passenger-first-name-${index}`).value;
-        const lastName = document.getElementById(`passenger-last-name-${index}`).value;
-        return `${firstName} ${lastName}`;
+
+    function getPassengerName(passenger) {
+        return document.getElementById(`passenger-first-name-${passenger}`).value + " " + document.getElementById(`passenger-last-name-${passenger}`).value;
     }
 
-    function getPassengerDOB(index) {
-        const dob = document.getElementById(`adult-date-picker-${index}`).value;
+    function getPassengerDOB(passenger) {
+        console.log(passenger);
+        const dob = document.getElementById(`${passengerTypes[passenger-1]}-date-picker-${passenger}`).value;
         return dob;
     }
 
-    function getPassengerAge(currentPassengerDOB) {
-        currentPassengerDOB = new Date(currentPassengerDOB);
-        const now = new Date();
-        const diff = now - currentPassengerDOB;
-        const age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
-
+    function getPassengerAge(dob) {
+        const birthDate = new Date(dob);
+        const today = new Date();
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDifference = today.getMonth() - birthDate.getMonth();
+        if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
         return age;
-
     }
+
     function getPassengerGender(index) {
         const title = document.getElementById(`passenger-title-${index}`).value;
-        if(title == 1 || title == 3){
+        if (title == 1 || title == 3) {
             gender = "Male"
-        }else{
+        } else {
             gender = "Female"
         }
-        return gender; 
-
+        return gender;
     }
 
-    function appendSelectedPlan(planTitle, planId, passenger) {
+    function appendSelectedPlan(planTitle, planId, passengerName) {
         const selectedPlanInput = document.getElementById("selectedPlanInput");
         const selectedPlanIdInput = document.getElementById("selectedPlanIdInput");
-
+        passenger = passengerName;
         selectedPlanInput.value += `${passenger}: ${planTitle}; `;
         selectedPlanIdInput.value += `${passenger}: ${planId}; `;
     }
@@ -2098,7 +2218,14 @@ for (const planKey in plans) {
         document.getElementById("insurancePlans").style.display = "none";
         isInsuranceSelected.value = 1;
 
-        const selectedPlansDiv = document.createElement('div');
+        // Check if the selected plans div already exists
+        let selectedPlansDiv = document.getElementById("selectedPlansDiv");
+        if (!selectedPlansDiv) {
+            selectedPlansDiv = document.createElement('div');
+            selectedPlansDiv.id = "selectedPlansDiv";
+            document.getElementById("insuranceSection").parentNode.appendChild(selectedPlansDiv);
+        }
+
         selectedPlansDiv.innerHTML = `
         <h2>Selected Plans</h2>
         <ul>
@@ -2106,7 +2233,6 @@ for (const planKey in plans) {
         </ul>
         <button id="cancelBtn">Cancel</button>
     `;
-        document.getElementById("insuranceSection").parentNode.appendChild(selectedPlansDiv);
 
         document.getElementById("cancelBtn").addEventListener("click", () => {
             selectedPlansDiv.remove();
@@ -2123,7 +2249,6 @@ for (const planKey in plans) {
         resetModal();
         modal.style.display = "none";
     }
-
 
     function resetModal() {
         modalBody.innerHTML = "";
