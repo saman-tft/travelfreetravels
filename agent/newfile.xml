@@ -10,12 +10,12 @@
      </web:Authentication><Header>
             <Channel>IBE_B2BAE</Channel>
             <ItineraryID></ItineraryID>
-            <PNR>V7NM9W</PNR>
+            <PNR></PNR>
             <PolicyNo/>
             <PurchaseDate>2024-05-23 18:00:00</PurchaseDate>
             <SSRFeeCode>INSC</SSRFeeCode>
             <Currency>AED</Currency>
-            <TotalPremium>0</TotalPremium>
+            <TotalPremium>77.07</TotalPremium>
             <CountryCode>EN</CountryCode>
             <CultureCode>EN</CultureCode>
             <TotalAdults>1</TotalAdults>
@@ -27,7 +27,7 @@
         <Address2></Address2>
         <Address3/>
         <HomePhoneNum/>
-        <MobilePhoneNum>9869555696</MobilePhoneNum>
+        <MobilePhoneNum>9869556696</MobilePhoneNum>
         <OtherPhoneNum/>
         <PostCode></PostCode>
         <City></City>
@@ -60,10 +60,10 @@
             <IsQualified>true</IsQualified>
             <Nationality>NP</Nationality>
             <CountryOfResidence>NP</CountryOfResidence>
-            <SelectedPlanCode></SelectedPlanCode>
+            <SelectedPlanCode>AE2-API-OUTBOUND-GOLD</SelectedPlanCode>
             <SelectedSSRFeeCode></SelectedSSRFeeCode>
-            <CurrencyCode></CurrencyCode>
-            <PassengerPremiumAmount>0</PassengerPremiumAmount>
+            <CurrencyCode>AED</CurrencyCode>
+            <PassengerPremiumAmount>77</PassengerPremiumAmount>
             </Passenger></Passengers>
         </GenericRequest>
         </ConfirmPurchase>

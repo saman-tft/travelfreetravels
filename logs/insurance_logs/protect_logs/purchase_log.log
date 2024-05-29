@@ -1,0 +1,308 @@
+
+========== BEGIN REQUEST/RESPONSE ==========
+purchase ID: 572
+Request Method Name: ConfirmPurchase
+Response Status: 1
+Timestamp: 2024-05-29 23:46:16
+----------BEGIN REQUEST ----------
+<?xml version="1.0" encoding="utf-8"?>
+        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+        <soap:Body>
+        <ConfirmPurchase xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
+        <GenericRequest><Authentication>
+                    <Username>UAT_DEMO</Username>
+                    <Password>ypHALsJ3EG3p</Password>
+                 </Authentication><Header>
+                <Channel>IBE_B2BAE</Channel>
+                <ItineraryID></ItineraryID>
+                <PNR>VDBEM9</PNR>
+                <PolicyNo/>
+                <PurchaseDate>2024-05-29 23:43:13</PurchaseDate>
+                <SSRFeeCode>INSC</SSRFeeCode>
+                <Currency>AED</Currency>
+                <TotalPremium>77.07</TotalPremium>
+                <CountryCode>NP</CountryCode>
+                <CultureCode>NP</CultureCode>
+                <TotalAdults>1</TotalAdults>
+                <TotalChild>0</TotalChild>
+                <TotalInfants>0 </TotalInfants>
+             </Header>
+            <Flights>
+            <DepartCountryCode>AE</DepartCountryCode>
+            <DepartStationCode></DepartStationCode>
+            <ArrivalCountryCode>IN</ArrivalCountryCode>
+            <ArrivalStationCode></ArrivalStationCode>
+            <DepartAirlineCode>AI</DepartAirlineCode>
+            <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
+            <ReturnAirlineCode></ReturnAirlineCode>
+            <ReturnDateTime></ReturnDateTime>
+            <DepartFlightNo>638</DepartFlightNo>
+            <ReturnFlightNo></ReturnFlightNo>
+        </Flights><Passengers><Passenger>
+            <IsInfant>0</IsInfant>
+            <FirstName>Ram</FirstName>
+            <LastName>Rai</LastName>
+            <Gender>Male</Gender>
+            <DOB> 00:00:00</DOB>
+            <Age>31</Age>
+            <IdentityType>Passport</IdentityType>
+            <IdentityNo>1234567</IdentityNo>
+            <IsQualified>true</IsQualified>
+            <Nationality>NP</Nationality>
+            <CountryOfResidence>NP</CountryOfResidence>
+            <SelectedPlanCode>AE2-API-OUTBOUND-GOLD</SelectedPlanCode>
+            <SelectedSSRFeeCode>INSB1_API_AE2_GO_OB</SelectedSSRFeeCode>
+            <CurrencyCode>AED</CurrencyCode>
+            <PassengerPremiumAmount>77</PassengerPremiumAmount>
+            </Passenger></Passengers>
+        </GenericRequest>
+        </ConfirmPurchase>
+        </soap:Body>
+        </soap:Envelope>
+----------END REQUEST ----------
+----------BEGIN RESPONSE ----------
+HTTP/2 200 
+cache-control: private, max-age=0
+content-type: text/xml; charset=utf-8
+server: Microsoft-IIS/10.0
+x-aspnet-version: 4.0.30319
+x-powered-by: ASP.NET
+date: Wed, 29 May 2024 18:16:16 GMT
+content-length: 1063
+
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ConfirmPurchaseResponse xmlns="http://ZEUSTravelInsuranceGateway/WebServices"><PurchaseResponse><ProposalState>ONHOLD</ProposalState><ErrorCode>10125</ErrorCode><ErrorMessage>General Exception Encountered @ ConfirmPurchase&lt;BR&gt;Message: Index was outside the bounds of the array.&lt;BR&gt;Source: App_Code.yniknglw&lt;BR&gt;StackTrace:    at CLSZEUS.ConfirmPurchase(InputRequest objConfirmPurchase, String AgentID, String ChannelCode, String PseudoAgentCode, String PseudoCityCode) in d:\Applications\ZeusAPI\App_Code\CLSZEUS.cs:line 19448&lt;BR&gt;gblDebugMessage: &lt;BR&gt;ChannelCode = IBE&lt;BR&gt;PseudoAgentCode = B2BAE&lt;BR&gt;PseudoCityCode = &lt;BR&gt;ChannelCode = IBE&lt;BR&gt;PseudoAgentCode = B2BAE&lt;BR&gt;PseudoCityCode = </ErrorMessage><PolicyNo /></PurchaseResponse></ConfirmPurchaseResponse></soap:Body></soap:Envelope>
+----------END RESPONSE ----------
+========== END REQUEST/RESPONSE ==========
+
+========== BEGIN REQUEST/RESPONSE ==========
+purchase ID: 572
+Request Method Name: ConfirmPurchase
+Response Status: 1
+Timestamp: 2024-05-29 23:51:27
+----------BEGIN REQUEST ----------
+<?xml version="1.0" encoding="utf-8"?>
+        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+        <soap:Body>
+        <ConfirmPurchase xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
+        <GenericRequest><Authentication>
+                    <Username>UAT_DEMO</Username>
+                    <Password>ypHALsJ3EG3p</Password>
+                 </Authentication><Header>
+                <Channel>IBE_B2BAE</Channel>
+                <ItineraryID></ItineraryID>
+                <PNR>VDBEM9</PNR>
+                <PolicyNo/>
+                <PurchaseDate>2024-05-29 23:43:13</PurchaseDate>
+                <SSRFeeCode>INSC</SSRFeeCode>
+                <Currency>AED</Currency>
+                <TotalPremium>77.07</TotalPremium>
+                <CountryCode>EN</CountryCode>
+                <CultureCode>EN</CultureCode>
+                <TotalAdults>1</TotalAdults>
+                <TotalChild>0</TotalChild>
+                <TotalInfants>0 </TotalInfants>
+             </Header>
+            <Flights>
+            <DepartCountryCode>AE</DepartCountryCode>
+            <DepartStationCode></DepartStationCode>
+            <ArrivalCountryCode>IN</ArrivalCountryCode>
+            <ArrivalStationCode></ArrivalStationCode>
+            <DepartAirlineCode>AI</DepartAirlineCode>
+            <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
+            <ReturnAirlineCode></ReturnAirlineCode>
+            <ReturnDateTime></ReturnDateTime>
+            <DepartFlightNo>638</DepartFlightNo>
+            <ReturnFlightNo></ReturnFlightNo>
+        </Flights><Passengers><Passenger>
+            <IsInfant>0</IsInfant>
+            <FirstName>Ram</FirstName>
+            <LastName>Rai</LastName>
+            <Gender>Male</Gender>
+            <DOB> 00:00:00</DOB>
+            <Age>31</Age>
+            <IdentityType>Passport</IdentityType>
+            <IdentityNo>1234567</IdentityNo>
+            <IsQualified>true</IsQualified>
+            <Nationality>NP</Nationality>
+            <CountryOfResidence>NP</CountryOfResidence>
+            <SelectedPlanCode>AE2-API-OUTBOUND-GOLD</SelectedPlanCode>
+            <SelectedSSRFeeCode>INSB1_API_AE2_GO_OB</SelectedSSRFeeCode>
+            <CurrencyCode>AED</CurrencyCode>
+            <PassengerPremiumAmount>77</PassengerPremiumAmount>
+            </Passenger></Passengers>
+        </GenericRequest>
+        </ConfirmPurchase>
+        </soap:Body>
+        </soap:Envelope>
+----------END REQUEST ----------
+----------BEGIN RESPONSE ----------
+HTTP/2 200 
+cache-control: private, max-age=0
+content-type: text/xml; charset=utf-8
+server: Microsoft-IIS/10.0
+x-aspnet-version: 4.0.30319
+x-powered-by: ASP.NET
+date: Wed, 29 May 2024 18:21:27 GMT
+content-length: 1063
+
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ConfirmPurchaseResponse xmlns="http://ZEUSTravelInsuranceGateway/WebServices"><PurchaseResponse><ProposalState>ONHOLD</ProposalState><ErrorCode>10125</ErrorCode><ErrorMessage>General Exception Encountered @ ConfirmPurchase&lt;BR&gt;Message: Index was outside the bounds of the array.&lt;BR&gt;Source: App_Code.yniknglw&lt;BR&gt;StackTrace:    at CLSZEUS.ConfirmPurchase(InputRequest objConfirmPurchase, String AgentID, String ChannelCode, String PseudoAgentCode, String PseudoCityCode) in d:\Applications\ZeusAPI\App_Code\CLSZEUS.cs:line 19448&lt;BR&gt;gblDebugMessage: &lt;BR&gt;ChannelCode = IBE&lt;BR&gt;PseudoAgentCode = B2BAE&lt;BR&gt;PseudoCityCode = &lt;BR&gt;ChannelCode = IBE&lt;BR&gt;PseudoAgentCode = B2BAE&lt;BR&gt;PseudoCityCode = </ErrorMessage><PolicyNo /></PurchaseResponse></ConfirmPurchaseResponse></soap:Body></soap:Envelope>
+----------END RESPONSE ----------
+========== END REQUEST/RESPONSE ==========
+
+========== BEGIN REQUEST/RESPONSE ==========
+purchase ID: 572
+Request Method Name: ConfirmPurchase
+Response Status: 1
+Timestamp: 2024-05-29 23:56:11
+----------BEGIN REQUEST ----------
+<?xml version="1.0" encoding="utf-8"?>
+        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+        <soap:Body>
+        <ConfirmPurchase xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
+        <GenericRequest><Authentication>
+                    <Username>UAT_DEMO</Username>
+                    <Password>ypHALsJ3EG3p</Password>
+                 </Authentication><Header>
+                <Channel>IBE_B2BAE</Channel>
+                <ItineraryID></ItineraryID>
+                <PNR>VDBEM9</PNR>
+                <PolicyNo/>
+                <PurchaseDate>2024-05-29 23:43:13</PurchaseDate>
+                <SSRFeeCode>INSC</SSRFeeCode>
+                <Currency>AED</Currency>
+                <TotalPremium>77.07</TotalPremium>
+                <CountryCode>EN</CountryCode>
+                <CultureCode>EN</CultureCode>
+                <TotalAdults>1</TotalAdults>
+                <TotalChild>0</TotalChild>
+                <TotalInfants>0 </TotalInfants>
+             </Header>
+            <Flights>
+            <DepartCountryCode>AE</DepartCountryCode>
+            <DepartStationCode></DepartStationCode>
+            <ArrivalCountryCode>IN</ArrivalCountryCode>
+            <ArrivalStationCode></ArrivalStationCode>
+            <DepartAirlineCode>AI</DepartAirlineCode>
+            <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
+            <ReturnAirlineCode></ReturnAirlineCode>
+            <ReturnDateTime></ReturnDateTime>
+            <DepartFlightNo>638</DepartFlightNo>
+            <ReturnFlightNo></ReturnFlightNo>
+        </Flights><Passengers><Passenger>
+            <IsInfant>0</IsInfant>
+            <FirstName>Ram</FirstName>
+            <LastName>Rai</LastName>
+            <Gender>Male</Gender>
+            <DOB> 00:00:00</DOB>
+            <Age>31</Age>
+            <IdentityType>Passport</IdentityType>
+            <IdentityNo>1234567</IdentityNo>
+            <IsQualified>true</IsQualified>
+            <Nationality>NP</Nationality>
+            <CountryOfResidence>NP</CountryOfResidence>
+            <SelectedPlanCode>AE2-API-OUTBOUND-GOLD</SelectedPlanCode>
+            <SelectedSSRFeeCode>INSB1_API_AE2_GO_OB</SelectedSSRFeeCode>
+            <CurrencyCode>AED</CurrencyCode>
+            <PassengerPremiumAmount>77</PassengerPremiumAmount>
+            </Passenger></Passengers>
+        </GenericRequest>
+        </ConfirmPurchase>
+        </soap:Body>
+        </soap:Envelope>
+----------END REQUEST ----------
+----------BEGIN RESPONSE ----------
+HTTP/2 200 
+cache-control: private, max-age=0
+content-type: text/xml; charset=utf-8
+server: Microsoft-IIS/10.0
+x-aspnet-version: 4.0.30319
+x-powered-by: ASP.NET
+date: Wed, 29 May 2024 18:26:11 GMT
+content-length: 1063
+
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ConfirmPurchaseResponse xmlns="http://ZEUSTravelInsuranceGateway/WebServices"><PurchaseResponse><ProposalState>ONHOLD</ProposalState><ErrorCode>10125</ErrorCode><ErrorMessage>General Exception Encountered @ ConfirmPurchase&lt;BR&gt;Message: Index was outside the bounds of the array.&lt;BR&gt;Source: App_Code.yniknglw&lt;BR&gt;StackTrace:    at CLSZEUS.ConfirmPurchase(InputRequest objConfirmPurchase, String AgentID, String ChannelCode, String PseudoAgentCode, String PseudoCityCode) in d:\Applications\ZeusAPI\App_Code\CLSZEUS.cs:line 19448&lt;BR&gt;gblDebugMessage: &lt;BR&gt;ChannelCode = IBE&lt;BR&gt;PseudoAgentCode = B2BAE&lt;BR&gt;PseudoCityCode = &lt;BR&gt;ChannelCode = IBE&lt;BR&gt;PseudoAgentCode = B2BAE&lt;BR&gt;PseudoCityCode = </ErrorMessage><PolicyNo /></PurchaseResponse></ConfirmPurchaseResponse></soap:Body></soap:Envelope>
+----------END RESPONSE ----------
+========== END REQUEST/RESPONSE ==========
+
+========== BEGIN REQUEST/RESPONSE ==========
+purchase ID: 573
+Request Method Name: ConfirmPurchase
+Response Status: 1
+Timestamp: 2024-05-30 00:00:04
+----------BEGIN REQUEST ----------
+<?xml version="1.0" encoding="utf-8"?>
+        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+        <soap:Body>
+        <ConfirmPurchase xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
+        <GenericRequest><Authentication>
+                    <Username>UAT_DEMO</Username>
+                    <Password>ypHALsJ3EG3p</Password>
+                 </Authentication><Header>
+                <Channel>IBE_B2BAE</Channel>
+                <ItineraryID></ItineraryID>
+                <PNR>VDDEU4</PNR>
+                <PolicyNo/>
+                <PurchaseDate>2024-05-29 23:59:21</PurchaseDate>
+                <SSRFeeCode>INSC</SSRFeeCode>
+                <Currency>AED</Currency>
+                <TotalPremium>77.07</TotalPremium>
+                <CountryCode>EN</CountryCode>
+                <CultureCode>EN</CultureCode>
+                <TotalAdults>1</TotalAdults>
+                <TotalChild>0</TotalChild>
+                <TotalInfants>0 </TotalInfants>
+             </Header>
+            <Flights>
+            <DepartCountryCode>AE</DepartCountryCode>
+            <DepartStationCode></DepartStationCode>
+            <ArrivalCountryCode>IN</ArrivalCountryCode>
+            <ArrivalStationCode></ArrivalStationCode>
+            <DepartAirlineCode>AI</DepartAirlineCode>
+            <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
+            <ReturnAirlineCode></ReturnAirlineCode>
+            <ReturnDateTime></ReturnDateTime>
+            <DepartFlightNo>638</DepartFlightNo>
+            <ReturnFlightNo></ReturnFlightNo>
+        </Flights><Passengers><Passenger>
+            <IsInfant>0</IsInfant>
+            <FirstName>asd</FirstName>
+            <LastName>dsa</LastName>
+            <Gender>Male</Gender>
+            <DOB>1993-04-29 00:00:00</DOB>
+            <Age>31</Age>
+            <IdentityType>Passport</IdentityType>
+            <IdentityNo>123456</IdentityNo>
+            <IsQualified>true</IsQualified>
+            <Nationality>NP</Nationality>
+            <CountryOfResidence>NP</CountryOfResidence>
+            <SelectedPlanCode>AE2-API-OUTBOUND-GOLD</SelectedPlanCode>
+            <SelectedSSRFeeCode>INSB1_API_AE2_GO_OB</SelectedSSRFeeCode>
+            <CurrencyCode>AED</CurrencyCode>
+            <PassengerPremiumAmount>77</PassengerPremiumAmount>
+            </Passenger></Passengers>
+        </GenericRequest>
+        </ConfirmPurchase>
+        </soap:Body>
+        </soap:Envelope>
+----------END REQUEST ----------
+----------BEGIN RESPONSE ----------
+HTTP/2 200 
+cache-control: private, max-age=0
+content-type: text/xml; charset=utf-8
+server: Microsoft-IIS/10.0
+x-aspnet-version: 4.0.30319
+x-powered-by: ASP.NET
+date: Wed, 29 May 2024 18:30:04 GMT
+content-length: 1063
+
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ConfirmPurchaseResponse xmlns="http://ZEUSTravelInsuranceGateway/WebServices"><PurchaseResponse><ProposalState>ONHOLD</ProposalState><ErrorCode>10125</ErrorCode><ErrorMessage>General Exception Encountered @ ConfirmPurchase&lt;BR&gt;Message: Index was outside the bounds of the array.&lt;BR&gt;Source: App_Code.yniknglw&lt;BR&gt;StackTrace:    at CLSZEUS.ConfirmPurchase(InputRequest objConfirmPurchase, String AgentID, String ChannelCode, String PseudoAgentCode, String PseudoCityCode) in d:\Applications\ZeusAPI\App_Code\CLSZEUS.cs:line 19448&lt;BR&gt;gblDebugMessage: &lt;BR&gt;ChannelCode = IBE&lt;BR&gt;PseudoAgentCode = B2BAE&lt;BR&gt;PseudoCityCode = &lt;BR&gt;ChannelCode = IBE&lt;BR&gt;PseudoAgentCode = B2BAE&lt;BR&gt;PseudoCityCode = </ErrorMessage><PolicyNo /></PurchaseResponse></ConfirmPurchaseResponse></soap:Body></soap:Envelope>
+----------END RESPONSE ----------
+========== END REQUEST/RESPONSE ==========

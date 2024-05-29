@@ -2091,6 +2091,8 @@ for (const planKey in plans) {
                                     plan: plan.PlanTitle,
                                     planId: plan.PlanCode,
                                     planType: plan.planType,
+                                    planCategory: plan.PlanType,
+                                    passengerDOB: passengerDOB,
                                     passengerAge: passengerAge,
                                     passengerGender: passengerGender,
                                     isInfant: (passengerTypes[passenger] === 'infant') ? 1 : 0
@@ -2134,8 +2136,11 @@ for (const planKey in plans) {
                                     plan: plan.PlanTitle,
                                     planId: plan.PlanCode,
                                     planType: plan.planType,
+                                    planCategory: plan.PlanType,
+                                    passengerDOB: passengerDOB,
                                     passengerAge: passengerAge,
-                                    passengerGender: passengerGender
+                                    passengerGender: passengerGender,
+                                    isInfant: (passengerTypes[passenger] === 'infant') ? 1 : 0
                                 });
                                 appendSelectedPlan(plan.PlanTitle, plan.PlanCode, passengerName);
                                 if (selectedPassenger < totalPassengers) {

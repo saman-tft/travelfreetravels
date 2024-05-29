@@ -46,6 +46,9 @@ class Protect implements InsuranceInterface
                 case 'GetAvailablePlansOTAWithRiders':
                     $formattedHeaderData = $this->get_GetAvailablePlansOTAWithRiders_Request_Header($headerData);
                     break;
+                case 'ConfirmPurchase':
+                    $formattedHeaderData = $this->get_ConfirmPurchase_Request_Header($headerData);
+                    break;
                 default:
                     throw new Exception("Invalid header name");
             }
@@ -64,6 +67,9 @@ class Protect implements InsuranceInterface
             switch ($requestName) {
                 case 'GetAvailablePlansOTAWithRiders':
                     $formattedApiRequest = $this->get_GetAvailablePlansOTAWithRiders_Request($requestData);
+                    break;
+                case 'ConfirmPurchase':
+                    $formattedApiRequest = $this->get_ConfirmPurchase_Request($requestData);
                     break;
                 default:
                     throw new Exception("Invalid request name provided");
@@ -122,6 +128,9 @@ class Protect implements InsuranceInterface
                 case 'GetAvailablePlansOTAWithRiders':
                     $response = $this->process_GetAvailablePlansOTAWithRidersResponse($rawApiResponse);
                     break;
+                case 'ConfirmPurchase':
+                    $response = $this->process_ConfirmPurchaseResponse($rawApiResponse);
+                    break;
                 default:
                     throw new Exception("Invalid api method name provided");
             }
@@ -140,7 +149,7 @@ class Protect implements InsuranceInterface
         return $authHeader;
     }
 
-    private function get_GetAvailablePlansOTAWithRiders_Request_Header($headerData): array
+    private function get_GetAvailablePlansOTAWithRiders_Request_Header(Array $headerData): Array
     {
         if ((is_array($headerData) == true) && isset($headerData['status']) && $headerData['status'] === 1) {
             $searchId = $headerData['data']['search_id'];
@@ -188,7 +197,63 @@ class Protect implements InsuranceInterface
         return $response;
     }
 
+private function get_ConfirmPurchase_Request_Header(Array $headerData): Array{
+    if ((is_array($headerData) == true) && isset($headerData['status']) && $headerData['status'] === 1) {
+        $searchId = $headerData['data']['search_id'];
+        if ($searchId != NULL && $searchId != '') {
+            $searchData = $headerData['data']['search_data'];
+            if ($searchData['status'] == 1 && isset($searchData['data'])) {
+                $pnr = $headerData['data']['pnr'];
+                $totalAmount = $headerData['data']['totalAmount'];
+                $purchaseDate = $headerData['data']['purchaseDate'];
+                $countryCode = $headerData['data']['countryCode'];
+                //get current currency
+                $currentCurrency = get_application_currency_preference();
 
+                //IF number of adults,children,infants is blank 0 is assigned
+                $numberOfAdults = ($searchData['data']['adult_config'] == 0 || $searchData['data']['adult_config'] == NULL || $searchData['data']['adult_config'] == '') ? 0 : $searchData['data']['adult_config'];
+                $numberOfChildren = ($searchData['data']['child_config'] == 0 || $searchData['data']['child_config'] == NULL || $searchData['data']['child_config'] == '') ? 0 : $searchData['data']['child_config'];
+                $numberOfInfants = ($searchData['data']['infant_config'] == 0 || $searchData['data']['infant_config'] == NULL || $searchData['data']['infant_config'] == '') ? 0 : $searchData['data']['infant_config'];
+
+                //prepare the request to return
+                $response['data'] = "<Header>
+                <Channel>" . PROTECT_TEST_CHANNEL_CODE . "</Channel>
+                <ItineraryID></ItineraryID>
+                <PNR>$pnr</PNR>
+                <PolicyNo/>
+                <PurchaseDate>$purchaseDate</PurchaseDate>
+                <SSRFeeCode>INSC</SSRFeeCode>
+                <Currency>AED</Currency>
+                <TotalPremium>$totalAmount</TotalPremium>
+                <CountryCode>EN</CountryCode>
+                <CultureCode>EN</CultureCode>
+                <TotalAdults>$numberOfAdults</TotalAdults>
+                <TotalChild>$numberOfChildren</TotalChild>
+                <TotalInfants>$numberOfInfants </TotalInfants>
+             </Header>";
+
+                $response['status'] = 1;
+                $response['message'] = '';
+            } else {
+                //search data not found
+                $response['status'] = 0;
+                $response['message'] = "No record with the search id was found";
+            }
+        } else {
+            //null search id
+            $response['status'] = 0;
+            $response['data'] = '';
+            $response['message'] = "Invalid search id";
+        }
+    } else {
+        //invalid data provided or unauth access
+        $response['status'] = 0;
+        $response['data'] = '';
+        $response['message'] = "Unauthorized access";
+    }
+    return $response;
+
+}
 
     private function get_GetAvailablePlansOTAWithRiders_Request(array $requestData): array
     {
@@ -211,6 +276,103 @@ class Protect implements InsuranceInterface
             </GetAvailablePlansOTAWithRiders>
             </soapenv:Body>
             </soapenv:Envelope>';
+            $response['message'] = '';
+        } else {
+            //no search id and unauthorized access
+            $response['status'] = 0;
+            $response['data'] = '';
+            $response['message'] = 'Invalid request data for request method GetAvailablePlansOTAWithRiders ';
+        }
+        return $response;
+    }
+    private function getBookingPassengerInformation($insuranceDetails){
+        $response = '<ContactDetails>
+        <ContactPerson>'.$insuranceDetails['bookingPassengerDetails']['name'].'</ContactPerson>
+        <Address1></Address1>
+        <Address2></Address2>
+        <Address3/>
+        <HomePhoneNum/>
+        <MobilePhoneNum>'.$insuranceDetails['bookingPassengerDetails']['phoneNumber'].'</MobilePhoneNum>
+        <OtherPhoneNum/>
+        <PostCode></PostCode>
+        <City></City>
+        <State></State>
+        <Country></Country>
+        <EmailAddress>'.$insuranceDetails['bookingPassengerDetails']['email'].'</EmailAddress>
+        </ContactDetails>';
+    }
+    function formatPassengerInformationToXML($insuranceInformation){
+        $passengerInformation = $insuranceInformation['passengerDetails'];
+        $planDetails = $insuranceInformation['planDetails'];
+        $request = '<Passengers>';
+        foreach($passengerInformation as $k=>$v){
+            $nameArray = explode(' ', $passengerInformation[$k]['name']);
+            $firstName = $nameArray[0];
+            $lastName = $nameArray[1];
+            $age = $passengerInformation[$k]['age'];
+            $dob = $passengerInformation[$k]['dob'];
+            $gender = $passengerInformation[$k]['gender'];
+            if($passengerInformation[$k]['identificationType'] == 'passport'){
+                $documentType = "Passport";
+            }else{
+                $documentType = "IdentificationCard";
+            }
+            $currencyCode = $planDetails[$passengerInformation[$k]['name']]['CurrencyCode'];
+            $identityNumber = $passengerInformation[$k]['identificationNumber']; 
+            $ssrFeeCode = $planDetails[$passengerInformation[$k]['name']]['SSRFeeCode'];
+            $planCode = $planDetails[$passengerInformation[$k]['name']]['PlanCode'];
+            $paxTotalAmount = round($planDetails[$passengerInformation[$k]['name']]['TotalPremiumAmount']);
+            $isInfant = $passengerInformation[$k]['isInfant'];
+            
+            $request .= "<Passenger>
+            <IsInfant>$isInfant</IsInfant>
+            <FirstName>$firstName</FirstName>
+            <LastName>$lastName</LastName>
+            <Gender>$gender</Gender>
+            <DOB>$dob 00:00:00</DOB>
+            <Age>$age</Age>
+            <IdentityType>$documentType</IdentityType>
+            <IdentityNo>$identityNumber</IdentityNo>
+            <IsQualified>true</IsQualified>
+            <Nationality>NP</Nationality>
+            <CountryOfResidence>NP</CountryOfResidence>
+            <SelectedPlanCode>$planCode</SelectedPlanCode>
+            <SelectedSSRFeeCode>$ssrFeeCode</SelectedSSRFeeCode>
+            <CurrencyCode>$currencyCode</CurrencyCode>
+            <PassengerPremiumAmount>$paxTotalAmount</PassengerPremiumAmount>
+            </Passenger>";
+        }
+
+        $request .= '</Passengers>';
+        return $request;
+    }
+    private function get_ConfirmPurchase_Request($requestData){
+        if ((is_array($requestData) == true) && isset($requestData['status']) && $requestData['status'] === 1) {
+            $response['status'] = 1;
+            $searchData = $requestData['data']['search_data'];
+            $segmentDetails = $requestData['data']['insuranceDetails']['SegmentDetails'];
+            $header = $requestData['data']['header'];
+            $insuranceDetails = $requestData['data']['insuranceDetails'];
+            $authHeader = $this->getAuthHeader();
+            $bookingPersonDetails =$this->getBookingPassengerInformation($insuranceDetails);
+            $currentFlightInformation = $this->formatFlightInformationToXML($searchData, $segmentDetails);
+        $passengerInformation = $this->formatPassengerInformationToXML($insuranceDetails);
+        $response['data'] = '<?xml version="1.0" encoding="utf-8"?>
+        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+        <soap:Body>
+        <ConfirmPurchase xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
+        <GenericRequest>'
+        . $authHeader .
+        $header.
+        $bookingPersonDetails.
+        $currentFlightInformation
+        .$passengerInformation.'
+        </GenericRequest>
+        </ConfirmPurchase>
+        </soap:Body>
+        </soap:Envelope>';
             $response['message'] = '';
         } else {
             //no search id and unauthorized access
@@ -326,8 +488,10 @@ class Protect implements InsuranceInterface
                 if ($planType !== '') {
                     $premiumType = ($plan['PlanPremiumChargeType'] === 'PerPassenger') ? 'perPassengerPlans' : 'familyPlans';
                     $sortedPlans[$premiumType][$planType][] = [
+                        'SSRFeeCode'=>$plan['SSRFeeCode'],
                         'PlanCode' => $plan['PlanCode'],
                         'PlanTitle' => $plan['PlanTitle'],
+                        'PlanType'=>$planType,
                         'CurrencyCode' => $plan['CurrencyCode'],
                         'TotalPremiumAmount' => $plan['TotalPremiumAmount'],
                         'PlanContent' => $plan['PlanContent'],
@@ -351,7 +515,15 @@ class Protect implements InsuranceInterface
         }
         return $response;
     }
+private function process_ConfirmPurchaseResponse(Array $rawApiResponse){
+    $xmlStartPosition = strpos($rawApiResponse['data'], '<?xml');
+        $xmlResponse = substr($rawApiResponse['data'], $xmlStartPosition);
+        //conversion of xml to array starts here
+        $xml = simplexml_load_string($xmlResponse);
+        $rawResponseArray = $this->convertToArray($xml->asXML());
+        debug($rawResponseArray);die;
 
+}
     private function convertToArray($xmlStr, $get_attributes = 1, $priority = 'tag'): array
     {
 

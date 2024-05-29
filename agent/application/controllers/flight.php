@@ -2,6 +2,9 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 ini_set('max_execution_time', 300);
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
 
 /**
  *
@@ -1028,12 +1031,11 @@ $insuranceAmount = 0;
                 }
                 // $this->ConfirmPurchase();
                 if($insuranceStatus == 1 && $booking['status'] == BOOKING_CONFIRMED){
-                $updateCondition['app_reference'] = $book_id;
-                $bookingId = $booking['data']['ticket']['TicketDetails'][0]['CommitBooking']['BookingDetails']['BookingId'];
-                $updateData['source'] = $insuranceTotalAmount;
-                $this->custom_db->update_record('flight_booking_transaction_details', $updateData, $updateCondition);
+                    $bookingId = $booking['data']['ticket']['TicketDetails'][0]['CommitBooking']['BookingDetails']['BookingId'];
+                    $insuranceUpdateStatus = $this->insurance_model->updateInsuranceDetailsAfterBooking($bookingId, $book_id, $insuranceTotalAmount);
+              
                 }
-                $this->ConfirmPurchase($insuranceDetails, $insuranceTotalAmount, $bookingId);
+                // $this->ConfirmPurchase($insuranceDetails, $insuranceTotalAmount, $bookingId);
                 //Failed booking logs in separate file, FIXME ---------------------------
                 if (in_array($booking['status'], array(SUCCESS_STATUS, BOOKING_CONFIRMED, BOOKING_PENDING, BOOKING_FAILED, BOOKING_ERROR, BOOKING_HOLD, FAILURE_STATUS)) == true) {
                     $currency_obj = new Currency(array(
@@ -1086,8 +1088,8 @@ $insuranceAmount = 0;
                             $this->rewards->update_earned_rewards_details($temp_booking, $book_id, "flight_booking_details");
                         }
                         if($booking['status'] == BOOKING_CONFIRMED && $insuranceStatus == 1 && $data['status'] == 'BOOKING_CONFIRMED'){
-                            // redirect(base_url() . 'index.php/insurance/confirmPurchase/' . $book_id . '/' . $temp_booking['booking_source']);
-                            $this->ConfirmPurchase($insuranceDetails, $insuranceTotalAmount, $bookingId);
+                            redirect(base_url() . 'index.php/insurance/processInsurancePurchase/' . $book_id . '/' . $temp_booking['booking_source']);
+                            // $this->ConfirmPurchase($insuranceDetails, $insuranceTotalAmount, $bookingId);
 
                         }else{
                             redirect(base_url() . 'index.php/voucher/flight/' . $book_id . '/' . $temp_booking['booking_source'] . '/' . $data['status'] . '/show_voucher');

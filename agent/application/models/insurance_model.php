@@ -22,19 +22,18 @@ Class Insurance_Model extends CI_Model
             unset($availableInsurancePlanDetails['id']);
         
             if (valid_array($availableInsurancePlanDetails)) {
+                $nationalityCode = $this->getNationalityCode($searchData['data']['country']);
+
                 $selectedPlanDetails = json_decode($post_params['selectedPlansJson'], true);
-                $passengerDetails = $this->preparePassengerDetails($selectedPlanDetails, $post_params);
+                $passengerDetails = $this->preparePassengerDetails($selectedPlanDetails, $post_params, $nationalityCode);
         
                 $formattedArray = $this->prepareFormattedArray($post_params['search_id'], $selectedPlanDetails, $passengerDetails, $post_params, $segmentDetails, $searchData);
         
-                $insuranceAmount = $this->calculateInsuranceAmount($selectedPlanDetails, $availableInsurancePlanDetails, $finalPlanDetails, $formattedArray);
-
-                $nationalityCode = $this->getNationalityCode($searchData['data']['country']);
-        
-                $formattedArray['planDetails'] = $finalPlanDetails;
-                $formattedArray['totalPrice'] = $insuranceAmount;
+                $planDetails = $this->getPlanDetails($selectedPlanDetails, $availableInsurancePlanDetails, $finalPlanDetails, $formattedArray);
+                $formattedArray['planDetails'] = $planDetails['planDetails'];
+                $formattedArray['totalPrice'] = $planDetails['insuranceAmount'];
                 $status = $this->createInsuranceRecord($id, $formattedArray, $nationalityCode, $insuranceId, $post_params['search_id'],$post_params['insuranceToken']);
-                $status['total_price'] = $insuranceAmount;
+                $status['total_price'] = $planDetails['insuranceAmount'];
             }
         } catch (Exception $e) {
             $status = 0;
@@ -55,6 +54,33 @@ Class Insurance_Model extends CI_Model
             throw $e;
         }
     }
+    public function updateInsuranceDetailsAfterBooking($pnr, $bookId, $totalAmount){
+        try{
+            $transactionUpdateStatus = $this->updateTransactionDetails($bookId, $totalAmount);
+            $insuranceUpdateStatus = $this->updateBookingDetails($pnr, $totalAmount, $bookId);
+            if($transactionUpdateStatus['status'] == 1 && $insuranceUpdateStatus['status'] == 1){
+                $response['status'] = 1;
+            }else{
+                $response['status'] = 0;
+            }
+        } catch(Exception $e){
+           $response['status'] = 0;
+        }
+       return $response;
+
+    }
+    public function updateBookingDetails($pnr, $totalAmount, $bookId){
+        $updateCondition['app_reference'] = trim($bookId);
+        $updateData['city'] = trim($pnr);
+        $updateData['zipcode'] = trim($totalAmount);
+        return $this->custom_db->update_record('plan_retirement', $updateData, $updateCondition);
+    }
+    
+    public function updateTransactionDetails($bookId, $totalAmount){
+        $updateCondition['app_reference'] = trim($bookId);
+        $updateData['source'] = trim($totalAmount);
+        return $this->custom_db->update_record('flight_booking_transaction_details', $updateData, $updateCondition);
+    }
 
     private function createInsuranceRecord($bookingId, $formattedArray, $nationalityCode, $insuranceId, $searchId, $token){
         $creationData = [
@@ -72,7 +98,7 @@ Class Insurance_Model extends CI_Model
         $creation = $this->custom_db->insert_record('plan_retirement', $creationData);
         return $creation;
     }
-    private function preparePassengerDetails($selectedPlanDetails, $post_params) {
+    private function preparePassengerDetails($selectedPlanDetails, $post_params, $nationalityCode) {
         $passengerDetails = [];
         foreach ($selectedPlanDetails as $key => $planDetail) {
             $planDetail['passengerDetails'] = [
@@ -82,7 +108,7 @@ Class Insurance_Model extends CI_Model
                 'age' => $planDetail['passengerAge'],
                 'gender' => $planDetail['passengerGender'],
                 'dob' => $planDetail['passengerDOB'],
-                'nationality'=> $post_params['passenger_passport_issuing_country'][$key],
+                'nationality'=> $nationalityCode,
                 'isInfant'=>$planDetail['isInfant']
             ];
             $passengerDetails[] = $planDetail['passengerDetails'];
@@ -104,21 +130,22 @@ Class Insurance_Model extends CI_Model
         ];
     }
     
-    private function calculateInsuranceAmount($selectedPlanDetails, $availableInsurancePlanDetails, &$finalPlanDetails, $formattedArray) {
+    private function getPlanDetails($selectedPlanDetails, $availableInsurancePlanDetails, &$finalPlanDetails, $formattedArray) {
         $insuranceAmount = 0;
         foreach ($selectedPlanDetails as $key => $planDetail) {
             $planType = $planDetail['type'] === "Individual" ? "perPassengerPlans" : "familyPlans";
-            $planCategory = $planDetail['planType'];
-    
-            foreach ($availableInsurancePlanDetails[$planType][$planCategory . 'Plans'] as $availablePlan) {
+            $planCategory = $planDetail['planCategory'];
+            foreach ($availableInsurancePlanDetails['data'][$planType][$planCategory] as $availablePlan) {
                 if ($planDetail['planId'] === $availablePlan['PlanCode']) {
                     $finalPlanDetails[$formattedArray['passengerDetails'][$key]['name']] = $availablePlan;
-                    $insuranceAmount += (int) $availablePlan['TotalPremiumAmount'];
+                    $insuranceAmount += (float) $availablePlan['TotalPremiumAmount'];
                     break;
                 }
             }
         }
-        return $insuranceAmount;
+        $response['planDetails'] = $finalPlanDetails;
+        $response['insuranceAmount'] =$insuranceAmount;
+        return $response;
     }
     public function getCountryDetailsFromCityName($cityName){
         if (preg_match('/^(.*?)\s*\(.*/', $cityName, $matches)) {
@@ -128,5 +155,17 @@ Class Insurance_Model extends CI_Model
         $query = 'SELECT * FROM all_api_city_master WHERE city_name='."$cityName";
         $countryDetails = $this->db->query($query)->result_array()[0];
         return $countryDetails['country_code'];
+    }
+
+    public function getInsuranceDetails($condition){
+        $query = $this->custom_db->single_table_records('plan_retirement', '*', $condition);
+        if($query['status'] == 1){
+            $response['data'] = $query['data'];
+            $response['status'] = 1;
+        }else{
+            $response['data'] = '';
+            $response['status'] = 0;
+        }
+        return $response;
     }
 }
