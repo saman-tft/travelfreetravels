@@ -84,6 +84,9 @@ class Protect implements InsuranceInterface
     {
         if ((is_array($request) == true) && isset($request['status']) && $request['status'] === 1) {
             $ch = curl_init($this->url);
+            $testFile = fopen("newfile.xml", "w") or die("Unable to open file!");
+            fwrite($testFile, $request['data']);
+            fclose($testFile);
             curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
             curl_setopt($ch, CURLOPT_HEADER, 1);
             curl_setopt($ch, CURLOPT_USERPWD, $this->userName . ":" . $this->password);
@@ -300,6 +303,7 @@ private function get_ConfirmPurchase_Request_Header(Array $headerData): Array{
         <Country></Country>
         <EmailAddress>'.$insuranceDetails['bookingPassengerDetails']['email'].'</EmailAddress>
         </ContactDetails>';
+        return $response;
     }
     function formatPassengerInformationToXML($insuranceInformation){
         $passengerInformation = $insuranceInformation['passengerDetails'];
@@ -356,6 +360,20 @@ private function get_ConfirmPurchase_Request_Header(Array $headerData): Array{
             $authHeader = $this->getAuthHeader();
             $bookingPersonDetails =$this->getBookingPassengerInformation($insuranceDetails);
             $currentFlightInformation = $this->formatFlightInformationToXML($searchData, $segmentDetails);
+            $currentFlightInformation = '    <Flights>   
+            <Flight>   
+            <DepartCountryCode>AE</DepartCountryCode>
+            <DepartStationCode></DepartStationCode>
+            <ArrivalCountryCode>IN</ArrivalCountryCode>
+            <ArrivalStationCode></ArrivalStationCode>
+            <DepartAirlineCode>AI</DepartAirlineCode>
+            <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
+            <ReturnAirlineCode></ReturnAirlineCode>
+            <ReturnDateTime></ReturnDateTime>
+            <DepartFlightNo>638</DepartFlightNo>
+            <ReturnFlightNo></ReturnFlightNo>
+            </Flight>
+         </Flights>';
         $passengerInformation = $this->formatPassengerInformationToXML($insuranceDetails);
         $response['data'] = '<?xml version="1.0" encoding="utf-8"?>
         <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -472,7 +490,7 @@ private function get_ConfirmPurchase_Request_Header(Array $headerData): Array{
         //conversion of xml to array starts here
         $xml = simplexml_load_string($xmlResponse);
         $rawResponseArray = $this->convertToArray($xml->asXML());
-        if (empty($rawResponseArray['soap:Envelope']['soap:Body']['GetAvailablePlansOTAWithRidersResponse']['GenericResponse']['ErrorCode']) && $rawResponseArray['soap:Envelope']['soap:Body']['GetAvailablePlansOTAWithRidersResponse']['GenericResponse']['ErrorCode'] == 0) {
+        if (empty($rawResponseArray['soap:Envelope']['soap:Body']['GetAvailablePlansOTAWithRidersResponse']['GenericResponse']['ErrorCode']) || $rawResponseArray['soap:Envelope']['soap:Body']['GetAvailablePlansOTAWithRidersResponse']['GenericResponse']['ErrorCode'] == 0) {
             // all good
             $availablePlans = $rawResponseArray['soap:Envelope']['soap:Body']['GetAvailablePlansOTAWithRidersResponse']['GenericResponse']['AvailablePlans']['AvailablePlan'];
             foreach ($availablePlans as $plan) {
@@ -510,8 +528,10 @@ private function get_ConfirmPurchase_Request_Header(Array $headerData): Array{
             $response['status'] = 1;
         } else {
             // error code is set
+            $response['status'] = 0;
             $response['errorCode'] = $rawResponseArray['soap:Envelope']['soap:Body']['GetAvailablePlansOTAWithRidersResponse']['GenericResponse']['ErrorCode'];
-            $response['ErrorMessage'] = $rawResponseArray['soap:Envelope']['soap:Body']['GetAvailablePlansOTAWithRidersResponse']['GenericResponse']['ErrorMessage'];
+            $response['errorMessage'] = $rawResponseArray['soap:Envelope']['soap:Body']['GetAvailablePlansOTAWithRidersResponse']['GenericResponse']['ErrorMessage'];
+            $this->insuranceLogger($response['errorCode'], 'process_GetAvailablePlansOTAWithRidersResponse',  $response['errorMessage'], 'GetAvailablePlansOTAWithRidersResponse', 'error', $response['status']);
         }
         return $response;
     }
@@ -521,8 +541,23 @@ private function process_ConfirmPurchaseResponse(Array $rawApiResponse){
         //conversion of xml to array starts here
         $xml = simplexml_load_string($xmlResponse);
         $rawResponseArray = $this->convertToArray($xml->asXML());
-        debug($rawResponseArray);die;
+        if (empty($rawResponseArray['soap:Envelope']['soap:Body']['ConfirmPurchaseResponse']['PurchaseResponse']['ErrorCode']) || $rawResponseArray['soap:Envelope']['soap:Body']['GetAvailablePlansOTAWithRidersResponse']['GenericResponse']['ErrorCode'] == 0){
+            $response['status'] = $rawResponseArray['soap:Envelope']['soap:Body']['ConfirmPurchaseResponse']['PurchaseResponse']['ProposalState'];
+            $response['data']['iteneraryId'] = $rawResponseArray['soap:Envelope']['soap:Body']['ConfirmPurchaseResponse']['PurchaseResponse']['ItineraryID'];
+            $response['data']['pnr'] = $rawResponseArray['soap:Envelope']['soap:Body']['ConfirmPurchaseResponse']['PurchaseResponse']['PNR']; 
+            $response['data']['policyNumber'] = $rawResponseArray['soap:Envelope']['soap:Body']['ConfirmPurchaseResponse']['PurchaseResponse']['PolicyNo'];
+            $response['data']['policyPurchasedDateTime'] = $rawResponseArray['soap:Envelope']['soap:Body']['ConfirmPurchaseResponse']['PurchaseResponse']['PolicyPurchasedDateTime']; 
+            $response['data']['ConfirmedPassengerDetails'] = $rawResponseArray['soap:Envelope']['soap:Body']['ConfirmPurchaseResponse']['PurchaseResponse']['ConfirmedPassengers'];
+            $response['data']['policyUrl'] = $rawResponseArray['soap:Envelope']['soap:Body']['ConfirmPurchaseResponse']['PurchaseResponse']['ConfirmedPassengers']['ConfirmedPassenger']['PolicyURLLink'];
 
+        }else{
+            $response['status'] = 'FAILED';
+            $response['errorCode'] = $rawResponseArray['soap:Envelope']['soap:Body']['GetAvailablePlansOTAWithRidersResponse']['GenericResponse']['ErrorCode'];
+            $response['errorMessage'] = $rawResponseArray['soap:Envelope']['soap:Body']['GetAvailablePlansOTAWithRidersResponse']['GenericResponse']['ErrorMessage'];
+            $this->insuranceLogger($response['errorCode'], 'process_ConfirmPurchaseResponse',  $response['errorMessage'], 'ConfirmPurchase', 'error', $response['status']);
+
+        }
+return $response;
 }
     private function convertToArray($xmlStr, $get_attributes = 1, $priority = 'tag'): array
     {
