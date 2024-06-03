@@ -327,6 +327,7 @@ private function get_ConfirmPurchase_Request_Header(Array $headerData): Array{
             $planCode = $planDetails[$passengerInformation[$k]['name']]['PlanCode'];
             $paxTotalAmount = round($planDetails[$passengerInformation[$k]['name']]['TotalPremiumAmount']);
             $isInfant = $passengerInformation[$k]['isInfant'];
+            $nationality =$passengerInformation[$k]['nationality']; 
             
             $request .= "<Passenger>
             <IsInfant>$isInfant</IsInfant>
@@ -338,8 +339,8 @@ private function get_ConfirmPurchase_Request_Header(Array $headerData): Array{
             <IdentityType>$documentType</IdentityType>
             <IdentityNo>$identityNumber</IdentityNo>
             <IsQualified>true</IsQualified>
-            <Nationality>NP</Nationality>
-            <CountryOfResidence>NP</CountryOfResidence>
+            <Nationality>$nationality</Nationality>
+            <CountryOfResidence>$nationality</CountryOfResidence>
             <SelectedPlanCode>$planCode</SelectedPlanCode>
             <SelectedSSRFeeCode>$ssrFeeCode</SelectedSSRFeeCode>
             <CurrencyCode>$currencyCode</CurrencyCode>
@@ -403,9 +404,8 @@ private function get_ConfirmPurchase_Request_Header(Array $headerData): Array{
 
     private function formatFlightInformationToXML($searchData = array(), $segmentDetails = array())
     {
-
+        $request = '';
         $tripType = $searchData['data']['trip_type'];
-        $request = '<Flights>';
         if ($tripType != 'circle') {
             foreach ($segmentDetails as $k => $v) {
                 foreach ($v as $s_k => $s_v) {
@@ -417,6 +417,7 @@ private function get_ConfirmPurchase_Request_Header(Array $headerData): Array{
                     $departureAirlineCode = $segmentDetails[$k][$s_k]['AirlineDetails']['AirlineCode'];
                     $departureFlightNumber = $segmentDetails[$k][$s_k]['AirlineDetails']['FlightNumber'];
                     $request .= "
+                    <Flights>
                 <DepartCountryCode>$departureCountryCode</DepartCountryCode>
                 <DepartStationCode></DepartStationCode>
                 <ArrivalCountryCode>$arrivalCountryCode</ArrivalCountryCode>
@@ -426,7 +427,8 @@ private function get_ConfirmPurchase_Request_Header(Array $headerData): Array{
                 <ReturnAirlineCode></ReturnAirlineCode>
                 <ReturnDateTime></ReturnDateTime>
                 <DepartFlightNo>$departureFlightNumber</DepartFlightNo>
-                <ReturnFlightNo></ReturnFlightNo>";
+                <ReturnFlightNo></ReturnFlightNo>
+                </Flights>";
                 }
             }
         } else {
@@ -444,6 +446,7 @@ private function get_ConfirmPurchase_Request_Header(Array $headerData): Array{
                 $returnFlightNumber = $segmentDetails[1][$k]['AirlineDetails']['FlightNumber'];
                 $returnDateTime = $segmentDetails[1][$k]['OriginDetails']['DateTime'];
                 $request .= "
+                <Flights>
                     <DepartCountryCode>$departureCountryCode</DepartCountryCode>
                     <DepartStationCode></DepartStationCode>
                     <ArrivalCountryCode>$arrivalCountryCode</ArrivalCountryCode>
@@ -453,10 +456,10 @@ private function get_ConfirmPurchase_Request_Header(Array $headerData): Array{
                     <ReturnAirlineCode>$returnAirlineCode</ReturnAirlineCode>
                     <ReturnDateTime>$returnDateTime</ReturnDateTime>
                     <DepartFlightNo>$departureFlightNumber</DepartFlightNo>
-                    <ReturnFlightNo>$returnFlightNumber</ReturnFlightNo>";
+                    <ReturnFlightNo>$returnFlightNumber</ReturnFlightNo>
+                    </Flights>";
             }
         }
-        $request .= '</Flights>';
         // $request = '
         //     <Flights>
         //     <DepartCountryCode>NP</DepartCountryCode>
