@@ -1,8 +1,8 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 require_once('InsuranceInterface.php');
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
 // error_reporting(E_ALL);
 /**
  *
@@ -34,7 +34,7 @@ class Protect implements InsuranceInterface
         } else {
             $this->userName = PROTECT_LIVE_USERNAME;
             $this->password = PROTECT_LIVE_PASSWORD;
-            $this->url = PROTECT_LIVE_CHANNEL_CODE;
+            $this->url = PROTECT_LIVE_REQUEST_URL;
             $this->channelCode = PROTECT_LIVE_CHANNEL_CODE;
         }
     }
@@ -87,7 +87,7 @@ class Protect implements InsuranceInterface
             $testFile = fopen("newfile.xml", "w") or die("Unable to open file!");
             fwrite($testFile, $request['data']);
             fclose($testFile);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml', 'Accept : */*', ''));
             curl_setopt($ch, CURLOPT_HEADER, 1);
             curl_setopt($ch, CURLOPT_USERPWD, $this->userName . ":" . $this->password);
             curl_setopt($ch, CURLOPT_TIMEOUT, 30);
@@ -170,7 +170,7 @@ class Protect implements InsuranceInterface
                     //prepare the request to return
                     $response['data'] = "<Header>
             <Channel>" . $this->channelCode . "</Channel>
-            <Currency>AED</Currency>
+            <Currency>NPR</Currency>
             <CountryCode>EN</CountryCode>
             <CultureCode>EN</CultureCode>
             <TotalAdults>$numberOfAdults</TotalAdults>
@@ -226,7 +226,7 @@ private function get_ConfirmPurchase_Request_Header(Array $headerData): Array{
                 <PolicyNo/>
                 <PurchaseDate>$purchaseDate</PurchaseDate>
                 <SSRFeeCode>INSC</SSRFeeCode>
-                <Currency>AED</Currency>
+                <Currency>NPR</Currency>
                 <TotalPremium>$totalAmount</TotalPremium>
                 <CountryCode>EN</CountryCode>
                 <CultureCode>EN</CultureCode>
@@ -359,7 +359,7 @@ private function get_ConfirmPurchase_Request_Header(Array $headerData): Array{
             $insuranceDetails = $requestData['data']['insuranceDetails'];
             $authHeader = $this->getAuthHeader();
             $bookingPersonDetails =$this->getBookingPassengerInformation($insuranceDetails);
-            $currentFlightInformation = $this->formatFlightInformationToXML($searchData, $segmentDetails);
+            $currentFlightInformation = $this->formatFlightInformationToXMLForPurchase($searchData, $segmentDetails);
             $currentFlightInformation = '    <Flights>   
             <Flight>   
             <DepartCountryCode>AE</DepartCountryCode>
@@ -405,7 +405,7 @@ private function get_ConfirmPurchase_Request_Header(Array $headerData): Array{
     {
 
         $tripType = $searchData['data']['trip_type'];
-        $request = '<flights>';
+        $request = '<Flights>';
         if ($tripType != 'circle') {
             foreach ($segmentDetails as $k => $v) {
                 foreach ($v as $s_k => $s_v) {
@@ -417,7 +417,6 @@ private function get_ConfirmPurchase_Request_Header(Array $headerData): Array{
                     $departureAirlineCode = $segmentDetails[$k][$s_k]['AirlineDetails']['AirlineCode'];
                     $departureFlightNumber = $segmentDetails[$k][$s_k]['AirlineDetails']['FlightNumber'];
                     $request .= "
-                <Flight>
                 <DepartCountryCode>$departureCountryCode</DepartCountryCode>
                 <DepartStationCode></DepartStationCode>
                 <ArrivalCountryCode>$arrivalCountryCode</ArrivalCountryCode>
@@ -427,8 +426,7 @@ private function get_ConfirmPurchase_Request_Header(Array $headerData): Array{
                 <ReturnAirlineCode></ReturnAirlineCode>
                 <ReturnDateTime></ReturnDateTime>
                 <DepartFlightNo>$departureFlightNumber</DepartFlightNo>
-                <ReturnFlightNo></ReturnFlightNo>
-             </Flight>";
+                <ReturnFlightNo></ReturnFlightNo>";
                 }
             }
         } else {
@@ -446,7 +444,79 @@ private function get_ConfirmPurchase_Request_Header(Array $headerData): Array{
                 $returnFlightNumber = $segmentDetails[1][$k]['AirlineDetails']['FlightNumber'];
                 $returnDateTime = $segmentDetails[1][$k]['OriginDetails']['DateTime'];
                 $request .= "
-                    <Flight>
+                    <DepartCountryCode>$departureCountryCode</DepartCountryCode>
+                    <DepartStationCode></DepartStationCode>
+                    <ArrivalCountryCode>$arrivalCountryCode</ArrivalCountryCode>
+                    <ArrivalStationCode></ArrivalStationCode>
+                    <DepartAirlineCode>$departureAirlineCode</DepartAirlineCode>
+                    <DepartDateTime>$departureDateTime</DepartDateTime>
+                    <ReturnAirlineCode>$returnAirlineCode</ReturnAirlineCode>
+                    <ReturnDateTime>$returnDateTime</ReturnDateTime>
+                    <DepartFlightNo>$departureFlightNumber</DepartFlightNo>
+                    <ReturnFlightNo>$returnFlightNumber</ReturnFlightNo>";
+            }
+        }
+        $request .= '</Flights>';
+        // $request = '
+        //     <Flights>
+        //     <DepartCountryCode>NP</DepartCountryCode>
+        //     <DepartStationCode></DepartStationCode>
+        //     <ArrivalCountryCode>IN</ArrivalCountryCode>
+        //     <ArrivalStationCode></ArrivalStationCode>
+        //     <DepartAirlineCode>AI</DepartAirlineCode>
+        //     <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
+        //     <ReturnAirlineCode></ReturnAirlineCode>
+        //     <ReturnDateTime></ReturnDateTime>
+        //     <DepartFlightNo>638</DepartFlightNo>
+        //     <ReturnFlightNo></ReturnFlightNo>
+        // </Flights>';
+
+        return $request;
+    }
+    private function formatFlightInformationToXMLForPurchase($searchData = array(), $segmentDetails = array())
+    {
+
+        $tripType = $searchData['data']['trip_type'];
+        $request = '<Flights>';
+        if ($tripType != 'circle') {
+            foreach ($segmentDetails as $k => $v) {
+                foreach ($v as $s_k => $s_v) {
+                    $departureCityName = $segmentDetails[$k][$s_k]['OriginDetails']['CityName'];
+                    $departureCountryCode = $this->CI->insurance_model->getCountryDetailsFromCityName($departureCityName);
+                    $arrivalCityName = $segmentDetails[$k][$s_k]['DestinationDetails']['CityName'];
+                    $arrivalCountryCode = $this->CI->insurance_model->getCountryDetailsFromCityName($arrivalCityName);
+                    $departureDateTime = $segmentDetails[$k][$s_k]['OriginDetails']['DateTime'];
+                    $departureAirlineCode = $segmentDetails[$k][$s_k]['AirlineDetails']['AirlineCode'];
+                    $departureFlightNumber = $segmentDetails[$k][$s_k]['AirlineDetails']['FlightNumber'];
+                    $request .= "<Flight>
+                <DepartCountryCode>$departureCountryCode</DepartCountryCode>
+                <DepartStationCode></DepartStationCode>
+                <ArrivalCountryCode>$arrivalCountryCode</ArrivalCountryCode>
+                <ArrivalStationCode></ArrivalStationCode>
+                <DepartAirlineCode>$departureAirlineCode</DepartAirlineCode>
+                <DepartDateTime>$departureDateTime</DepartDateTime>
+                <ReturnAirlineCode></ReturnAirlineCode>
+                <ReturnDateTime></ReturnDateTime>
+                <DepartFlightNo>$departureFlightNumber</DepartFlightNo>
+                <ReturnFlightNo></ReturnFlightNo></Flight>";
+                }
+            }
+        } else {
+            $segmentDetails[1] = array_reverse($segmentDetails[1]);
+            foreach ($segmentDetails[0] as $k => $v) {
+                $departureCityName = $segmentDetails[0][$k]['OriginDetails']['CityName'];
+                $departureCountryCode = $this->CI->insurance_model->getCountryDetailsFromCityName($departureCityName);
+                $arrivalCityName = $segmentDetails[0][$k]['DestinationDetails']['CityName'];
+
+                $arrivalCountryCode = $this->CI->insurance_model->getCountryDetailsFromCityName($arrivalCityName);
+                $departureDateTime = $segmentDetails[0][$k]['OriginDetails']['DateTime'];
+                $departureAirlineCode = $segmentDetails[0][$k]['AirlineDetails']['AirlineCode'];
+                $departureFlightNumber = $segmentDetails[0][$k]['AirlineDetails']['FlightNumber'];
+                $returnAirlineCode = $segmentDetails[1][$k]['AirlineDetails']['AirlineCode'];
+                $returnFlightNumber = $segmentDetails[1][$k]['AirlineDetails']['FlightNumber'];
+                $returnDateTime = $segmentDetails[1][$k]['OriginDetails']['DateTime'];
+                $request .= "
+                <Flight>
                     <DepartCountryCode>$departureCountryCode</DepartCountryCode>
                     <DepartStationCode></DepartStationCode>
                     <ArrivalCountryCode>$arrivalCountryCode</ArrivalCountryCode>
@@ -457,27 +527,13 @@ private function get_ConfirmPurchase_Request_Header(Array $headerData): Array{
                     <ReturnDateTime>$returnDateTime</ReturnDateTime>
                     <DepartFlightNo>$departureFlightNumber</DepartFlightNo>
                     <ReturnFlightNo>$returnFlightNumber</ReturnFlightNo>
-                 </Flight>";
+                    </Flight>";
             }
         }
         $request .= '</Flights>';
-        $request = '
-            <Flights>
-            <DepartCountryCode>AE</DepartCountryCode>
-            <DepartStationCode></DepartStationCode>
-            <ArrivalCountryCode>IN</ArrivalCountryCode>
-            <ArrivalStationCode></ArrivalStationCode>
-            <DepartAirlineCode>AI</DepartAirlineCode>
-            <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
-            <ReturnAirlineCode></ReturnAirlineCode>
-            <ReturnDateTime></ReturnDateTime>
-            <DepartFlightNo>638</DepartFlightNo>
-            <ReturnFlightNo></ReturnFlightNo>
-        </Flights>';
 
         return $request;
     }
-
 
 
 
