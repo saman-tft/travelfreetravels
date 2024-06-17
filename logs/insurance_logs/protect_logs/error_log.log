@@ -1,52 +1,54 @@
 
 ========== BEGIN REQUEST/RESPONSE ==========
-error ID: 570
-Request Method Name: ConfirmPurchase
+error ID: 40002
+Request Method Name: GetAvailablePlansOTAWithRidersResponse
 Response Status: 0
-Timestamp: 2024-05-29 23:27:29
+Timestamp: 2024-06-03 13:01:19
 ----------BEGIN REQUEST ----------
-<?xml version="1.0" encoding="utf-8"?>
-        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-        <soap:Body>
-        <ConfirmPurchase xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
-        <GenericRequest><Authentication>
-                    <Username>UAT_DEMO</Username>
-                    <Password>ypHALsJ3EG3p</Password>
-                 </Authentication><
-            <Flights>
-            <DepartCountryCode>AE</DepartCountryCode>
-            <DepartStationCode></DepartStationCode>
-            <ArrivalCountryCode>IN</ArrivalCountryCode>
-            <ArrivalStationCode></ArrivalStationCode>
-            <DepartAirlineCode>AI</DepartAirlineCode>
-            <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
-            <ReturnAirlineCode></ReturnAirlineCode>
-            <ReturnDateTime></ReturnDateTime>
-            <DepartFlightNo>638</DepartFlightNo>
-            <ReturnFlightNo></ReturnFlightNo>
-        </Flights><Passengers><Passenger>
-            <IsInfant>0</IsInfant>
-            <FirstName>asd</FirstName>
-            <LastName>dsa</LastName>
-            <Gender>Male</Gender>
-            <DOB> 00:00:00</DOB>
-            <Age>12</Age>
-            <IdentityType>Passport</IdentityType>
-            <IdentityNo>123456</IdentityNo>
-            <IsQualified>true</IsQualified>
-            <Nationality>NP</Nationality>
-            <CountryOfResidence>NP</CountryOfResidence>
-            <SelectedPlanCode>AE2-API-OUTBOUND-GOLD</SelectedPlanCode>
-            <SelectedSSRFeeCode></SelectedSSRFeeCode>
-            <CurrencyCode>AED</CurrencyCode>
-            <PassengerPremiumAmount>77</PassengerPremiumAmount>
-            </Passenger></Passengers>
-        </GenericRequest>
-        </ConfirmPurchase>
-        </soap:Body>
-        </soap:Envelope>
+process_GetAvailablePlansOTAWithRidersResponse
+----------END REQUEST ----------
+----------BEGIN RESPONSE ----------
+Invalid currency code. Please use local currency, which is either the departure or arrival country's currency.
+----------END RESPONSE ----------
+========== END REQUEST/RESPONSE ==========
+
+========== BEGIN REQUEST/RESPONSE ==========
+error ID: 978018
+Request Method Name: GetAvailablePlansOTAWithRiders
+Response Status: 0
+Timestamp: 2024-06-03 13:03:15
+----------BEGIN REQUEST ----------
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://ZEUSTravelInsuranceGateway/WebServices">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <GetAvailablePlansOTAWithRiders xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
+                <GenericRequestOTALite><Authentication>
+                    <Username>Travel_Free_Travels</Username>
+                    <Password>7qPiDYANEcMJ</Password>
+                 </Authentication><Header>
+            <Channel>IBE_TFTNP</Channel>
+            <Currency>NPR</Currency>
+            <CountryCode>EN</CountryCode>
+            <CultureCode>EN</CultureCode>
+            <TotalAdults>1</TotalAdults>
+            <TotalChild>0</TotalChild>
+            <TotalInfants>0 </TotalInfants>
+         </Header><flights>
+                <Flight>
+                <DepartCountryCode>NP</DepartCountryCode>
+                <DepartStationCode></DepartStationCode>
+                <ArrivalCountryCode>IN</ArrivalCountryCode>
+                <ArrivalStationCode></ArrivalStationCode>
+                <DepartAirlineCode>RA</DepartAirlineCode>
+                <DepartDateTime>2024-06-28 13:25:00</DepartDateTime>
+                <ReturnAirlineCode></ReturnAirlineCode>
+                <ReturnDateTime></ReturnDateTime>
+                <DepartFlightNo>217</DepartFlightNo>
+                <ReturnFlightNo></ReturnFlightNo>
+             </Flight></Flights></GenericRequestOTALite>
+            </GetAvailablePlansOTAWithRiders>
+            </soapenv:Body>
+            </soapenv:Envelope>
 ----------END REQUEST ----------
 ----------BEGIN RESPONSE ----------
 Request failed: HTTP status code: 400
@@ -54,53 +56,40 @@ Request failed: HTTP status code: 400
 ========== END REQUEST/RESPONSE ==========
 
 ========== BEGIN REQUEST/RESPONSE ==========
-error ID: 572
-Request Method Name: ConfirmPurchase
+error ID: 978018
+Request Method Name: GetAvailablePlansOTAWithRiders
 Response Status: 0
-Timestamp: 2024-05-29 23:44:13
+Timestamp: 2024-06-03 13:07:28
 ----------BEGIN REQUEST ----------
-<?xml version="1.0" encoding="utf-8"?>
-        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-        <soap:Body>
-        <ConfirmPurchase xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
-        <GenericRequest><Authentication>
-                    <Username>UAT_DEMO</Username>
-                    <Password>ypHALsJ3EG3p</Password>
-                 </Authentication><
-            <Flights>
-            <DepartCountryCode>AE</DepartCountryCode>
-            <DepartStationCode></DepartStationCode>
-            <ArrivalCountryCode>IN</ArrivalCountryCode>
-            <ArrivalStationCode></ArrivalStationCode>
-            <DepartAirlineCode>AI</DepartAirlineCode>
-            <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
-            <ReturnAirlineCode></ReturnAirlineCode>
-            <ReturnDateTime></ReturnDateTime>
-            <DepartFlightNo>638</DepartFlightNo>
-            <ReturnFlightNo></ReturnFlightNo>
-        </Flights><Passengers><Passenger>
-            <IsInfant>0</IsInfant>
-            <FirstName>Ram</FirstName>
-            <LastName>Rai</LastName>
-            <Gender>Male</Gender>
-            <DOB> 00:00:00</DOB>
-            <Age>31</Age>
-            <IdentityType>Passport</IdentityType>
-            <IdentityNo>1234567</IdentityNo>
-            <IsQualified>true</IsQualified>
-            <Nationality>NP</Nationality>
-            <CountryOfResidence>NP</CountryOfResidence>
-            <SelectedPlanCode>AE2-API-OUTBOUND-GOLD</SelectedPlanCode>
-            <SelectedSSRFeeCode>INSB1_API_AE2_GO_OB</SelectedSSRFeeCode>
-            <CurrencyCode>AED</CurrencyCode>
-            <PassengerPremiumAmount>77</PassengerPremiumAmount>
-            </Passenger></Passengers>
-        </GenericRequest>
-        </ConfirmPurchase>
-        </soap:Body>
-        </soap:Envelope>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://ZEUSTravelInsuranceGateway/WebServices">
+            <soapenv:Header/>asd
+            <soapenv:Body>
+                <GetAvailablePlansOTAWithRiders xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
+                <GenericRequestOTALite><Authentication>
+                    <Username>Travel_Free_Travels</Username>
+                    <Password>7qPiDYANEcMJ</Password>
+                 </Authentication><Header>
+            <Channel>IBE_TFTNP</Channel>
+            <Currency>NPR</Currency>
+            <CountryCode>EN</CountryCode>
+            <CultureCode>EN</CultureCode>
+            <TotalAdults>1</TotalAdults>
+            <TotalChild>0</TotalChild>
+            <TotalInfants>0 </TotalInfants>
+         </Header><flights>
+                <DepartCountryCode>NP</DepartCountryCode>
+                <DepartStationCode></DepartStationCode>
+                <ArrivalCountryCode>IN</ArrivalCountryCode>
+                <ArrivalStationCode></ArrivalStationCode>
+                <DepartAirlineCode>RA</DepartAirlineCode>
+                <DepartDateTime>2024-06-28 13:25:00</DepartDateTime>
+                <ReturnAirlineCode></ReturnAirlineCode>
+                <ReturnDateTime></ReturnDateTime>
+                <DepartFlightNo>217</DepartFlightNo>
+                <ReturnFlightNo></ReturnFlightNo></Flights></GenericRequestOTALite>
+            </GetAvailablePlansOTAWithRiders>
+            </soapenv:Body>
+            </soapenv:Envelope>
 ----------END REQUEST ----------
 ----------BEGIN RESPONSE ----------
 Request failed: HTTP status code: 400

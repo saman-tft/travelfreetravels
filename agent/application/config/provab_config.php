@@ -75,4 +75,4 @@ $config['flight_search_session_expiry_period'] = 600;
 $config['flight_search_session_expiry_alert_period'] = 300;
 
 // configure the test and live creds for protect insurance api
-$config['protect_api_mode'] = 'test';
+$config['protect_api_mode'] = 'live';

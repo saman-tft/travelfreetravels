@@ -1,9 +1,6 @@
 <?php
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 /**
  *
  * @package Flight Insurance
@@ -184,20 +181,24 @@ class Insurance extends CI_Controller
                             $formattedApiData = $this->insuranceService->getFormattedApiResponse($rawApiResponse);
                             $formattedApiData['message'] = '';
                         } catch (Exception $e) {
-                            $formattedApiData['status'] = 0;
+                            $formattedApiData['status'] = 'FAILED';
                             $formattedApiData['data'] = '';
                             $formattedApiData['message'] = $e->getMessage();
                         }
 
-                        if ($formattedApiData['status'] === 1) {
-                          
-                            $plansDetails['data'] = $formattedApiData['PlanDetails'];
-                            $plansDetails['id'] = 'INS' . date('Ymd') . rand(1000, 2000);
-                            $plansDetails['token'] = provab_encrypt(json_encode($plansDetails, true));
-                            $encodedPlans = json_encode($plansDetails, true);
-                            header('Content-Type: application/json');
-                            echo $encodedPlans;
+                        if ($formattedApiData['status'] == 'CONFIRMED') {
+                            try{
+                            $updateStatus = $this->insurance_model->updateConfirmedInsuranceDetails($bookId, $formattedApiData);
+                            }catch(Exception $e){
+                                $updateStatus['status'] = 0;
+                                $updateStatus['message'] = $e->getMessage();
+                            }
+                        }else{
+
+                            //log failed exception or on hold exception
                         }
+                        redirect(base_url() . 'index.php/voucher/flight/' . $bookId . '/' . $bookingSource . '/' . 'BOOKING_CONFIRMED' . '/show_voucher' . '/insurance'. '/'. $formattedApiData['status']);
+                        
                     }
                 }
             }

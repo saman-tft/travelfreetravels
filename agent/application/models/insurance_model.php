@@ -98,9 +98,49 @@ Class Insurance_Model extends CI_Model
         $creation = $this->custom_db->insert_record('plan_retirement', $creationData);
         return $creation;
     }
+
+    public function updateConfirmedInsuranceDetails(String $bookId, Array $confirmedInsuranceDetails){
+        try{
+        $bookId =trim($bookId);
+        $pnr = trim($confirmedInsuranceDetails['data']['pnr']);
+        $policyNumber = trim($confirmedInsuranceDetails['data']['policyNumber']);
+        $iteneraryId = trim($confirmedInsuranceDetails['data']['iteneraryId']);
+        $passengerDetails =trim(json_encode($confirmedInsuranceDetails['data']['ConfirmedPassengerDetails']), true);
+        $insuranceStatus = trim($confirmedInsuranceDetails['status']);
+
+        $policyUrl = trim($confirmedInsuranceDetails['data']['ConfirmedPassengerDetails']['ConfirmedPassenger']['PolicyURLLink']);
+        $updateCondition = [
+            'app_reference'=>$bookId,
+            'city'=>$pnr,
+            'sortcode'=>1
+        ];
+        $updateData = [
+            'address'=>$policyNumber,
+            'payment_status'=>'accepted',
+            'passcopy'=> $iteneraryId,
+            'packselect'=>$passengerDetails,
+            'package'=>$insuranceStatus,
+            'bankname'=>$policyUrl,
+            'sortcode'=>0
+        ];
+        $updateStatus = $this->custom_db->update_record('plan_retirement', $updateData, $updateCondition);
+        if($updateStatus == 1){
+            $response['status'] = 1;
+        }else{
+            $response['status'] = 0;
+        }
+    }catch(Exception $e){
+        $response['status'] = 0;
+        throw $e;
+    }
+        return $response;
+
+        
+    }
     private function preparePassengerDetails($selectedPlanDetails, $post_params, $nationalityCode) {
         $passengerDetails = [];
         foreach ($selectedPlanDetails as $key => $planDetail) {
+            if($planDetail['plan'] != 'None'){
             $planDetail['passengerDetails'] = [
                 'name' => $planDetail['passenger'],
                 'identificationType' => $post_params['identification_type'][$key],
@@ -113,6 +153,7 @@ Class Insurance_Model extends CI_Model
             ];
             $passengerDetails[] = $planDetail['passengerDetails'];
         }
+    }
         return $passengerDetails;
     }
     

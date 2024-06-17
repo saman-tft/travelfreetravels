@@ -21,7 +21,7 @@ Class Car_Model extends CI_Model
 		$raw_search_chars = $this->db->escape($search_chars);
 		$r_search_chars = $this->db->escape($search_chars.'%');
 		$search_chars = $this->db->escape('%'.$search_chars.'%');
-		$query = 'Select * from car_airport where Airport_Name_EN like '.$search_chars.'
+		$query = 'Select * from Car_Airport where Airport_Name_EN like '.$search_chars.'
 		OR Airport_IATA like '.$search_chars.' OR Country_ISO like '.$search_chars.'
 		ORDER BY top_destination DESC,
 		CASE

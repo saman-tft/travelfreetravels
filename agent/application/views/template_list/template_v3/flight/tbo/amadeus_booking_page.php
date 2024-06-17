@@ -121,10 +121,58 @@
     </div>
 </div> -->
 <style>
+    .insuranceSection {
+        font-weight: 800;
+        margin-bottom: 0.5em;
+        border: 3px inset purple;
+        padding: 1em;
+
+    }
+
+    .insuranceSection p {
+        font-weight: 800;
+        color: black;
+        font-size: 16px;
+
+    }
+
+    .insuranceButton {
+        padding: 0.5em 2em;
+        color: white;
+        box-shadow: 2px 2px 5px black;
+        font-weight: 800;
+        border: 1px inset purple;
+    }
+
+    .yesButton {
+        background: purple;
+    }
+
+    .yesButton:hover {
+        color: white;
+        background: #8C4F9F;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .noButton {
+        background: red;
+    }
+
+    .noButton:hover {
+        color: white;
+        background: rgb(244, 58, 58);
+        transition: all 0.2s ease-in-out;
+    }
+
+    .insuranceErrorMessage {
+        font-weight: 800;
+        padding: 0 1.2em;
+    }
+
     .modal {
         display: none;
         position: fixed;
-        z-index: 1;
+        z-index: 99999;
         left: 0;
         top: 0;
         width: 100%;
@@ -138,11 +186,214 @@
         margin: 15% auto;
         padding: 20px;
         border: 1px solid #888;
-        width: 80%;
+        max-width: max-content;
     }
 
+    .modalBody {
+        display: grid;
+        gap: 0.6em;
+        padding: 1.2em;
+  overflow: auto;
+    }
+
+    .categoryPrompt {
+        color: black;
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    .familyPlansButton {
+        background: purple;
+        color: white;
+        text-align: center;
+    }
+
+    .familyPlansButton:hover {
+        color: white;
+        background: #8C4F9F;
+    }
+
+    .individualPlansButton {
+        background: #009EDB;
+        color: white;
+        text-align: center;
+    }
+
+    .individualPlansButton:hover {
+        color: white;
+        background: #73b8d1;
+    }
+
+    .individualPlanSelectionTitle:hover {
+        opacity: 0.8;
+    }
+
+    .individualPlanSelectionTitle {
+        color: black;
+        font-size: 2.5rem;
+        margin-top: -0.5em;
+        text-transform: capitalize;
+        font-weight: 800;
+    }
+
+    .passengerName {
+        color: purple;
+        text-transform: capitalize;
+    }
+    .individualPlans{
+        display:flex;
+        flex-direction: column;
+    }
+    .individualPlansContainer{
+        display:grid;
+        gap:1em;
+        flex-grow: 1;
+        max-height: 95%;
+        overflow-y:auto;
+        padding:1em;
+    }
+    .leftContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0 0.5em;
+  color: white;
+  font-family: cursive;
+}
+.leftContainer h3{
+    font-size: 2.2rem;
+  font-weight: 800;
+}
+.leftContainer p{
+    font-size: 1.8rem;
+  font-weight: 800;
+}
+
+.rightContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  gap: 1.2em;
+}
+.plan {
+  display: grid;
+  grid-template-columns: 0.8fr 0.3fr;
+  place-content: center;
+  place-items: center;
+  color: white;
+}
+.additionalDetailsList{
+    display: flex;
+    flex-direction:column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.additionalDetailsList li{
+    text-align:left;
+}
+.goldPlans {
+  background: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%), radial-gradient(ellipse farthest-corner at left top, #FFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%);
+  border-radius: 15px;
+  border: #8f6B29 2px solid;
+  box-shadow: 3px 3px 10px #8f6b29;
+}
+.goldPlans .rightContainer button{
+  background: -webkit-linear-gradient(top, #8f6B29, #FDE08D, #DF9F28);
+  background: linear-gradient(top, #8f6B29, #FDE08D, #DF9F28);
+  border: #8f6B29 2px solid;
+  border-radius: 5px;
+  padding: 0 0.5em;
+  font-weight: 900;
+  font-size: 1.2em;
+  box-shadow: 2px 2px 7px #8f6b29;
+  width:100%;
+
+}
+.goldPlans .rightContainer button:hover{
+    opacity:0.8;
+}
+.silverPlans {
+  background: radial-gradient(ellipse farthest-corner at right bottom, #D3D3D3 0%, #C0C0C0 8%, #A9A9A9 30%, #808080 40%, transparent 80%), radial-gradient(ellipse farthest-corner at left top, #FFF 0%, #F5F5F5 8%, #DCDCDC 25%, #A9A9A9 62.5%, #A9A9A9 100%);
+  border-radius: 15px;
+  border: #696969 2px solid;
+  box-shadow: 3px 3px 10px #696969;
+}
+
+.silverPlans .rightContainer button {
+  background: -webkit-linear-gradient(top, #696969, #D3D3D3, #B0B0B0);
+  background: linear-gradient(top, #696969, #D3D3D3, #B0B0B0);
+  border: #696969 2px solid;
+  border-radius: 5px;
+  padding: 0 0.5em;
+  font-weight: 900;
+  font-size: 1.2em;
+  box-shadow: 2px 2px 7px #696969;
+  width: 100%;
+}
+
+.silverPlans .rightContainer button:hover {
+  opacity: 0.8;
+}
+
+.platinumPlans {
+  background: radial-gradient(ellipse farthest-corner at left top, #C9C9FF 0%, #B0B0FF 8%, #8A8AFF 30%, #6666FF 40%, transparent 80%), radial-gradient(ellipse farthest-corner at right bottom, #FFF 0%, #F5F5FF 8%, #DCDCFF 25%, #8A8AFF 62.5%, #8A8AFF 100%);
+  border-radius: 15px;
+  border: #5858FF 2px solid;
+  box-shadow: 3px 3px 10px #5858FF;
+}
+
+.platinumPlans .rightContainer button {
+  background: -webkit-linear-gradient(top, #5858FF, #C9C9FF, #A3A3FF);
+  background: linear-gradient(top, #5858FF, #C9C9FF, #A3A3FF);
+  border: #5858FF 2px solid;
+  border-radius: 5px;
+  padding: 0 0.5em;
+  font-weight: 900;
+  font-size: 1.2em;
+  box-shadow: 2px 2px 7px #5858FF;
+  width: 100%;
+}
+
+.platinumPlans .rightContainer button:hover {
+  opacity: 0.8;
+}
+.navigationButtonsContainer {
+  display: flex;
+  justify-content: space-between;
+}
+.backButton{
+    background:purple;
+}
+.selectedPlanDetails{
+    display: block;
+  padding: 1em;
+}
+.selectedPlansTitle{
+    margin-top: 0;
+  margin-bottom: 0.4em;
+  color: black;
+  font-size: 2.5rem;
+}
+.selectedPlanDetails div ul li{
+    margin: 0.5em 0;
+  text-transform: capitalize;
+  color: purple;
+}
+
+.selectedPlanDetails div ul{
+    font-size: 1.8rem;
+  font-weight: 800;
+}
+.selectedPlan{
+    display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
     .close {
-        color: #aaa;
+        color: black;
         float: right;
         font-size: 28px;
         font-weight: bold;
@@ -163,11 +414,12 @@
     .modal-backdrop {
         display: none;
     }
+    
 </style>
 <div id="modal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <div id="modal-body">
+    <div class="modal-content" id="modal-content">
+        <span class="close"></span>
+        <div id="modal-body" class="modalBody">
             <!-- Modal content will be inserted here -->
         </div>
     </div>
@@ -259,7 +511,7 @@ echo generate_low_balance_popup($FareDetails['_CustomerBuying'] + $FareDetails['
 <div class="fldealsec">
     <div class="container">
         <!-- Bootstrap modal for loading -->
-        <div class="modal" id="loadingModal" tabindex="-1">
+        <!-- <div class="modal" id="loadingModal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body text-center">
@@ -267,7 +519,7 @@ echo generate_low_balance_popup($FareDetails['_CustomerBuying'] + $FareDetails['
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="tabcontnue">
             <div class="col-xs-4 nopadding">
                 <div class="rondsts <?= $review_active_class ?>">
@@ -506,7 +758,7 @@ echo generate_low_balance_popup($FareDetails['_CustomerBuying'] + $FareDetails['
                                     <input type="hidden" id="insuranceId" name="insuranceId">
                                     <input type="hidden" id="insuranceToken" name="insuranceToken">
 
-                                    
+
 
 
                                     <input type="hidden" name="total_price_with_rewards" value="<?= round($total_price_with_rewards) ?>">
@@ -995,14 +1247,17 @@ echo generate_low_balance_popup($FareDetails['_CustomerBuying'] + $FareDetails['
                                     $segmentDetails = base64_encode(json_encode($SegmentDetails, true));
                                     $searchId = $search_data['search_id'];
                                     ?>
-                                    <div id="insuranceSection">
+                                    <div class="selectedPlanDetails insuranceSection" id="selectedPlanDetails"></div>
+                                    <div id="insuranceSection" class="insuranceSection">
                                         <p>Would you like to purchase insurance for this flight?</p>
-                                        <a href='<?php echo base_url() . "insurance/GetAvailablePlansOTAWithRiders/" . $search_data['search_id'] . '/' . $segmentDetails ?>'>Insure Trip</a>
-                                        <a href='<?php echo base_url() . "flight/ConfirmPurchase" ?>'>Confirm Insurance</a>
-                                        <button type="button" class="btn btn-primary" id="yesBtn">Yes</button>
-                                        <button type="button" class="btn btn-danger" id="noBtn">No</button>
+                                        <!-- <a href='<?php echo base_url() . "insurance/GetAvailablePlansOTAWithRiders/" . $search_data['search_id'] . '/' . $segmentDetails ?>'>Insure Trip</a>
+                                        <a href='<?php echo base_url() . "flight/ConfirmPurchase" ?>'>Confirm Insurance</a> -->
+                                        <div class="buttonContainer">
+                                            <button type="button" class="btn yesButton insuranceButton" id="yesBtn">Yes</button>
+                                            <button type="button" class="btn insuranceButton noButton" id="noBtn">No</button>
+                                        </div>
                                     </div>
-                                    <div id="errorDiv"></div>
+                                    <div id="errorDiv" class="insuranceErrorMessage text-danger"></div>
 
                                     <!-- Insurance plans section -->
                                     <div id="insurancePlans" style="display: none;">
@@ -1808,6 +2063,11 @@ for (const planKey in plans) {
 
 <script>
     document.getElementById("yesBtn").addEventListener("click", openModal);
+    document.getElementById("noBtn").addEventListener("click", () => {
+        document.getElementById("insuranceSection").style.display = 'none';
+        document.getElementById("isInsured").value = 0;
+    });
+
     const modal = document.getElementById("modal");
     const modalBody = document.getElementById("modal-body");
     const closeBtn = document.getElementsByClassName("close")[0];
@@ -1826,6 +2086,25 @@ for (const planKey in plans) {
     const baseUrl = "<?php echo base_url(); ?>";
     const fetchUrl = `${baseUrl}index.php/insurance/GetAvailablePlansOTAWithRiders/<?php echo $searchId ?>/<?php echo $segmentDetails ?>`;
     const cache = {};
+    const errorDiv = document.getElementById('errorDiv');
+    const inputFields = document.querySelectorAll('input');
+    const modalContentContainer = document.getElementById('modal-content');
+    const selectedPlanDetailsContainer = document.getElementById('selectedPlanDetails');
+    selectedPlanDetailsContainer.style.display = "none";
+
+    inputFields.forEach(input => {
+        input.addEventListener('focus', () => {
+            errorDiv.innerText = '';
+        });
+
+    });
+    document.addEventListener('keydown', function(event) {
+    if (event.key === "Escape") {
+      modal.style.display = "none";
+      resetModal();
+      isInsuranceSelected.value = 0;
+    }
+  });
 
     closeBtn.onclick = function() {
         resetModal();
@@ -1840,7 +2119,34 @@ for (const planKey in plans) {
             isInsuranceSelected.value = 0;
         }
     }
+    function extractTextFromHTML(html) {
+    let container = document.createElement('div');
+    container.innerHTML = html;
+    let table = container.querySelector('table');
+    let extractedText = [];
 
+
+    if (table) {
+
+        table.querySelectorAll('tr').forEach(function(row) {
+
+            row.querySelectorAll('td').forEach(function(cell) {
+            if(cell.textContent.trim() != '' && !(cell.textContent.trim().includes('Terms & Conditions')))
+                extractedText.push(cell.textContent.trim());
+            });
+        });
+    }
+
+
+    return extractedText;
+}
+function getAdditionalPlanDetails(planDetails){
+    let additionalPlanHTML = '';
+    planDetails.forEach(planDetail =>{
+        additionalPlanHTML += `<li>${planDetail}</li>`;
+    });
+    return additionalPlanHTML;
+}
     function openModal() {
         if (!arePassengerNamesEntered()) {
             displayErrorMessage("Please enter the names first.");
@@ -1850,22 +2156,23 @@ for (const planKey in plans) {
             displayErrorMessage("Please choose the date of birth first.");
             return;
         }
-
+        modalContentContainer.style.maxWidth="max-content";
         modal.style.display = "block";
+        
         showLoading();
         if (cache['data']) {
             data = cache['data'];
-                    id = data.id ?? 0;
-                    token = data.token ?? NULL;
-                    data = data.data ?? NULL;
-                    hideLoading();
-                    if (data && typeof data === 'object') {
-                        showPlanOptions(data);
-                        insuranceIdInput.value = id;
-                        insuranceTokenInput.value = token;
-                    } else {
-                        throw new Error('Invalid data format');
-                    }
+            id = data.id ?? 0;
+            token = data.token ?? NULL;
+            data = data.data ?? NULL;
+            hideLoading();
+            if (data && typeof data === 'object') {
+                showPlanOptions(data);
+                insuranceIdInput.value = id;
+                insuranceTokenInput.value = token;
+            } else {
+                throw new Error('Invalid data format');
+            }
         } else {
             fetch(fetchUrl)
                 .then(response => response.json())
@@ -1964,9 +2271,10 @@ for (const planKey in plans) {
 
     function showPlanOptions(data) {
         modalBody.innerHTML = `
-        <p>Which plan would you like to purchase?</p>
-        <button id="familyPlanBtn">Family Plan</button>
-        <button id="individualPlanBtn">Individual Plan</button>
+        <p class="categoryPrompt">Which plan would you like to purchase?</p>
+        <button id="familyPlanBtn" class="insuranceButton btn familyPlansButton">Family Plan</button>
+        <button id="individualPlanBtn" class="insuranceButton btn individualPlansButton">Individual Plan</button>
+        <button id="cancelButton" class="insuranceButton btn noButton">Cancel</button>
     `;
         if (!data.perPassengerPlans) {
             data.perPassengerPlans = [];
@@ -1975,18 +2283,35 @@ for (const planKey in plans) {
         if (!data.familyPlans) {
             data.familyPlans = [];
         }
-        document.getElementById("familyPlanBtn").addEventListener("click", () => showFamilyPlans(data.familyPlans));
+        document.getElementById("familyPlanBtn").addEventListener("click", () => showFamilyPlans(currentPassenger,data.familyPlans));
         document.getElementById("individualPlanBtn").addEventListener("click", () => showIndividualPlans(currentPassenger, data.perPassengerPlans));
+        document.getElementById("cancelButton").addEventListener("click", () => {
+            resetModal();
+            modal.style.display = "none";
+            isInsuranceSelected.value = 0;
+        });
+
     }
 
-    function showFamilyPlans(familyPlans) {
+    function showFamilyPlans(familyPlans, passenger) {
+        modalContentContainer.style.maxWidth="700px";
         modalBody.innerHTML = `
-        <button id="goBackBtn">Go Back</button>
         <div id="familyPlans">
+        <div id="familyPlansContainer">
             <!-- Family plans will be loaded here -->
+        </div>
+        </div>
+        <div id="navigationButtonsContainer" class="navigationButtonsContainer">
+        <button id="goBackBtn" class="backButton insuranceButton">Go Back</button>
+        <button id="familyCancelButton" class="btn noButton insuranceButton">Cancel</button>
         </div>
     `;
 
+    document.getElementById("familyCancelButton").addEventListener("click", () => {
+        modal.style.display = "none";
+      resetModal();
+      isInsuranceSelected.value = 0;
+        });
         document.getElementById("goBackBtn").addEventListener("click", openModal);
 
         const familyPlansContainer = document.getElementById("familyPlans");
@@ -1994,16 +2319,28 @@ for (const planKey in plans) {
         let planExists = false;
         Object.values(familyPlans).forEach(plansArray => {
             if (Array.isArray(plansArray) && plansArray.length > 0) {
+
                 planExists = true;
                 plansArray.forEach((plan, index) => {
-                    const planElement = document.createElement('div');
-                    planElement.innerHTML = `
-                    <h3>${plan.PlanTitle}</h3>
-                    <p>${plan.CurrencyCode} ${plan.TotalPremiumAmount}</p>
-                    <button id="selectFamilyPlan${index}" class="family-plan-select">Select</button>
-                    <button id="viewDetailsFamilyPlan${index}" class="view-details">View Details</button>
-                    <div id="detailsFamilyPlan${index}" style="display:none;">${plan.PlanContent}</div>
-                `;
+                            const planElement = document.createElement('div');
+                            const planDetails = extractTextFromHTML(plan.PlanContent);
+                            const detailsList = getAdditionalPlanDetails(planDetails);
+                            planElement.classList.add('plan',`${plan.PlanType}`);
+                            planElement.innerHTML = `
+                            <div class="leftContainer">
+                                <h3>${plan.PlanTitle}</h3>
+                                <p>${plan.CurrencyCode} ${plan.TotalPremiumAmount}</p>
+                                <div id="detailsFamilyPlan${index}" style="display:none;">
+                                <ul class="additionalDetailsList">
+                                ${detailsList}
+                                </ul>
+                                </div>
+                            </div>
+                            <div class="rightContainer">
+                            <button id="selectFamilyPlan${index}" class="family-plan-select">Select</button>
+                            <button id="viewDetailsFamilyPlan${index}" class="view-details">View Details</button>
+                            </div>   
+                            `;
                     familyPlansContainer.appendChild(planElement);
 
                     document.getElementById(`viewDetailsFamilyPlan${index}`).addEventListener("click", () => {
@@ -2013,17 +2350,29 @@ for (const planKey in plans) {
 
                     document.getElementById(`selectFamilyPlan${index}`).addEventListener("click", () => {
                         if (!familyPlanSelected) {
-                            selectedPlans = selectedPlans.filter(plan => plan.type !== 'Family'); // Remove any previously selected family plan
+                            selectedPlans = selectedPlans.filter(plan => plan.type !== 'Family');
+                        passengerTypes.forEach((passengerType, index)=>{
+                            const passengerName = getPassengerName(index+1);
+                            const passengerDOB = getPassengerDOB(index+1);
+                            const passengerAge = getPassengerAge(passengerDOB+1);
+                            const passengerGender = getPassengerGender(index+1);
                             selectedPlans.push({
-                                type: 'Family',
-                                plan: plan.PlanTitle,
-                                planId: plan.PlanCode,
-                                planType: plan.planType
-                            });
+                                    type: 'Family',
+                                    passenger: passengerName,
+                                    plan: plan.PlanTitle,
+                                    planId: plan.PlanCode,
+                                    planType: plan.planType,
+                                    planCategory: plan.PlanType,
+                                    passengerDOB: passengerDOB,
+                                    passengerAge: passengerAge,
+                                    passengerGender: passengerGender,
+                                    isInfant: (passengerTypes[passenger] === 'infant') ? 1 : 0
+                                });
+                        })
+                           
                             familyPlanSelected = true;
-                            console.log(`Selected ${plan.PlanTitle}`);
                             appendSelectedPlan(plan.PlanTitle, plan.PlanCode, 'Family');
-                            finishSelection(); // Directly finish selection
+                            finishSelection();
                         }
                     });
                 });
@@ -2031,7 +2380,7 @@ for (const planKey in plans) {
         });
 
         if (!planExists) {
-            familyPlansContainer.innerHTML = '<p>No family plans available.</p>';
+            familyPlansContainer.innerHTML = '<p class="text-danger">No family plans available.</p>';
         }
     }
 
@@ -2040,16 +2389,25 @@ for (const planKey in plans) {
         const passengerDOB = getPassengerDOB(passenger);
         const passengerAge = getPassengerAge(passengerDOB);
         const passengerGender = getPassengerGender(passenger);
+        modalContentContainer.style.maxWidth="700px";
+
 
         modalBody.innerHTML = `
-        <button id="goBackBtn">Go Back</button>
+        <h2 class="individualPlanSelectionTitle">Choose a plan for <span class="passengerName">${passengerName}</span></h2>
         <div id="individualPlans">
-            <h2>Select a plan for ${passengerName}</h2>
+        <div id="individualPlansContainer" class="individualPlansContainer">
             <!-- Individual plans will be loaded here -->
         </div>
+ 
+        </div>
+        <div id="navigationButtonsContainer" class="navigationButtonsContainer">
+        <button id="goBackBtn" class="backButton insuranceButton">Go Back</button>
+        </div>
+       
+
     `;
 
-        document.getElementById("goBackBtn").addEventListener("click", () => {
+    document.getElementById("goBackBtn").addEventListener("click", () => {
             if (passenger === 1) {
                 openModal();
             } else {
@@ -2057,7 +2415,8 @@ for (const planKey in plans) {
             }
         });
 
-        const individualPlansContainer = document.getElementById("individualPlans");
+        const individualPlansContainer = document.getElementById("individualPlansContainer");
+        const navButtonContainer = document.getElementById("navigationButtonsContainer");
 
         let planExists = false;
         Object.keys(individualPlans).forEach(planType => {
@@ -2068,12 +2427,23 @@ for (const planKey in plans) {
                         if (passengerAge <= plan.MaxAge && passengerAge >= plan.MinAge && (plan.Gender == "Both" || plan.Gender == passengerGender)) {
                             planExists = true;
                             const planElement = document.createElement('div');
+                            const planDetails = extractTextFromHTML(plan.PlanContent);
+                            const detailsList = getAdditionalPlanDetails(planDetails);
+                            planElement.classList.add('plan',`${plan.PlanType}`);
                             planElement.innerHTML = `
+                            <div class="leftContainer">
                                 <h3>${plan.PlanTitle}</h3>
                                 <p>${plan.CurrencyCode} ${plan.TotalPremiumAmount}</p>
-                                <button id="selectIndividualPlan${plan.PlanCode}" class="individual-plan-select" data-passenger="${passenger}">Select</button>
-                                <button id="viewDetailsIndividualPlan${plan.PlanCode}" class="view-details">View Details</button>
-                                <div id="detailsIndividualPlan${plan.PlanCode}" style="display:none;">${plan.PlanContent}</div>
+                                <div id="detailsIndividualPlan${plan.PlanCode}" style="display:none;">
+                                <ul class="additionalDetailsList">
+                                ${detailsList}
+                                </ul>
+                                </div>
+                            </div>
+                            <div class="rightContainer">
+                            <button id="selectIndividualPlan${plan.PlanCode}" class="individual-plan-select" data-passenger="${passenger}">Select</button>
+                            <button id="viewDetailsIndividualPlan${plan.PlanCode}" class="view-details">View Details</button>
+                            </div>   
                             `;
                             individualPlansContainer.appendChild(planElement);
 
@@ -2113,12 +2483,23 @@ for (const planKey in plans) {
                         if (passengerAge <= plan.MaxAge && passengerAge >= plan.MinAge && (plan.Gender == "Both" || plan.Gender == passengerGender)) {
                             planExists = true;
                             const planElement = document.createElement('div');
+                            const planDetails = extractTextFromHTML(plan.PlanContent);
+                            const detailsList = getAdditionalPlanDetails(planDetails);
+                            planElement.classList.add('plan',`${plan.PlanType}`);
                             planElement.innerHTML = `
+                            <div class="leftContainer">
                                 <h3>${plan.PlanTitle}</h3>
                                 <p>${plan.CurrencyCode} ${plan.TotalPremiumAmount}</p>
-                                <button id="selectIndividualPlan${plan.PlanCode}" class="individual-plan-select" data-passenger="${passenger}">Select</button>
-                                <button id="viewDetailsIndividualPlan${plan.PlanCode}" class="view-details">View Details</button>
-                                <div id="detailsIndividualPlan${plan.PlanCode}" style="display:none;">${plan.PlanContent}</div>
+                                <div id="detailsIndividualPlan${plan.PlanCode}" style="display:none;">
+                                <ul class="additionalDetailsList">
+                                ${detailsList}
+                                </ul>
+                                </div>
+                            </div>
+                            <div class="rightContainer">
+                            <button id="selectIndividualPlan${plan.PlanCode}" class="individual-plan-select" data-passenger="${passenger}">Select</button>
+                            <button id="viewDetailsIndividualPlan${plan.PlanCode}" class="view-details">View Details</button>
+                            </div>   
                             `;
                             individualPlansContainer.appendChild(planElement);
 
@@ -2155,12 +2536,13 @@ for (const planKey in plans) {
             }
         });
         if (!planExists) {
-            individualPlansContainer.innerHTML += '<p>No individual plans available.</p>';
+            individualPlansContainer.innerHTML += '<p class="text-danger">No plans available currently.</p>';
         }
         const skipButton = document.createElement('button');
         skipButton.innerText = 'Skip';
+        skipButton.classList.add('insuranceButton','skipButton','noButton');
         skipButton.addEventListener('click', () => {
-            selectedPlans = selectedPlans.filter(p => !(p.type === 'Individual' && p.passenger === passengerName)); // Ensure no previous selection
+            selectedPlans = selectedPlans.filter(p => !(p.type === 'Individual' && p.passenger === passengerName));
             selectedPlans.push({
                 type: 'Individual',
                 passenger: passengerName,
@@ -2172,7 +2554,7 @@ for (const planKey in plans) {
                 finishSelection();
             }
         });
-        individualPlansContainer.appendChild(skipButton);
+        navButtonContainer.appendChild(skipButton);
     }
 
 
@@ -2181,7 +2563,6 @@ for (const planKey in plans) {
     }
 
     function getPassengerDOB(passenger) {
-        console.log(passenger);
         const dob = document.getElementById(`${passengerTypes[passenger-1]}-date-picker-${passenger}`).value;
         return dob;
     }
@@ -2218,25 +2599,27 @@ for (const planKey in plans) {
     function finishSelection() {
         const selectedPlansInput = document.getElementById("selectedPlansJson");
         selectedPlansInput.value = JSON.stringify(selectedPlans);
-
         document.getElementById("insuranceSection").style.display = "none";
         document.getElementById("insurancePlans").style.display = "none";
         isInsuranceSelected.value = 1;
-
-        // Check if the selected plans div already exists
+        selectedPlanDetailsContainer.style.display = "block";
+        selectedPlanDetailsContainer.innerHTML = `
+        <h2 class="selectedPlansTitle">Selected Plans</h2>
+        `;
         let selectedPlansDiv = document.getElementById("selectedPlansDiv");
+
         if (!selectedPlansDiv) {
             selectedPlansDiv = document.createElement('div');
+            selectedPlansDiv.classList.add("selectedPlan");
             selectedPlansDiv.id = "selectedPlansDiv";
-            document.getElementById("insuranceSection").parentNode.appendChild(selectedPlansDiv);
+            selectedPlanDetailsContainer.append(selectedPlansDiv);
         }
 
         selectedPlansDiv.innerHTML = `
-        <h2>Selected Plans</h2>
         <ul>
-            ${selectedPlans.map(plan => `<li>${plan.type === 'Individual' ? plan.passenger : 'Family'}: ${plan.plan}</li>`).join('')}
+            ${selectedPlans.map(plan => `<li><span class="passengerName">${plan.type === 'Individual' ? plan.passenger : 'Family'}</span> :<span class="planName"> ${plan.plan}</span></li>`).join('')}
         </ul>
-        <button id="cancelBtn">Cancel</button>
+        <button id="cancelBtn" class="btn noButton insuranceButton">Cancel</button>
     `;
 
         document.getElementById("cancelBtn").addEventListener("click", () => {
@@ -2248,9 +2631,10 @@ for (const planKey in plans) {
 
             document.getElementById("insuranceSection").style.display = "block";
             resetModal();
+        selectedPlanDetailsContainer.style.display = "none";
+
         });
 
-        // Close the modal
         resetModal();
         modal.style.display = "none";
     }

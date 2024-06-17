@@ -525,7 +525,7 @@ Class Module_Model extends CI_Model
 				'top_destination' => $status
 		);
 		$this->db->where('origin', $origin);
-		$this->db->update('car_airport', $data);
+		$this->db->update('Car_Airport', $data);
 	}
 	function update_top_inner_destination_car($status,$origin)
 	{ 
@@ -533,7 +533,7 @@ Class Module_Model extends CI_Model
 				'car_inner_top_destination' => $status
 		);
 		$this->db->where('origin', $origin);
-		$this->db->update('car_airport', $data);
+		$this->db->update('Car_Airport', $data);
 	}
 	/**
 	 * for car perfect packages
@@ -543,7 +543,7 @@ Class Module_Model extends CI_Model
 				'car_perfect_packages_status' => $status
 		);
 		$this->db->where('origin', $origin);
-		$this->db->update('car_airport', $data);
+		$this->db->update('Car_Airport', $data);
 	 }
 	 function delete_car_perfect_packages($status,$origin){
 	     $data = array(
@@ -551,7 +551,7 @@ Class Module_Model extends CI_Model
 				'car_perfect_packages_status' => $status
 		);
 		$this->db->where('origin', $origin);
-		$this->db->update('car_airport', $data);
+		$this->db->update('Car_Airport', $data);
 	 }
 	function update_addbannering($status,$origin)
 	{

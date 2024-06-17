@@ -1,31 +1,31 @@
-<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://ZEUSTravelInsuranceGateway/WebServices">
-        <soapenv:Header/>
-        <soapenv:Body>
-            <GetAvailablePlansOTAWithRiders xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
+<soapenv:Envelope>
+            <soapenv:Header/>
+            <soapenv:Body>
+                <GetAvailablePlansOTAWithRiders>
                 <GenericRequestOTALite><Authentication>
-                    <Username>UAT_DEMO</Username>
-                    <Password>ypHALsJ3EG3p</Password>
+                    <Username>Travel_Free_Travels</Username>
+                    <Password>7qPiDYANEcMJ</Password>
                  </Authentication><Header>
-            <Channel>IBE_B2BAE</Channel>
-            <Currency>AED</Currency>
+            <Channel>IBE_TFTNP</Channel>
+            <Currency>NPR</Currency>
             <CountryCode>EN</CountryCode>
             <CultureCode>EN</CultureCode>
             <TotalAdults>1</TotalAdults>
             <TotalChild>0</TotalChild>
             <TotalInfants>0 </TotalInfants>
          </Header>
-    <Flights>   
-    <DepartCountryCode>AE</DepartCountryCode>
-    <DepartStationCode></DepartStationCode>
-    <ArrivalCountryCode>IN</ArrivalCountryCode>
-    <ArrivalStationCode></ArrivalStationCode>
-    <DepartAirlineCode>AI</DepartAirlineCode>
-    <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
-    <ReturnAirlineCode></ReturnAirlineCode>
-    <ReturnDateTime></ReturnDateTime>
-    <DepartFlightNo>638</DepartFlightNo>
-    <ReturnFlightNo></ReturnFlightNo>
- </Flights></GenericRequestOTALite>
-        </GetAvailablePlansOTAWithRiders>
-     </soapenv:Body>
-  </soapenv:Envelope>
+            <Flights>
+            <DepartCountryCode>AE</DepartCountryCode>
+            <DepartStationCode></DepartStationCode>
+            <ArrivalCountryCode>IN</ArrivalCountryCode>
+            <ArrivalStationCode></ArrivalStationCode>
+            <DepartAirlineCode>AI</DepartAirlineCode>
+            <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
+            <ReturnAirlineCode></ReturnAirlineCode>
+            <ReturnDateTime></ReturnDateTime>
+            <DepartFlightNo>638</DepartFlightNo>
+            <ReturnFlightNo></ReturnFlightNo>
+        </Flights></GenericRequestOTALite>
+            </GetAvailablePlansOTAWithRiders>
+            </soapenv:Body>
+            </soapenv:Envelope>

@@ -1,9 +1,9 @@
 
 ========== BEGIN REQUEST/RESPONSE ==========
-purchase ID: 572
+purchase ID: 977996
 Request Method Name: ConfirmPurchase
 Response Status: 1
-Timestamp: 2024-05-29 23:46:16
+Timestamp: 2024-05-30 13:21:55
 ----------BEGIN REQUEST ----------
 <?xml version="1.0" encoding="utf-8"?>
         <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -17,86 +17,9 @@ Timestamp: 2024-05-29 23:46:16
                  </Authentication><Header>
                 <Channel>IBE_B2BAE</Channel>
                 <ItineraryID></ItineraryID>
-                <PNR>VDBEM9</PNR>
+                <PNR>VGK6FF</PNR>
                 <PolicyNo/>
-                <PurchaseDate>2024-05-29 23:43:13</PurchaseDate>
-                <SSRFeeCode>INSC</SSRFeeCode>
-                <Currency>AED</Currency>
-                <TotalPremium>77.07</TotalPremium>
-                <CountryCode>NP</CountryCode>
-                <CultureCode>NP</CultureCode>
-                <TotalAdults>1</TotalAdults>
-                <TotalChild>0</TotalChild>
-                <TotalInfants>0 </TotalInfants>
-             </Header>
-            <Flights>
-            <DepartCountryCode>AE</DepartCountryCode>
-            <DepartStationCode></DepartStationCode>
-            <ArrivalCountryCode>IN</ArrivalCountryCode>
-            <ArrivalStationCode></ArrivalStationCode>
-            <DepartAirlineCode>AI</DepartAirlineCode>
-            <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
-            <ReturnAirlineCode></ReturnAirlineCode>
-            <ReturnDateTime></ReturnDateTime>
-            <DepartFlightNo>638</DepartFlightNo>
-            <ReturnFlightNo></ReturnFlightNo>
-        </Flights><Passengers><Passenger>
-            <IsInfant>0</IsInfant>
-            <FirstName>Ram</FirstName>
-            <LastName>Rai</LastName>
-            <Gender>Male</Gender>
-            <DOB> 00:00:00</DOB>
-            <Age>31</Age>
-            <IdentityType>Passport</IdentityType>
-            <IdentityNo>1234567</IdentityNo>
-            <IsQualified>true</IsQualified>
-            <Nationality>NP</Nationality>
-            <CountryOfResidence>NP</CountryOfResidence>
-            <SelectedPlanCode>AE2-API-OUTBOUND-GOLD</SelectedPlanCode>
-            <SelectedSSRFeeCode>INSB1_API_AE2_GO_OB</SelectedSSRFeeCode>
-            <CurrencyCode>AED</CurrencyCode>
-            <PassengerPremiumAmount>77</PassengerPremiumAmount>
-            </Passenger></Passengers>
-        </GenericRequest>
-        </ConfirmPurchase>
-        </soap:Body>
-        </soap:Envelope>
-----------END REQUEST ----------
-----------BEGIN RESPONSE ----------
-HTTP/2 200 
-cache-control: private, max-age=0
-content-type: text/xml; charset=utf-8
-server: Microsoft-IIS/10.0
-x-aspnet-version: 4.0.30319
-x-powered-by: ASP.NET
-date: Wed, 29 May 2024 18:16:16 GMT
-content-length: 1063
-
-<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ConfirmPurchaseResponse xmlns="http://ZEUSTravelInsuranceGateway/WebServices"><PurchaseResponse><ProposalState>ONHOLD</ProposalState><ErrorCode>10125</ErrorCode><ErrorMessage>General Exception Encountered @ ConfirmPurchase&lt;BR&gt;Message: Index was outside the bounds of the array.&lt;BR&gt;Source: App_Code.yniknglw&lt;BR&gt;StackTrace:    at CLSZEUS.ConfirmPurchase(InputRequest objConfirmPurchase, String AgentID, String ChannelCode, String PseudoAgentCode, String PseudoCityCode) in d:\Applications\ZeusAPI\App_Code\CLSZEUS.cs:line 19448&lt;BR&gt;gblDebugMessage: &lt;BR&gt;ChannelCode = IBE&lt;BR&gt;PseudoAgentCode = B2BAE&lt;BR&gt;PseudoCityCode = &lt;BR&gt;ChannelCode = IBE&lt;BR&gt;PseudoAgentCode = B2BAE&lt;BR&gt;PseudoCityCode = </ErrorMessage><PolicyNo /></PurchaseResponse></ConfirmPurchaseResponse></soap:Body></soap:Envelope>
-----------END RESPONSE ----------
-========== END REQUEST/RESPONSE ==========
-
-========== BEGIN REQUEST/RESPONSE ==========
-purchase ID: 572
-Request Method Name: ConfirmPurchase
-Response Status: 1
-Timestamp: 2024-05-29 23:51:27
-----------BEGIN REQUEST ----------
-<?xml version="1.0" encoding="utf-8"?>
-        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-        <soap:Body>
-        <ConfirmPurchase xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
-        <GenericRequest><Authentication>
-                    <Username>UAT_DEMO</Username>
-                    <Password>ypHALsJ3EG3p</Password>
-                 </Authentication><Header>
-                <Channel>IBE_B2BAE</Channel>
-                <ItineraryID></ItineraryID>
-                <PNR>VDBEM9</PNR>
-                <PolicyNo/>
-                <PurchaseDate>2024-05-29 23:43:13</PurchaseDate>
+                <PurchaseDate>2024-05-30 13:21:12</PurchaseDate>
                 <SSRFeeCode>INSC</SSRFeeCode>
                 <Currency>AED</Currency>
                 <TotalPremium>77.07</TotalPremium>
@@ -105,8 +28,21 @@ Timestamp: 2024-05-29 23:51:27
                 <TotalAdults>1</TotalAdults>
                 <TotalChild>0</TotalChild>
                 <TotalInfants>0 </TotalInfants>
-             </Header>
-            <Flights>
+             </Header><ContactDetails>
+        <ContactPerson>asd dsa</ContactPerson>
+        <Address1></Address1>
+        <Address2></Address2>
+        <Address3/>
+        <HomePhoneNum/>
+        <MobilePhoneNum>9869556696</MobilePhoneNum>
+        <OtherPhoneNum/>
+        <PostCode></PostCode>
+        <City></City>
+        <State></State>
+        <Country></Country>
+        <EmailAddress>asd@gmail.com</EmailAddress>
+        </ContactDetails>    <Flights>   
+            <Flight>   
             <DepartCountryCode>AE</DepartCountryCode>
             <DepartStationCode></DepartStationCode>
             <ArrivalCountryCode>IN</ArrivalCountryCode>
@@ -117,167 +53,14 @@ Timestamp: 2024-05-29 23:51:27
             <ReturnDateTime></ReturnDateTime>
             <DepartFlightNo>638</DepartFlightNo>
             <ReturnFlightNo></ReturnFlightNo>
-        </Flights><Passengers><Passenger>
-            <IsInfant>0</IsInfant>
-            <FirstName>Ram</FirstName>
-            <LastName>Rai</LastName>
-            <Gender>Male</Gender>
-            <DOB> 00:00:00</DOB>
-            <Age>31</Age>
-            <IdentityType>Passport</IdentityType>
-            <IdentityNo>1234567</IdentityNo>
-            <IsQualified>true</IsQualified>
-            <Nationality>NP</Nationality>
-            <CountryOfResidence>NP</CountryOfResidence>
-            <SelectedPlanCode>AE2-API-OUTBOUND-GOLD</SelectedPlanCode>
-            <SelectedSSRFeeCode>INSB1_API_AE2_GO_OB</SelectedSSRFeeCode>
-            <CurrencyCode>AED</CurrencyCode>
-            <PassengerPremiumAmount>77</PassengerPremiumAmount>
-            </Passenger></Passengers>
-        </GenericRequest>
-        </ConfirmPurchase>
-        </soap:Body>
-        </soap:Envelope>
-----------END REQUEST ----------
-----------BEGIN RESPONSE ----------
-HTTP/2 200 
-cache-control: private, max-age=0
-content-type: text/xml; charset=utf-8
-server: Microsoft-IIS/10.0
-x-aspnet-version: 4.0.30319
-x-powered-by: ASP.NET
-date: Wed, 29 May 2024 18:21:27 GMT
-content-length: 1063
-
-<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ConfirmPurchaseResponse xmlns="http://ZEUSTravelInsuranceGateway/WebServices"><PurchaseResponse><ProposalState>ONHOLD</ProposalState><ErrorCode>10125</ErrorCode><ErrorMessage>General Exception Encountered @ ConfirmPurchase&lt;BR&gt;Message: Index was outside the bounds of the array.&lt;BR&gt;Source: App_Code.yniknglw&lt;BR&gt;StackTrace:    at CLSZEUS.ConfirmPurchase(InputRequest objConfirmPurchase, String AgentID, String ChannelCode, String PseudoAgentCode, String PseudoCityCode) in d:\Applications\ZeusAPI\App_Code\CLSZEUS.cs:line 19448&lt;BR&gt;gblDebugMessage: &lt;BR&gt;ChannelCode = IBE&lt;BR&gt;PseudoAgentCode = B2BAE&lt;BR&gt;PseudoCityCode = &lt;BR&gt;ChannelCode = IBE&lt;BR&gt;PseudoAgentCode = B2BAE&lt;BR&gt;PseudoCityCode = </ErrorMessage><PolicyNo /></PurchaseResponse></ConfirmPurchaseResponse></soap:Body></soap:Envelope>
-----------END RESPONSE ----------
-========== END REQUEST/RESPONSE ==========
-
-========== BEGIN REQUEST/RESPONSE ==========
-purchase ID: 572
-Request Method Name: ConfirmPurchase
-Response Status: 1
-Timestamp: 2024-05-29 23:56:11
-----------BEGIN REQUEST ----------
-<?xml version="1.0" encoding="utf-8"?>
-        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-        <soap:Body>
-        <ConfirmPurchase xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
-        <GenericRequest><Authentication>
-                    <Username>UAT_DEMO</Username>
-                    <Password>ypHALsJ3EG3p</Password>
-                 </Authentication><Header>
-                <Channel>IBE_B2BAE</Channel>
-                <ItineraryID></ItineraryID>
-                <PNR>VDBEM9</PNR>
-                <PolicyNo/>
-                <PurchaseDate>2024-05-29 23:43:13</PurchaseDate>
-                <SSRFeeCode>INSC</SSRFeeCode>
-                <Currency>AED</Currency>
-                <TotalPremium>77.07</TotalPremium>
-                <CountryCode>EN</CountryCode>
-                <CultureCode>EN</CultureCode>
-                <TotalAdults>1</TotalAdults>
-                <TotalChild>0</TotalChild>
-                <TotalInfants>0 </TotalInfants>
-             </Header>
-            <Flights>
-            <DepartCountryCode>AE</DepartCountryCode>
-            <DepartStationCode></DepartStationCode>
-            <ArrivalCountryCode>IN</ArrivalCountryCode>
-            <ArrivalStationCode></ArrivalStationCode>
-            <DepartAirlineCode>AI</DepartAirlineCode>
-            <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
-            <ReturnAirlineCode></ReturnAirlineCode>
-            <ReturnDateTime></ReturnDateTime>
-            <DepartFlightNo>638</DepartFlightNo>
-            <ReturnFlightNo></ReturnFlightNo>
-        </Flights><Passengers><Passenger>
-            <IsInfant>0</IsInfant>
-            <FirstName>Ram</FirstName>
-            <LastName>Rai</LastName>
-            <Gender>Male</Gender>
-            <DOB> 00:00:00</DOB>
-            <Age>31</Age>
-            <IdentityType>Passport</IdentityType>
-            <IdentityNo>1234567</IdentityNo>
-            <IsQualified>true</IsQualified>
-            <Nationality>NP</Nationality>
-            <CountryOfResidence>NP</CountryOfResidence>
-            <SelectedPlanCode>AE2-API-OUTBOUND-GOLD</SelectedPlanCode>
-            <SelectedSSRFeeCode>INSB1_API_AE2_GO_OB</SelectedSSRFeeCode>
-            <CurrencyCode>AED</CurrencyCode>
-            <PassengerPremiumAmount>77</PassengerPremiumAmount>
-            </Passenger></Passengers>
-        </GenericRequest>
-        </ConfirmPurchase>
-        </soap:Body>
-        </soap:Envelope>
-----------END REQUEST ----------
-----------BEGIN RESPONSE ----------
-HTTP/2 200 
-cache-control: private, max-age=0
-content-type: text/xml; charset=utf-8
-server: Microsoft-IIS/10.0
-x-aspnet-version: 4.0.30319
-x-powered-by: ASP.NET
-date: Wed, 29 May 2024 18:26:11 GMT
-content-length: 1063
-
-<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ConfirmPurchaseResponse xmlns="http://ZEUSTravelInsuranceGateway/WebServices"><PurchaseResponse><ProposalState>ONHOLD</ProposalState><ErrorCode>10125</ErrorCode><ErrorMessage>General Exception Encountered @ ConfirmPurchase&lt;BR&gt;Message: Index was outside the bounds of the array.&lt;BR&gt;Source: App_Code.yniknglw&lt;BR&gt;StackTrace:    at CLSZEUS.ConfirmPurchase(InputRequest objConfirmPurchase, String AgentID, String ChannelCode, String PseudoAgentCode, String PseudoCityCode) in d:\Applications\ZeusAPI\App_Code\CLSZEUS.cs:line 19448&lt;BR&gt;gblDebugMessage: &lt;BR&gt;ChannelCode = IBE&lt;BR&gt;PseudoAgentCode = B2BAE&lt;BR&gt;PseudoCityCode = &lt;BR&gt;ChannelCode = IBE&lt;BR&gt;PseudoAgentCode = B2BAE&lt;BR&gt;PseudoCityCode = </ErrorMessage><PolicyNo /></PurchaseResponse></ConfirmPurchaseResponse></soap:Body></soap:Envelope>
-----------END RESPONSE ----------
-========== END REQUEST/RESPONSE ==========
-
-========== BEGIN REQUEST/RESPONSE ==========
-purchase ID: 573
-Request Method Name: ConfirmPurchase
-Response Status: 1
-Timestamp: 2024-05-30 00:00:04
-----------BEGIN REQUEST ----------
-<?xml version="1.0" encoding="utf-8"?>
-        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-        <soap:Body>
-        <ConfirmPurchase xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
-        <GenericRequest><Authentication>
-                    <Username>UAT_DEMO</Username>
-                    <Password>ypHALsJ3EG3p</Password>
-                 </Authentication><Header>
-                <Channel>IBE_B2BAE</Channel>
-                <ItineraryID></ItineraryID>
-                <PNR>VDDEU4</PNR>
-                <PolicyNo/>
-                <PurchaseDate>2024-05-29 23:59:21</PurchaseDate>
-                <SSRFeeCode>INSC</SSRFeeCode>
-                <Currency>AED</Currency>
-                <TotalPremium>77.07</TotalPremium>
-                <CountryCode>EN</CountryCode>
-                <CultureCode>EN</CultureCode>
-                <TotalAdults>1</TotalAdults>
-                <TotalChild>0</TotalChild>
-                <TotalInfants>0 </TotalInfants>
-             </Header>
-            <Flights>
-            <DepartCountryCode>AE</DepartCountryCode>
-            <DepartStationCode></DepartStationCode>
-            <ArrivalCountryCode>IN</ArrivalCountryCode>
-            <ArrivalStationCode></ArrivalStationCode>
-            <DepartAirlineCode>AI</DepartAirlineCode>
-            <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
-            <ReturnAirlineCode></ReturnAirlineCode>
-            <ReturnDateTime></ReturnDateTime>
-            <DepartFlightNo>638</DepartFlightNo>
-            <ReturnFlightNo></ReturnFlightNo>
-        </Flights><Passengers><Passenger>
+            </Flight>
+         </Flights><Passengers><Passenger>
             <IsInfant>0</IsInfant>
             <FirstName>asd</FirstName>
             <LastName>dsa</LastName>
             <Gender>Male</Gender>
-            <DOB>1993-04-29 00:00:00</DOB>
-            <Age>31</Age>
+            <DOB>2012-04-30 00:00:00</DOB>
+            <Age>12</Age>
             <IdentityType>Passport</IdentityType>
             <IdentityNo>123456</IdentityNo>
             <IsQualified>true</IsQualified>
@@ -300,9 +83,1556 @@ content-type: text/xml; charset=utf-8
 server: Microsoft-IIS/10.0
 x-aspnet-version: 4.0.30319
 x-powered-by: ASP.NET
-date: Wed, 29 May 2024 18:30:04 GMT
-content-length: 1063
+date: Thu, 30 May 2024 07:51:55 GMT
+content-length: 1829
 
-<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ConfirmPurchaseResponse xmlns="http://ZEUSTravelInsuranceGateway/WebServices"><PurchaseResponse><ProposalState>ONHOLD</ProposalState><ErrorCode>10125</ErrorCode><ErrorMessage>General Exception Encountered @ ConfirmPurchase&lt;BR&gt;Message: Index was outside the bounds of the array.&lt;BR&gt;Source: App_Code.yniknglw&lt;BR&gt;StackTrace:    at CLSZEUS.ConfirmPurchase(InputRequest objConfirmPurchase, String AgentID, String ChannelCode, String PseudoAgentCode, String PseudoCityCode) in d:\Applications\ZeusAPI\App_Code\CLSZEUS.cs:line 19448&lt;BR&gt;gblDebugMessage: &lt;BR&gt;ChannelCode = IBE&lt;BR&gt;PseudoAgentCode = B2BAE&lt;BR&gt;PseudoCityCode = &lt;BR&gt;ChannelCode = IBE&lt;BR&gt;PseudoAgentCode = B2BAE&lt;BR&gt;PseudoCityCode = </ErrorMessage><PolicyNo /></PurchaseResponse></ConfirmPurchaseResponse></soap:Body></soap:Envelope>
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ConfirmPurchaseResponse xmlns="http://ZEUSTravelInsuranceGateway/WebServices"><PurchaseResponse><ProposalState>CONFIRMED</ProposalState><ItineraryID>454</ItineraryID><PNR>VGK6FF</PNR><ErrorCode>0</ErrorCode><ErrorMessage>[Premium corrected and accepted]Invalid premium detected for pax[asd dsa, Age(12), premium(77)]. Correct premium should be [77.07]&lt;BR&gt;ChannelCode = IBE&lt;BR&gt;PseudoAgentCode = B2BAE&lt;BR&gt;PseudoCityCode = &lt;BR&gt;SelectedReturnDateTime(Exception) = 2025-01-01 06:30:00&lt;BR&gt;SelectedPlanID = 2628&lt;BR&gt;SelectedUnderwriterID = 63&lt;BR&gt;NewPolicyNo_ResultCode = 0&lt;BR&gt;SelectedNewPolicyNo = T2P-2024-AE2API-0000794&lt;BR&gt;NewPolicyNo_ResultMessage = SUCCESS&lt;BR&gt;&lt;BR&gt;AddNewPolicy(VGK6FF, IBE, B2BAE, , EN, EN, T2P-2024-AE2API-0000794, 2628, AE2-API-OUTBOUND-GOLD, INSC, 63, AED, 77.07, 1, 0, 0, 1, AE, XXX, IN, , AI, 638, 2025-01-01 06:30:00, , 0, 2025-01-01 06:30:00, 1, 0, 1, 0, 2024-05-30 00:00:00)Start.AddNewContactPerson.SelectedItinerary_ID = 454</ErrorMessage><PolicyNo>T2P-2024-AE2API-0000794</PolicyNo><PolicyPurchasedDateTime>2024-05-30 07:51:55</PolicyPurchasedDateTime><ConfirmedPassengers><ConfirmedPassenger><FirstName>asd</FirstName><LastName>dsa</LastName><DOB>2012-04-30 00:00:00</DOB><IdentityNo>123456</IdentityNo><PolicyNo>T2P-2024-AE2API-0000794_1</PolicyNo><PolicyURLLink>https://uat-tpe.tune2protect.com/CoiGenerator/ZEUS_Process_GeneratePolicyB2B_v2.aspx?IID=454&amp;PNO=T2P-2024-AE2API-0000794</PolicyURLLink></ConfirmedPassenger></ConfirmedPassengers></PurchaseResponse></ConfirmPurchaseResponse></soap:Body></soap:Envelope>
+----------END RESPONSE ----------
+========== END REQUEST/RESPONSE ==========
+
+========== BEGIN REQUEST/RESPONSE ==========
+purchase ID: 977997
+Request Method Name: ConfirmPurchase
+Response Status: 1
+Timestamp: 2024-05-30 14:48:41
+----------BEGIN REQUEST ----------
+<?xml version="1.0" encoding="utf-8"?>
+        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+        <soap:Body>
+        <ConfirmPurchase xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
+        <GenericRequest><Authentication>
+                    <Username>UAT_DEMO</Username>
+                    <Password>ypHALsJ3EG3p</Password>
+                 </Authentication><Header>
+                <Channel>IBE_B2BAE</Channel>
+                <ItineraryID></ItineraryID>
+                <PNR>VGVXNC</PNR>
+                <PolicyNo/>
+                <PurchaseDate>2024-05-30 14:47:53</PurchaseDate>
+                <SSRFeeCode>INSC</SSRFeeCode>
+                <Currency>AED</Currency>
+                <TotalPremium>77.07</TotalPremium>
+                <CountryCode>EN</CountryCode>
+                <CultureCode>EN</CultureCode>
+                <TotalAdults>1</TotalAdults>
+                <TotalChild>0</TotalChild>
+                <TotalInfants>0 </TotalInfants>
+             </Header><ContactDetails>
+        <ContactPerson>Sushant Mall</ContactPerson>
+        <Address1></Address1>
+        <Address2></Address2>
+        <Address3/>
+        <HomePhoneNum/>
+        <MobilePhoneNum>9869556696</MobilePhoneNum>
+        <OtherPhoneNum/>
+        <PostCode></PostCode>
+        <City></City>
+        <State></State>
+        <Country></Country>
+        <EmailAddress>asd@gmail.com</EmailAddress>
+        </ContactDetails>    <Flights>   
+            <Flight>   
+            <DepartCountryCode>AE</DepartCountryCode>
+            <DepartStationCode></DepartStationCode>
+            <ArrivalCountryCode>IN</ArrivalCountryCode>
+            <ArrivalStationCode></ArrivalStationCode>
+            <DepartAirlineCode>AI</DepartAirlineCode>
+            <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
+            <ReturnAirlineCode></ReturnAirlineCode>
+            <ReturnDateTime></ReturnDateTime>
+            <DepartFlightNo>638</DepartFlightNo>
+            <ReturnFlightNo></ReturnFlightNo>
+            </Flight>
+         </Flights><Passengers><Passenger>
+            <IsInfant>0</IsInfant>
+            <FirstName>Sushant</FirstName>
+            <LastName>Mall</LastName>
+            <Gender>Male</Gender>
+            <DOB>1992-04-29 00:00:00</DOB>
+            <Age>32</Age>
+            <IdentityType>Passport</IdentityType>
+            <IdentityNo>123456</IdentityNo>
+            <IsQualified>true</IsQualified>
+            <Nationality>NP</Nationality>
+            <CountryOfResidence>NP</CountryOfResidence>
+            <SelectedPlanCode>AE2-API-OUTBOUND-GOLD</SelectedPlanCode>
+            <SelectedSSRFeeCode>INSB1_API_AE2_GO_OB</SelectedSSRFeeCode>
+            <CurrencyCode>AED</CurrencyCode>
+            <PassengerPremiumAmount>77</PassengerPremiumAmount>
+            </Passenger></Passengers>
+        </GenericRequest>
+        </ConfirmPurchase>
+        </soap:Body>
+        </soap:Envelope>
+----------END REQUEST ----------
+----------BEGIN RESPONSE ----------
+HTTP/2 200 
+cache-control: private, max-age=0
+content-type: text/xml; charset=utf-8
+server: Microsoft-IIS/10.0
+x-aspnet-version: 4.0.30319
+x-powered-by: ASP.NET
+date: Thu, 30 May 2024 09:18:41 GMT
+content-length: 1839
+
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ConfirmPurchaseResponse xmlns="http://ZEUSTravelInsuranceGateway/WebServices"><PurchaseResponse><ProposalState>CONFIRMED</ProposalState><ItineraryID>455</ItineraryID><PNR>VGVXNC</PNR><ErrorCode>0</ErrorCode><ErrorMessage>[Premium corrected and accepted]Invalid premium detected for pax[Sushant Mall, Age(32), premium(77)]. Correct premium should be [77.07]&lt;BR&gt;ChannelCode = IBE&lt;BR&gt;PseudoAgentCode = B2BAE&lt;BR&gt;PseudoCityCode = &lt;BR&gt;SelectedReturnDateTime(Exception) = 2025-01-01 06:30:00&lt;BR&gt;SelectedPlanID = 2628&lt;BR&gt;SelectedUnderwriterID = 63&lt;BR&gt;NewPolicyNo_ResultCode = 0&lt;BR&gt;SelectedNewPolicyNo = T2P-2024-AE2API-0000795&lt;BR&gt;NewPolicyNo_ResultMessage = SUCCESS&lt;BR&gt;&lt;BR&gt;AddNewPolicy(VGVXNC, IBE, B2BAE, , EN, EN, T2P-2024-AE2API-0000795, 2628, AE2-API-OUTBOUND-GOLD, INSC, 63, AED, 77.07, 1, 0, 0, 1, AE, XXX, IN, , AI, 638, 2025-01-01 06:30:00, , 0, 2025-01-01 06:30:00, 1, 0, 1, 0, 2024-05-30 00:00:00)Start.AddNewContactPerson.SelectedItinerary_ID = 455</ErrorMessage><PolicyNo>T2P-2024-AE2API-0000795</PolicyNo><PolicyPurchasedDateTime>2024-05-30 09:18:41</PolicyPurchasedDateTime><ConfirmedPassengers><ConfirmedPassenger><FirstName>Sushant</FirstName><LastName>Mall</LastName><DOB>1992-04-29 00:00:00</DOB><IdentityNo>123456</IdentityNo><PolicyNo>T2P-2024-AE2API-0000795_1</PolicyNo><PolicyURLLink>https://uat-tpe.tune2protect.com/CoiGenerator/ZEUS_Process_GeneratePolicyB2B_v2.aspx?IID=455&amp;PNO=T2P-2024-AE2API-0000795</PolicyURLLink></ConfirmedPassenger></ConfirmedPassengers></PurchaseResponse></ConfirmPurchaseResponse></soap:Body></soap:Envelope>
+----------END RESPONSE ----------
+========== END REQUEST/RESPONSE ==========
+
+========== BEGIN REQUEST/RESPONSE ==========
+purchase ID: 977997
+Request Method Name: ConfirmPurchase
+Response Status: 1
+Timestamp: 2024-05-30 14:49:53
+----------BEGIN REQUEST ----------
+<?xml version="1.0" encoding="utf-8"?>
+        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+        <soap:Body>
+        <ConfirmPurchase xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
+        <GenericRequest><Authentication>
+                    <Username>UAT_DEMO</Username>
+                    <Password>ypHALsJ3EG3p</Password>
+                 </Authentication><Header>
+                <Channel>IBE_B2BAE</Channel>
+                <ItineraryID></ItineraryID>
+                <PNR>VGVXNC</PNR>
+                <PolicyNo/>
+                <PurchaseDate>2024-05-30 14:47:53</PurchaseDate>
+                <SSRFeeCode>INSC</SSRFeeCode>
+                <Currency>AED</Currency>
+                <TotalPremium>77.07</TotalPremium>
+                <CountryCode>EN</CountryCode>
+                <CultureCode>EN</CultureCode>
+                <TotalAdults>1</TotalAdults>
+                <TotalChild>0</TotalChild>
+                <TotalInfants>0 </TotalInfants>
+             </Header><ContactDetails>
+        <ContactPerson>Sushant Mall</ContactPerson>
+        <Address1></Address1>
+        <Address2></Address2>
+        <Address3/>
+        <HomePhoneNum/>
+        <MobilePhoneNum>9869556696</MobilePhoneNum>
+        <OtherPhoneNum/>
+        <PostCode></PostCode>
+        <City></City>
+        <State></State>
+        <Country></Country>
+        <EmailAddress>asd@gmail.com</EmailAddress>
+        </ContactDetails>    <Flights>   
+            <Flight>   
+            <DepartCountryCode>AE</DepartCountryCode>
+            <DepartStationCode></DepartStationCode>
+            <ArrivalCountryCode>IN</ArrivalCountryCode>
+            <ArrivalStationCode></ArrivalStationCode>
+            <DepartAirlineCode>AI</DepartAirlineCode>
+            <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
+            <ReturnAirlineCode></ReturnAirlineCode>
+            <ReturnDateTime></ReturnDateTime>
+            <DepartFlightNo>638</DepartFlightNo>
+            <ReturnFlightNo></ReturnFlightNo>
+            </Flight>
+         </Flights><Passengers><Passenger>
+            <IsInfant>0</IsInfant>
+            <FirstName>Sushant</FirstName>
+            <LastName>Mall</LastName>
+            <Gender>Male</Gender>
+            <DOB>1992-04-29 00:00:00</DOB>
+            <Age>32</Age>
+            <IdentityType>Passport</IdentityType>
+            <IdentityNo>123456</IdentityNo>
+            <IsQualified>true</IsQualified>
+            <Nationality>NP</Nationality>
+            <CountryOfResidence>NP</CountryOfResidence>
+            <SelectedPlanCode>AE2-API-OUTBOUND-GOLD</SelectedPlanCode>
+            <SelectedSSRFeeCode>INSB1_API_AE2_GO_OB</SelectedSSRFeeCode>
+            <CurrencyCode>AED</CurrencyCode>
+            <PassengerPremiumAmount>77</PassengerPremiumAmount>
+            </Passenger></Passengers>
+        </GenericRequest>
+        </ConfirmPurchase>
+        </soap:Body>
+        </soap:Envelope>
+----------END REQUEST ----------
+----------BEGIN RESPONSE ----------
+HTTP/2 200 
+cache-control: private, max-age=0
+content-type: text/xml; charset=utf-8
+server: Microsoft-IIS/10.0
+x-aspnet-version: 4.0.30319
+x-powered-by: ASP.NET
+date: Thu, 30 May 2024 09:19:53 GMT
+content-length: 612
+
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ConfirmPurchaseResponse xmlns="http://ZEUSTravelInsuranceGateway/WebServices"><PurchaseResponse><ProposalState>ONHOLD</ProposalState><ErrorCode>12111</ErrorCode><ErrorMessage>Duplicate transaction detected.&lt;BR&gt;ChannelCode = IBE&lt;BR&gt;PseudoAgentCode = B2BAE&lt;BR&gt;PseudoCityCode = </ErrorMessage><PolicyNo /></PurchaseResponse></ConfirmPurchaseResponse></soap:Body></soap:Envelope>
+----------END RESPONSE ----------
+========== END REQUEST/RESPONSE ==========
+
+========== BEGIN REQUEST/RESPONSE ==========
+purchase ID: 977997
+Request Method Name: ConfirmPurchase
+Response Status: 1
+Timestamp: 2024-05-30 14:56:12
+----------BEGIN REQUEST ----------
+<?xml version="1.0" encoding="utf-8"?>
+        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+        <soap:Body>
+        <ConfirmPurchase xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
+        <GenericRequest><Authentication>
+                    <Username>UAT_DEMO</Username>
+                    <Password>ypHALsJ3EG3p</Password>
+                 </Authentication><Header>
+                <Channel>IBE_B2BAE</Channel>
+                <ItineraryID></ItineraryID>
+                <PNR>VGWLEE</PNR>
+                <PolicyNo/>
+                <PurchaseDate>2024-05-30 14:55:32</PurchaseDate>
+                <SSRFeeCode>INSC</SSRFeeCode>
+                <Currency>AED</Currency>
+                <TotalPremium>77.07</TotalPremium>
+                <CountryCode>EN</CountryCode>
+                <CultureCode>EN</CultureCode>
+                <TotalAdults>1</TotalAdults>
+                <TotalChild>0</TotalChild>
+                <TotalInfants>0 </TotalInfants>
+             </Header><ContactDetails>
+        <ContactPerson>asd dsa</ContactPerson>
+        <Address1></Address1>
+        <Address2></Address2>
+        <Address3/>
+        <HomePhoneNum/>
+        <MobilePhoneNum>98695556696</MobilePhoneNum>
+        <OtherPhoneNum/>
+        <PostCode></PostCode>
+        <City></City>
+        <State></State>
+        <Country></Country>
+        <EmailAddress>asd@gmail.com</EmailAddress>
+        </ContactDetails>    <Flights>   
+            <Flight>   
+            <DepartCountryCode>AE</DepartCountryCode>
+            <DepartStationCode></DepartStationCode>
+            <ArrivalCountryCode>IN</ArrivalCountryCode>
+            <ArrivalStationCode></ArrivalStationCode>
+            <DepartAirlineCode>AI</DepartAirlineCode>
+            <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
+            <ReturnAirlineCode></ReturnAirlineCode>
+            <ReturnDateTime></ReturnDateTime>
+            <DepartFlightNo>638</DepartFlightNo>
+            <ReturnFlightNo></ReturnFlightNo>
+            </Flight>
+         </Flights><Passengers><Passenger>
+            <IsInfant>0</IsInfant>
+            <FirstName>asd</FirstName>
+            <LastName>dsa</LastName>
+            <Gender>Male</Gender>
+            <DOB>2012-04-30 00:00:00</DOB>
+            <Age>12</Age>
+            <IdentityType>Passport</IdentityType>
+            <IdentityNo>123546</IdentityNo>
+            <IsQualified>true</IsQualified>
+            <Nationality>NP</Nationality>
+            <CountryOfResidence>NP</CountryOfResidence>
+            <SelectedPlanCode>AE2-API-OUTBOUND-GOLD</SelectedPlanCode>
+            <SelectedSSRFeeCode>INSB1_API_AE2_GO_OB</SelectedSSRFeeCode>
+            <CurrencyCode>AED</CurrencyCode>
+            <PassengerPremiumAmount>77</PassengerPremiumAmount>
+            </Passenger></Passengers>
+        </GenericRequest>
+        </ConfirmPurchase>
+        </soap:Body>
+        </soap:Envelope>
+----------END REQUEST ----------
+----------BEGIN RESPONSE ----------
+HTTP/2 200 
+cache-control: private, max-age=0
+content-type: text/xml; charset=utf-8
+server: Microsoft-IIS/10.0
+x-aspnet-version: 4.0.30319
+x-powered-by: ASP.NET
+date: Thu, 30 May 2024 09:26:11 GMT
+content-length: 1829
+
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ConfirmPurchaseResponse xmlns="http://ZEUSTravelInsuranceGateway/WebServices"><PurchaseResponse><ProposalState>CONFIRMED</ProposalState><ItineraryID>456</ItineraryID><PNR>VGWLEE</PNR><ErrorCode>0</ErrorCode><ErrorMessage>[Premium corrected and accepted]Invalid premium detected for pax[asd dsa, Age(12), premium(77)]. Correct premium should be [77.07]&lt;BR&gt;ChannelCode = IBE&lt;BR&gt;PseudoAgentCode = B2BAE&lt;BR&gt;PseudoCityCode = &lt;BR&gt;SelectedReturnDateTime(Exception) = 2025-01-01 06:30:00&lt;BR&gt;SelectedPlanID = 2628&lt;BR&gt;SelectedUnderwriterID = 63&lt;BR&gt;NewPolicyNo_ResultCode = 0&lt;BR&gt;SelectedNewPolicyNo = T2P-2024-AE2API-0000796&lt;BR&gt;NewPolicyNo_ResultMessage = SUCCESS&lt;BR&gt;&lt;BR&gt;AddNewPolicy(VGWLEE, IBE, B2BAE, , EN, EN, T2P-2024-AE2API-0000796, 2628, AE2-API-OUTBOUND-GOLD, INSC, 63, AED, 77.07, 1, 0, 0, 1, AE, XXX, IN, , AI, 638, 2025-01-01 06:30:00, , 0, 2025-01-01 06:30:00, 1, 0, 1, 0, 2024-05-30 00:00:00)Start.AddNewContactPerson.SelectedItinerary_ID = 456</ErrorMessage><PolicyNo>T2P-2024-AE2API-0000796</PolicyNo><PolicyPurchasedDateTime>2024-05-30 09:26:11</PolicyPurchasedDateTime><ConfirmedPassengers><ConfirmedPassenger><FirstName>asd</FirstName><LastName>dsa</LastName><DOB>2012-04-30 00:00:00</DOB><IdentityNo>123546</IdentityNo><PolicyNo>T2P-2024-AE2API-0000796_1</PolicyNo><PolicyURLLink>https://uat-tpe.tune2protect.com/CoiGenerator/ZEUS_Process_GeneratePolicyB2B_v2.aspx?IID=456&amp;PNO=T2P-2024-AE2API-0000796</PolicyURLLink></ConfirmedPassenger></ConfirmedPassengers></PurchaseResponse></ConfirmPurchaseResponse></soap:Body></soap:Envelope>
+----------END RESPONSE ----------
+========== END REQUEST/RESPONSE ==========
+
+========== BEGIN REQUEST/RESPONSE ==========
+purchase ID: 977997
+Request Method Name: ConfirmPurchase
+Response Status: 1
+Timestamp: 2024-05-30 14:58:05
+----------BEGIN REQUEST ----------
+<?xml version="1.0" encoding="utf-8"?>
+        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+        <soap:Body>
+        <ConfirmPurchase xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
+        <GenericRequest><Authentication>
+                    <Username>UAT_DEMO</Username>
+                    <Password>ypHALsJ3EG3p</Password>
+                 </Authentication><Header>
+                <Channel>IBE_B2BAE</Channel>
+                <ItineraryID></ItineraryID>
+                <PNR>VGWLEE</PNR>
+                <PolicyNo/>
+                <PurchaseDate>2024-05-30 14:55:32</PurchaseDate>
+                <SSRFeeCode>INSC</SSRFeeCode>
+                <Currency>AED</Currency>
+                <TotalPremium>77.07</TotalPremium>
+                <CountryCode>EN</CountryCode>
+                <CultureCode>EN</CultureCode>
+                <TotalAdults>1</TotalAdults>
+                <TotalChild>0</TotalChild>
+                <TotalInfants>0 </TotalInfants>
+             </Header><ContactDetails>
+        <ContactPerson>asd dsa</ContactPerson>
+        <Address1></Address1>
+        <Address2></Address2>
+        <Address3/>
+        <HomePhoneNum/>
+        <MobilePhoneNum>98695556696</MobilePhoneNum>
+        <OtherPhoneNum/>
+        <PostCode></PostCode>
+        <City></City>
+        <State></State>
+        <Country></Country>
+        <EmailAddress>asd@gmail.com</EmailAddress>
+        </ContactDetails>    <Flights>   
+            <Flight>   
+            <DepartCountryCode>AE</DepartCountryCode>
+            <DepartStationCode></DepartStationCode>
+            <ArrivalCountryCode>IN</ArrivalCountryCode>
+            <ArrivalStationCode></ArrivalStationCode>
+            <DepartAirlineCode>AI</DepartAirlineCode>
+            <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
+            <ReturnAirlineCode></ReturnAirlineCode>
+            <ReturnDateTime></ReturnDateTime>
+            <DepartFlightNo>638</DepartFlightNo>
+            <ReturnFlightNo></ReturnFlightNo>
+            </Flight>
+         </Flights><Passengers><Passenger>
+            <IsInfant>0</IsInfant>
+            <FirstName>asd</FirstName>
+            <LastName>dsa</LastName>
+            <Gender>Male</Gender>
+            <DOB>2012-04-30 00:00:00</DOB>
+            <Age>12</Age>
+            <IdentityType>Passport</IdentityType>
+            <IdentityNo>123546</IdentityNo>
+            <IsQualified>true</IsQualified>
+            <Nationality>NP</Nationality>
+            <CountryOfResidence>NP</CountryOfResidence>
+            <SelectedPlanCode>AE2-API-OUTBOUND-GOLD</SelectedPlanCode>
+            <SelectedSSRFeeCode>INSB1_API_AE2_GO_OB</SelectedSSRFeeCode>
+            <CurrencyCode>AED</CurrencyCode>
+            <PassengerPremiumAmount>77</PassengerPremiumAmount>
+            </Passenger></Passengers>
+        </GenericRequest>
+        </ConfirmPurchase>
+        </soap:Body>
+        </soap:Envelope>
+----------END REQUEST ----------
+----------BEGIN RESPONSE ----------
+HTTP/2 200 
+cache-control: private, max-age=0
+content-type: text/xml; charset=utf-8
+server: Microsoft-IIS/10.0
+x-aspnet-version: 4.0.30319
+x-powered-by: ASP.NET
+date: Thu, 30 May 2024 09:28:05 GMT
+content-length: 612
+
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ConfirmPurchaseResponse xmlns="http://ZEUSTravelInsuranceGateway/WebServices"><PurchaseResponse><ProposalState>ONHOLD</ProposalState><ErrorCode>12111</ErrorCode><ErrorMessage>Duplicate transaction detected.&lt;BR&gt;ChannelCode = IBE&lt;BR&gt;PseudoAgentCode = B2BAE&lt;BR&gt;PseudoCityCode = </ErrorMessage><PolicyNo /></PurchaseResponse></ConfirmPurchaseResponse></soap:Body></soap:Envelope>
+----------END RESPONSE ----------
+========== END REQUEST/RESPONSE ==========
+
+========== BEGIN REQUEST/RESPONSE ==========
+purchase ID: 977997
+Request Method Name: ConfirmPurchase
+Response Status: 1
+Timestamp: 2024-05-30 15:04:22
+----------BEGIN REQUEST ----------
+<?xml version="1.0" encoding="utf-8"?>
+        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+        <soap:Body>
+        <ConfirmPurchase xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
+        <GenericRequest><Authentication>
+                    <Username>UAT_DEMO</Username>
+                    <Password>ypHALsJ3EG3p</Password>
+                 </Authentication><Header>
+                <Channel>IBE_B2BAE</Channel>
+                <ItineraryID></ItineraryID>
+                <PNR>VGY5X7</PNR>
+                <PolicyNo/>
+                <PurchaseDate>2024-05-30 15:03:43</PurchaseDate>
+                <SSRFeeCode>INSC</SSRFeeCode>
+                <Currency>AED</Currency>
+                <TotalPremium>77.07</TotalPremium>
+                <CountryCode>EN</CountryCode>
+                <CultureCode>EN</CultureCode>
+                <TotalAdults>1</TotalAdults>
+                <TotalChild>0</TotalChild>
+                <TotalInfants>0 </TotalInfants>
+             </Header><ContactDetails>
+        <ContactPerson>Sushanti Malla</ContactPerson>
+        <Address1></Address1>
+        <Address2></Address2>
+        <Address3/>
+        <HomePhoneNum/>
+        <MobilePhoneNum>9869556696</MobilePhoneNum>
+        <OtherPhoneNum/>
+        <PostCode></PostCode>
+        <City></City>
+        <State></State>
+        <Country></Country>
+        <EmailAddress>asd@gmail.com</EmailAddress>
+        </ContactDetails>    <Flights>   
+            <Flight>   
+            <DepartCountryCode>AE</DepartCountryCode>
+            <DepartStationCode></DepartStationCode>
+            <ArrivalCountryCode>IN</ArrivalCountryCode>
+            <ArrivalStationCode></ArrivalStationCode>
+            <DepartAirlineCode>AI</DepartAirlineCode>
+            <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
+            <ReturnAirlineCode></ReturnAirlineCode>
+            <ReturnDateTime></ReturnDateTime>
+            <DepartFlightNo>638</DepartFlightNo>
+            <ReturnFlightNo></ReturnFlightNo>
+            </Flight>
+         </Flights><Passengers><Passenger>
+            <IsInfant>0</IsInfant>
+            <FirstName>Sushanti</FirstName>
+            <LastName>Malla</LastName>
+            <Gender>Male</Gender>
+            <DOB>1992-04-22 00:00:00</DOB>
+            <Age>32</Age>
+            <IdentityType>Passport</IdentityType>
+            <IdentityNo>1234567</IdentityNo>
+            <IsQualified>true</IsQualified>
+            <Nationality>NP</Nationality>
+            <CountryOfResidence>NP</CountryOfResidence>
+            <SelectedPlanCode>AE2-API-OUTBOUND-GOLD</SelectedPlanCode>
+            <SelectedSSRFeeCode>INSB1_API_AE2_GO_OB</SelectedSSRFeeCode>
+            <CurrencyCode>AED</CurrencyCode>
+            <PassengerPremiumAmount>77</PassengerPremiumAmount>
+            </Passenger></Passengers>
+        </GenericRequest>
+        </ConfirmPurchase>
+        </soap:Body>
+        </soap:Envelope>
+----------END REQUEST ----------
+----------BEGIN RESPONSE ----------
+HTTP/2 200 
+cache-control: private, max-age=0
+content-type: text/xml; charset=utf-8
+server: Microsoft-IIS/10.0
+x-aspnet-version: 4.0.30319
+x-powered-by: ASP.NET
+date: Thu, 30 May 2024 09:34:22 GMT
+content-length: 1844
+
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ConfirmPurchaseResponse xmlns="http://ZEUSTravelInsuranceGateway/WebServices"><PurchaseResponse><ProposalState>CONFIRMED</ProposalState><ItineraryID>457</ItineraryID><PNR>VGY5X7</PNR><ErrorCode>0</ErrorCode><ErrorMessage>[Premium corrected and accepted]Invalid premium detected for pax[Sushanti Malla, Age(32), premium(77)]. Correct premium should be [77.07]&lt;BR&gt;ChannelCode = IBE&lt;BR&gt;PseudoAgentCode = B2BAE&lt;BR&gt;PseudoCityCode = &lt;BR&gt;SelectedReturnDateTime(Exception) = 2025-01-01 06:30:00&lt;BR&gt;SelectedPlanID = 2628&lt;BR&gt;SelectedUnderwriterID = 63&lt;BR&gt;NewPolicyNo_ResultCode = 0&lt;BR&gt;SelectedNewPolicyNo = T2P-2024-AE2API-0000797&lt;BR&gt;NewPolicyNo_ResultMessage = SUCCESS&lt;BR&gt;&lt;BR&gt;AddNewPolicy(VGY5X7, IBE, B2BAE, , EN, EN, T2P-2024-AE2API-0000797, 2628, AE2-API-OUTBOUND-GOLD, INSC, 63, AED, 77.07, 1, 0, 0, 1, AE, XXX, IN, , AI, 638, 2025-01-01 06:30:00, , 0, 2025-01-01 06:30:00, 1, 0, 1, 0, 2024-05-30 00:00:00)Start.AddNewContactPerson.SelectedItinerary_ID = 457</ErrorMessage><PolicyNo>T2P-2024-AE2API-0000797</PolicyNo><PolicyPurchasedDateTime>2024-05-30 09:34:22</PolicyPurchasedDateTime><ConfirmedPassengers><ConfirmedPassenger><FirstName>Sushanti</FirstName><LastName>Malla</LastName><DOB>1992-04-22 00:00:00</DOB><IdentityNo>1234567</IdentityNo><PolicyNo>T2P-2024-AE2API-0000797_1</PolicyNo><PolicyURLLink>https://uat-tpe.tune2protect.com/CoiGenerator/ZEUS_Process_GeneratePolicyB2B_v2.aspx?IID=457&amp;PNO=T2P-2024-AE2API-0000797</PolicyURLLink></ConfirmedPassenger></ConfirmedPassengers></PurchaseResponse></ConfirmPurchaseResponse></soap:Body></soap:Envelope>
+----------END RESPONSE ----------
+========== END REQUEST/RESPONSE ==========
+
+========== BEGIN REQUEST/RESPONSE ==========
+purchase ID: 977998
+Request Method Name: ConfirmPurchase
+Response Status: 1
+Timestamp: 2024-05-30 15:26:17
+----------BEGIN REQUEST ----------
+<?xml version="1.0" encoding="utf-8"?>
+        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+        <soap:Body>
+        <ConfirmPurchase xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
+        <GenericRequest><Authentication>
+                    <Username>UAT_DEMO</Username>
+                    <Password>ypHALsJ3EG3p</Password>
+                 </Authentication><Header>
+                <Channel>IBE_B2BAE</Channel>
+                <ItineraryID></ItineraryID>
+                <PNR>VH2LVW</PNR>
+                <PolicyNo/>
+                <PurchaseDate>2024-05-30 15:25:36</PurchaseDate>
+                <SSRFeeCode>INSC</SSRFeeCode>
+                <Currency>AED</Currency>
+                <TotalPremium>77.07</TotalPremium>
+                <CountryCode>EN</CountryCode>
+                <CultureCode>EN</CultureCode>
+                <TotalAdults>1</TotalAdults>
+                <TotalChild>0</TotalChild>
+                <TotalInfants>0 </TotalInfants>
+             </Header><ContactDetails>
+        <ContactPerson>Roshan Thamsuhang</ContactPerson>
+        <Address1></Address1>
+        <Address2></Address2>
+        <Address3/>
+        <HomePhoneNum/>
+        <MobilePhoneNum>9869556696</MobilePhoneNum>
+        <OtherPhoneNum/>
+        <PostCode></PostCode>
+        <City></City>
+        <State></State>
+        <Country></Country>
+        <EmailAddress>roshan@gmail.com</EmailAddress>
+        </ContactDetails>    <Flights>   
+            <Flight>   
+            <DepartCountryCode>AE</DepartCountryCode>
+            <DepartStationCode></DepartStationCode>
+            <ArrivalCountryCode>IN</ArrivalCountryCode>
+            <ArrivalStationCode></ArrivalStationCode>
+            <DepartAirlineCode>AI</DepartAirlineCode>
+            <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
+            <ReturnAirlineCode></ReturnAirlineCode>
+            <ReturnDateTime></ReturnDateTime>
+            <DepartFlightNo>638</DepartFlightNo>
+            <ReturnFlightNo></ReturnFlightNo>
+            </Flight>
+         </Flights><Passengers><Passenger>
+            <IsInfant>0</IsInfant>
+            <FirstName>Roshan</FirstName>
+            <LastName>Thamsuhang</LastName>
+            <Gender>Male</Gender>
+            <DOB>1992-04-30 00:00:00</DOB>
+            <Age>32</Age>
+            <IdentityType>Passport</IdentityType>
+            <IdentityNo>123456</IdentityNo>
+            <IsQualified>true</IsQualified>
+            <Nationality>NP</Nationality>
+            <CountryOfResidence>NP</CountryOfResidence>
+            <SelectedPlanCode>AE2-API-OUTBOUND-GOLD</SelectedPlanCode>
+            <SelectedSSRFeeCode>INSB1_API_AE2_GO_OB</SelectedSSRFeeCode>
+            <CurrencyCode>AED</CurrencyCode>
+            <PassengerPremiumAmount>77</PassengerPremiumAmount>
+            </Passenger></Passengers>
+        </GenericRequest>
+        </ConfirmPurchase>
+        </soap:Body>
+        </soap:Envelope>
+----------END REQUEST ----------
+----------BEGIN RESPONSE ----------
+HTTP/2 200 
+cache-control: private, max-age=0
+content-type: text/xml; charset=utf-8
+server: Microsoft-IIS/10.0
+x-aspnet-version: 4.0.30319
+x-powered-by: ASP.NET
+date: Thu, 30 May 2024 09:56:17 GMT
+content-length: 1849
+
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ConfirmPurchaseResponse xmlns="http://ZEUSTravelInsuranceGateway/WebServices"><PurchaseResponse><ProposalState>CONFIRMED</ProposalState><ItineraryID>458</ItineraryID><PNR>VH2LVW</PNR><ErrorCode>0</ErrorCode><ErrorMessage>[Premium corrected and accepted]Invalid premium detected for pax[Roshan Thamsuhang, Age(32), premium(77)]. Correct premium should be [77.07]&lt;BR&gt;ChannelCode = IBE&lt;BR&gt;PseudoAgentCode = B2BAE&lt;BR&gt;PseudoCityCode = &lt;BR&gt;SelectedReturnDateTime(Exception) = 2025-01-01 06:30:00&lt;BR&gt;SelectedPlanID = 2628&lt;BR&gt;SelectedUnderwriterID = 63&lt;BR&gt;NewPolicyNo_ResultCode = 0&lt;BR&gt;SelectedNewPolicyNo = T2P-2024-AE2API-0000798&lt;BR&gt;NewPolicyNo_ResultMessage = SUCCESS&lt;BR&gt;&lt;BR&gt;AddNewPolicy(VH2LVW, IBE, B2BAE, , EN, EN, T2P-2024-AE2API-0000798, 2628, AE2-API-OUTBOUND-GOLD, INSC, 63, AED, 77.07, 1, 0, 0, 1, AE, XXX, IN, , AI, 638, 2025-01-01 06:30:00, , 0, 2025-01-01 06:30:00, 1, 0, 1, 0, 2024-05-30 00:00:00)Start.AddNewContactPerson.SelectedItinerary_ID = 458</ErrorMessage><PolicyNo>T2P-2024-AE2API-0000798</PolicyNo><PolicyPurchasedDateTime>2024-05-30 09:56:17</PolicyPurchasedDateTime><ConfirmedPassengers><ConfirmedPassenger><FirstName>Roshan</FirstName><LastName>Thamsuhang</LastName><DOB>1992-04-30 00:00:00</DOB><IdentityNo>123456</IdentityNo><PolicyNo>T2P-2024-AE2API-0000798_1</PolicyNo><PolicyURLLink>https://uat-tpe.tune2protect.com/CoiGenerator/ZEUS_Process_GeneratePolicyB2B_v2.aspx?IID=458&amp;PNO=T2P-2024-AE2API-0000798</PolicyURLLink></ConfirmedPassenger></ConfirmedPassengers></PurchaseResponse></ConfirmPurchaseResponse></soap:Body></soap:Envelope>
+----------END RESPONSE ----------
+========== END REQUEST/RESPONSE ==========
+
+========== BEGIN REQUEST/RESPONSE ==========
+purchase ID: 977998
+Request Method Name: ConfirmPurchase
+Response Status: 1
+Timestamp: 2024-05-30 15:36:10
+----------BEGIN REQUEST ----------
+<?xml version="1.0" encoding="utf-8"?>
+        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+        <soap:Body>
+        <ConfirmPurchase xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
+        <GenericRequest><Authentication>
+                    <Username>UAT_DEMO</Username>
+                    <Password>ypHALsJ3EG3p</Password>
+                 </Authentication><Header>
+                <Channel>IBE_B2BAE</Channel>
+                <ItineraryID></ItineraryID>
+                <PNR>VH3TNR</PNR>
+                <PolicyNo/>
+                <PurchaseDate>2024-05-30 15:35:26</PurchaseDate>
+                <SSRFeeCode>INSC</SSRFeeCode>
+                <Currency>AED</Currency>
+                <TotalPremium>77.07</TotalPremium>
+                <CountryCode>EN</CountryCode>
+                <CultureCode>EN</CultureCode>
+                <TotalAdults>1</TotalAdults>
+                <TotalChild>0</TotalChild>
+                <TotalInfants>0 </TotalInfants>
+             </Header><ContactDetails>
+        <ContactPerson>Roshan Tamange</ContactPerson>
+        <Address1></Address1>
+        <Address2></Address2>
+        <Address3/>
+        <HomePhoneNum/>
+        <MobilePhoneNum>9869556696</MobilePhoneNum>
+        <OtherPhoneNum/>
+        <PostCode></PostCode>
+        <City></City>
+        <State></State>
+        <Country></Country>
+        <EmailAddress>asd@gmail.com</EmailAddress>
+        </ContactDetails>    <Flights>   
+            <Flight>   
+            <DepartCountryCode>AE</DepartCountryCode>
+            <DepartStationCode></DepartStationCode>
+            <ArrivalCountryCode>IN</ArrivalCountryCode>
+            <ArrivalStationCode></ArrivalStationCode>
+            <DepartAirlineCode>AI</DepartAirlineCode>
+            <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
+            <ReturnAirlineCode></ReturnAirlineCode>
+            <ReturnDateTime></ReturnDateTime>
+            <DepartFlightNo>638</DepartFlightNo>
+            <ReturnFlightNo></ReturnFlightNo>
+            </Flight>
+         </Flights><Passengers><Passenger>
+            <IsInfant>0</IsInfant>
+            <FirstName>Roshan</FirstName>
+            <LastName>Tamange</LastName>
+            <Gender>Male</Gender>
+            <DOB>1992-04-30 00:00:00</DOB>
+            <Age>32</Age>
+            <IdentityType>Passport</IdentityType>
+            <IdentityNo>1234567</IdentityNo>
+            <IsQualified>true</IsQualified>
+            <Nationality>NP</Nationality>
+            <CountryOfResidence>NP</CountryOfResidence>
+            <SelectedPlanCode>AE2-API-OUTBOUND-GOLD</SelectedPlanCode>
+            <SelectedSSRFeeCode>INSB1_API_AE2_GO_OB</SelectedSSRFeeCode>
+            <CurrencyCode>AED</CurrencyCode>
+            <PassengerPremiumAmount>77</PassengerPremiumAmount>
+            </Passenger></Passengers>
+        </GenericRequest>
+        </ConfirmPurchase>
+        </soap:Body>
+        </soap:Envelope>
+----------END REQUEST ----------
+----------BEGIN RESPONSE ----------
+HTTP/2 200 
+cache-control: private, max-age=0
+content-type: text/xml; charset=utf-8
+server: Microsoft-IIS/10.0
+x-aspnet-version: 4.0.30319
+x-powered-by: ASP.NET
+date: Thu, 30 May 2024 10:06:10 GMT
+content-length: 1844
+
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ConfirmPurchaseResponse xmlns="http://ZEUSTravelInsuranceGateway/WebServices"><PurchaseResponse><ProposalState>CONFIRMED</ProposalState><ItineraryID>459</ItineraryID><PNR>VH3TNR</PNR><ErrorCode>0</ErrorCode><ErrorMessage>[Premium corrected and accepted]Invalid premium detected for pax[Roshan Tamange, Age(32), premium(77)]. Correct premium should be [77.07]&lt;BR&gt;ChannelCode = IBE&lt;BR&gt;PseudoAgentCode = B2BAE&lt;BR&gt;PseudoCityCode = &lt;BR&gt;SelectedReturnDateTime(Exception) = 2025-01-01 06:30:00&lt;BR&gt;SelectedPlanID = 2628&lt;BR&gt;SelectedUnderwriterID = 63&lt;BR&gt;NewPolicyNo_ResultCode = 0&lt;BR&gt;SelectedNewPolicyNo = T2P-2024-AE2API-0000799&lt;BR&gt;NewPolicyNo_ResultMessage = SUCCESS&lt;BR&gt;&lt;BR&gt;AddNewPolicy(VH3TNR, IBE, B2BAE, , EN, EN, T2P-2024-AE2API-0000799, 2628, AE2-API-OUTBOUND-GOLD, INSC, 63, AED, 77.07, 1, 0, 0, 1, AE, XXX, IN, , AI, 638, 2025-01-01 06:30:00, , 0, 2025-01-01 06:30:00, 1, 0, 1, 0, 2024-05-30 00:00:00)Start.AddNewContactPerson.SelectedItinerary_ID = 459</ErrorMessage><PolicyNo>T2P-2024-AE2API-0000799</PolicyNo><PolicyPurchasedDateTime>2024-05-30 10:06:10</PolicyPurchasedDateTime><ConfirmedPassengers><ConfirmedPassenger><FirstName>Roshan</FirstName><LastName>Tamange</LastName><DOB>1992-04-30 00:00:00</DOB><IdentityNo>1234567</IdentityNo><PolicyNo>T2P-2024-AE2API-0000799_1</PolicyNo><PolicyURLLink>https://uat-tpe.tune2protect.com/CoiGenerator/ZEUS_Process_GeneratePolicyB2B_v2.aspx?IID=459&amp;PNO=T2P-2024-AE2API-0000799</PolicyURLLink></ConfirmedPassenger></ConfirmedPassengers></PurchaseResponse></ConfirmPurchaseResponse></soap:Body></soap:Envelope>
+----------END RESPONSE ----------
+========== END REQUEST/RESPONSE ==========
+
+========== BEGIN REQUEST/RESPONSE ==========
+purchase ID: 977998
+Request Method Name: ConfirmPurchase
+Response Status: 1
+Timestamp: 2024-05-30 15:37:32
+----------BEGIN REQUEST ----------
+<?xml version="1.0" encoding="utf-8"?>
+        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+        <soap:Body>
+        <ConfirmPurchase xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
+        <GenericRequest><Authentication>
+                    <Username>UAT_DEMO</Username>
+                    <Password>ypHALsJ3EG3p</Password>
+                 </Authentication><Header>
+                <Channel>IBE_B2BAE</Channel>
+                <ItineraryID></ItineraryID>
+                <PNR>VH3TNR</PNR>
+                <PolicyNo/>
+                <PurchaseDate>2024-05-30 15:35:26</PurchaseDate>
+                <SSRFeeCode>INSC</SSRFeeCode>
+                <Currency>AED</Currency>
+                <TotalPremium>77.07</TotalPremium>
+                <CountryCode>EN</CountryCode>
+                <CultureCode>EN</CultureCode>
+                <TotalAdults>1</TotalAdults>
+                <TotalChild>0</TotalChild>
+                <TotalInfants>0 </TotalInfants>
+             </Header><ContactDetails>
+        <ContactPerson>Roshan Tamange</ContactPerson>
+        <Address1></Address1>
+        <Address2></Address2>
+        <Address3/>
+        <HomePhoneNum/>
+        <MobilePhoneNum>9869556696</MobilePhoneNum>
+        <OtherPhoneNum/>
+        <PostCode></PostCode>
+        <City></City>
+        <State></State>
+        <Country></Country>
+        <EmailAddress>asd@gmail.com</EmailAddress>
+        </ContactDetails>    <Flights>   
+            <Flight>   
+            <DepartCountryCode>AE</DepartCountryCode>
+            <DepartStationCode></DepartStationCode>
+            <ArrivalCountryCode>IN</ArrivalCountryCode>
+            <ArrivalStationCode></ArrivalStationCode>
+            <DepartAirlineCode>AI</DepartAirlineCode>
+            <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
+            <ReturnAirlineCode></ReturnAirlineCode>
+            <ReturnDateTime></ReturnDateTime>
+            <DepartFlightNo>638</DepartFlightNo>
+            <ReturnFlightNo></ReturnFlightNo>
+            </Flight>
+         </Flights><Passengers><Passenger>
+            <IsInfant>0</IsInfant>
+            <FirstName>Roshan</FirstName>
+            <LastName>Tamange</LastName>
+            <Gender>Male</Gender>
+            <DOB>1992-04-30 00:00:00</DOB>
+            <Age>32</Age>
+            <IdentityType>Passport</IdentityType>
+            <IdentityNo>1234567</IdentityNo>
+            <IsQualified>true</IsQualified>
+            <Nationality>NP</Nationality>
+            <CountryOfResidence>NP</CountryOfResidence>
+            <SelectedPlanCode>AE2-API-OUTBOUND-GOLD</SelectedPlanCode>
+            <SelectedSSRFeeCode>INSB1_API_AE2_GO_OB</SelectedSSRFeeCode>
+            <CurrencyCode>AED</CurrencyCode>
+            <PassengerPremiumAmount>77</PassengerPremiumAmount>
+            </Passenger></Passengers>
+        </GenericRequest>
+        </ConfirmPurchase>
+        </soap:Body>
+        </soap:Envelope>
+----------END REQUEST ----------
+----------BEGIN RESPONSE ----------
+HTTP/2 200 
+cache-control: private, max-age=0
+content-type: text/xml; charset=utf-8
+server: Microsoft-IIS/10.0
+x-aspnet-version: 4.0.30319
+x-powered-by: ASP.NET
+date: Thu, 30 May 2024 10:07:32 GMT
+content-length: 612
+
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ConfirmPurchaseResponse xmlns="http://ZEUSTravelInsuranceGateway/WebServices"><PurchaseResponse><ProposalState>ONHOLD</ProposalState><ErrorCode>12111</ErrorCode><ErrorMessage>Duplicate transaction detected.&lt;BR&gt;ChannelCode = IBE&lt;BR&gt;PseudoAgentCode = B2BAE&lt;BR&gt;PseudoCityCode = </ErrorMessage><PolicyNo /></PurchaseResponse></ConfirmPurchaseResponse></soap:Body></soap:Envelope>
+----------END RESPONSE ----------
+========== END REQUEST/RESPONSE ==========
+
+========== BEGIN REQUEST/RESPONSE ==========
+purchase ID: 977998
+Request Method Name: ConfirmPurchase
+Response Status: 1
+Timestamp: 2024-05-30 15:39:41
+----------BEGIN REQUEST ----------
+<?xml version="1.0" encoding="utf-8"?>
+        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+        <soap:Body>
+        <ConfirmPurchase xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
+        <GenericRequest><Authentication>
+                    <Username>UAT_DEMO</Username>
+                    <Password>ypHALsJ3EG3p</Password>
+                 </Authentication><Header>
+                <Channel>IBE_B2BAE</Channel>
+                <ItineraryID></ItineraryID>
+                <PNR>VH4N8F</PNR>
+                <PolicyNo/>
+                <PurchaseDate>2024-05-30 15:38:58</PurchaseDate>
+                <SSRFeeCode>INSC</SSRFeeCode>
+                <Currency>AED</Currency>
+                <TotalPremium>77.07</TotalPremium>
+                <CountryCode>EN</CountryCode>
+                <CultureCode>EN</CultureCode>
+                <TotalAdults>1</TotalAdults>
+                <TotalChild>0</TotalChild>
+                <TotalInfants>0 </TotalInfants>
+             </Header><ContactDetails>
+        <ContactPerson>asd dsa</ContactPerson>
+        <Address1></Address1>
+        <Address2></Address2>
+        <Address3/>
+        <HomePhoneNum/>
+        <MobilePhoneNum>9869100541</MobilePhoneNum>
+        <OtherPhoneNum/>
+        <PostCode></PostCode>
+        <City></City>
+        <State></State>
+        <Country></Country>
+        <EmailAddress>asd@gmail.com</EmailAddress>
+        </ContactDetails>    <Flights>   
+            <Flight>   
+            <DepartCountryCode>AE</DepartCountryCode>
+            <DepartStationCode></DepartStationCode>
+            <ArrivalCountryCode>IN</ArrivalCountryCode>
+            <ArrivalStationCode></ArrivalStationCode>
+            <DepartAirlineCode>AI</DepartAirlineCode>
+            <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
+            <ReturnAirlineCode></ReturnAirlineCode>
+            <ReturnDateTime></ReturnDateTime>
+            <DepartFlightNo>638</DepartFlightNo>
+            <ReturnFlightNo></ReturnFlightNo>
+            </Flight>
+         </Flights><Passengers><Passenger>
+            <IsInfant>0</IsInfant>
+            <FirstName>asd</FirstName>
+            <LastName>dsa</LastName>
+            <Gender>Male</Gender>
+            <DOB>2012-04-30 00:00:00</DOB>
+            <Age>12</Age>
+            <IdentityType>Passport</IdentityType>
+            <IdentityNo>123467</IdentityNo>
+            <IsQualified>true</IsQualified>
+            <Nationality>NP</Nationality>
+            <CountryOfResidence>NP</CountryOfResidence>
+            <SelectedPlanCode>AE2-API-OUTBOUND-GOLD</SelectedPlanCode>
+            <SelectedSSRFeeCode>INSB1_API_AE2_GO_OB</SelectedSSRFeeCode>
+            <CurrencyCode>AED</CurrencyCode>
+            <PassengerPremiumAmount>77</PassengerPremiumAmount>
+            </Passenger></Passengers>
+        </GenericRequest>
+        </ConfirmPurchase>
+        </soap:Body>
+        </soap:Envelope>
+----------END REQUEST ----------
+----------BEGIN RESPONSE ----------
+HTTP/2 200 
+cache-control: private, max-age=0
+content-type: text/xml; charset=utf-8
+server: Microsoft-IIS/10.0
+x-aspnet-version: 4.0.30319
+x-powered-by: ASP.NET
+date: Thu, 30 May 2024 10:09:41 GMT
+content-length: 1829
+
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ConfirmPurchaseResponse xmlns="http://ZEUSTravelInsuranceGateway/WebServices"><PurchaseResponse><ProposalState>CONFIRMED</ProposalState><ItineraryID>460</ItineraryID><PNR>VH4N8F</PNR><ErrorCode>0</ErrorCode><ErrorMessage>[Premium corrected and accepted]Invalid premium detected for pax[asd dsa, Age(12), premium(77)]. Correct premium should be [77.07]&lt;BR&gt;ChannelCode = IBE&lt;BR&gt;PseudoAgentCode = B2BAE&lt;BR&gt;PseudoCityCode = &lt;BR&gt;SelectedReturnDateTime(Exception) = 2025-01-01 06:30:00&lt;BR&gt;SelectedPlanID = 2628&lt;BR&gt;SelectedUnderwriterID = 63&lt;BR&gt;NewPolicyNo_ResultCode = 0&lt;BR&gt;SelectedNewPolicyNo = T2P-2024-AE2API-0000800&lt;BR&gt;NewPolicyNo_ResultMessage = SUCCESS&lt;BR&gt;&lt;BR&gt;AddNewPolicy(VH4N8F, IBE, B2BAE, , EN, EN, T2P-2024-AE2API-0000800, 2628, AE2-API-OUTBOUND-GOLD, INSC, 63, AED, 77.07, 1, 0, 0, 1, AE, XXX, IN, , AI, 638, 2025-01-01 06:30:00, , 0, 2025-01-01 06:30:00, 1, 0, 1, 0, 2024-05-30 00:00:00)Start.AddNewContactPerson.SelectedItinerary_ID = 460</ErrorMessage><PolicyNo>T2P-2024-AE2API-0000800</PolicyNo><PolicyPurchasedDateTime>2024-05-30 10:09:41</PolicyPurchasedDateTime><ConfirmedPassengers><ConfirmedPassenger><FirstName>asd</FirstName><LastName>dsa</LastName><DOB>2012-04-30 00:00:00</DOB><IdentityNo>123467</IdentityNo><PolicyNo>T2P-2024-AE2API-0000800_1</PolicyNo><PolicyURLLink>https://uat-tpe.tune2protect.com/CoiGenerator/ZEUS_Process_GeneratePolicyB2B_v2.aspx?IID=460&amp;PNO=T2P-2024-AE2API-0000800</PolicyURLLink></ConfirmedPassenger></ConfirmedPassengers></PurchaseResponse></ConfirmPurchaseResponse></soap:Body></soap:Envelope>
+----------END RESPONSE ----------
+========== END REQUEST/RESPONSE ==========
+
+========== BEGIN REQUEST/RESPONSE ==========
+purchase ID: 977998
+Request Method Name: ConfirmPurchase
+Response Status: 1
+Timestamp: 2024-05-30 15:41:31
+----------BEGIN REQUEST ----------
+<?xml version="1.0" encoding="utf-8"?>
+        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+        <soap:Body>
+        <ConfirmPurchase xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
+        <GenericRequest><Authentication>
+                    <Username>UAT_DEMO</Username>
+                    <Password>ypHALsJ3EG3p</Password>
+                 </Authentication><Header>
+                <Channel>IBE_B2BAE</Channel>
+                <ItineraryID></ItineraryID>
+                <PNR>VH4N8F</PNR>
+                <PolicyNo/>
+                <PurchaseDate>2024-05-30 15:38:58</PurchaseDate>
+                <SSRFeeCode>INSC</SSRFeeCode>
+                <Currency>AED</Currency>
+                <TotalPremium>77.07</TotalPremium>
+                <CountryCode>EN</CountryCode>
+                <CultureCode>EN</CultureCode>
+                <TotalAdults>1</TotalAdults>
+                <TotalChild>0</TotalChild>
+                <TotalInfants>0 </TotalInfants>
+             </Header><ContactDetails>
+        <ContactPerson>asd dsa</ContactPerson>
+        <Address1></Address1>
+        <Address2></Address2>
+        <Address3/>
+        <HomePhoneNum/>
+        <MobilePhoneNum>9869100541</MobilePhoneNum>
+        <OtherPhoneNum/>
+        <PostCode></PostCode>
+        <City></City>
+        <State></State>
+        <Country></Country>
+        <EmailAddress>asd@gmail.com</EmailAddress>
+        </ContactDetails>    <Flights>   
+            <Flight>   
+            <DepartCountryCode>AE</DepartCountryCode>
+            <DepartStationCode></DepartStationCode>
+            <ArrivalCountryCode>IN</ArrivalCountryCode>
+            <ArrivalStationCode></ArrivalStationCode>
+            <DepartAirlineCode>AI</DepartAirlineCode>
+            <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
+            <ReturnAirlineCode></ReturnAirlineCode>
+            <ReturnDateTime></ReturnDateTime>
+            <DepartFlightNo>638</DepartFlightNo>
+            <ReturnFlightNo></ReturnFlightNo>
+            </Flight>
+         </Flights><Passengers><Passenger>
+            <IsInfant>0</IsInfant>
+            <FirstName>asd</FirstName>
+            <LastName>dsa</LastName>
+            <Gender>Male</Gender>
+            <DOB>2012-04-30 00:00:00</DOB>
+            <Age>12</Age>
+            <IdentityType>Passport</IdentityType>
+            <IdentityNo>123467</IdentityNo>
+            <IsQualified>true</IsQualified>
+            <Nationality>NP</Nationality>
+            <CountryOfResidence>NP</CountryOfResidence>
+            <SelectedPlanCode>AE2-API-OUTBOUND-GOLD</SelectedPlanCode>
+            <SelectedSSRFeeCode>INSB1_API_AE2_GO_OB</SelectedSSRFeeCode>
+            <CurrencyCode>AED</CurrencyCode>
+            <PassengerPremiumAmount>77</PassengerPremiumAmount>
+            </Passenger></Passengers>
+        </GenericRequest>
+        </ConfirmPurchase>
+        </soap:Body>
+        </soap:Envelope>
+----------END REQUEST ----------
+----------BEGIN RESPONSE ----------
+HTTP/2 200 
+cache-control: private, max-age=0
+content-type: text/xml; charset=utf-8
+server: Microsoft-IIS/10.0
+x-aspnet-version: 4.0.30319
+x-powered-by: ASP.NET
+date: Thu, 30 May 2024 10:11:31 GMT
+content-length: 612
+
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ConfirmPurchaseResponse xmlns="http://ZEUSTravelInsuranceGateway/WebServices"><PurchaseResponse><ProposalState>ONHOLD</ProposalState><ErrorCode>12111</ErrorCode><ErrorMessage>Duplicate transaction detected.&lt;BR&gt;ChannelCode = IBE&lt;BR&gt;PseudoAgentCode = B2BAE&lt;BR&gt;PseudoCityCode = </ErrorMessage><PolicyNo /></PurchaseResponse></ConfirmPurchaseResponse></soap:Body></soap:Envelope>
+----------END RESPONSE ----------
+========== END REQUEST/RESPONSE ==========
+
+========== BEGIN REQUEST/RESPONSE ==========
+purchase ID: 977998
+Request Method Name: ConfirmPurchase
+Response Status: 1
+Timestamp: 2024-05-30 15:43:40
+----------BEGIN REQUEST ----------
+<?xml version="1.0" encoding="utf-8"?>
+        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+        <soap:Body>
+        <ConfirmPurchase xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
+        <GenericRequest><Authentication>
+                    <Username>UAT_DEMO</Username>
+                    <Password>ypHALsJ3EG3p</Password>
+                 </Authentication><Header>
+                <Channel>IBE_B2BAE</Channel>
+                <ItineraryID></ItineraryID>
+                <PNR>VH6AZA</PNR>
+                <PolicyNo/>
+                <PurchaseDate>2024-05-30 15:42:59</PurchaseDate>
+                <SSRFeeCode>INSC</SSRFeeCode>
+                <Currency>AED</Currency>
+                <TotalPremium>77.07</TotalPremium>
+                <CountryCode>EN</CountryCode>
+                <CultureCode>EN</CultureCode>
+                <TotalAdults>1</TotalAdults>
+                <TotalChild>0</TotalChild>
+                <TotalInfants>0 </TotalInfants>
+             </Header><ContactDetails>
+        <ContactPerson>asd dsa</ContactPerson>
+        <Address1></Address1>
+        <Address2></Address2>
+        <Address3/>
+        <HomePhoneNum/>
+        <MobilePhoneNum>9869556696</MobilePhoneNum>
+        <OtherPhoneNum/>
+        <PostCode></PostCode>
+        <City></City>
+        <State></State>
+        <Country></Country>
+        <EmailAddress>asd@gmail.com</EmailAddress>
+        </ContactDetails>    <Flights>   
+            <Flight>   
+            <DepartCountryCode>AE</DepartCountryCode>
+            <DepartStationCode></DepartStationCode>
+            <ArrivalCountryCode>IN</ArrivalCountryCode>
+            <ArrivalStationCode></ArrivalStationCode>
+            <DepartAirlineCode>AI</DepartAirlineCode>
+            <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
+            <ReturnAirlineCode></ReturnAirlineCode>
+            <ReturnDateTime></ReturnDateTime>
+            <DepartFlightNo>638</DepartFlightNo>
+            <ReturnFlightNo></ReturnFlightNo>
+            </Flight>
+         </Flights><Passengers><Passenger>
+            <IsInfant>0</IsInfant>
+            <FirstName>asd</FirstName>
+            <LastName>dsa</LastName>
+            <Gender>Male</Gender>
+            <DOB>1992-04-14 00:00:00</DOB>
+            <Age>32</Age>
+            <IdentityType>Passport</IdentityType>
+            <IdentityNo>123456</IdentityNo>
+            <IsQualified>true</IsQualified>
+            <Nationality>NP</Nationality>
+            <CountryOfResidence>NP</CountryOfResidence>
+            <SelectedPlanCode>AE2-API-OUTBOUND-GOLD</SelectedPlanCode>
+            <SelectedSSRFeeCode>INSB1_API_AE2_GO_OB</SelectedSSRFeeCode>
+            <CurrencyCode>AED</CurrencyCode>
+            <PassengerPremiumAmount>77</PassengerPremiumAmount>
+            </Passenger></Passengers>
+        </GenericRequest>
+        </ConfirmPurchase>
+        </soap:Body>
+        </soap:Envelope>
+----------END REQUEST ----------
+----------BEGIN RESPONSE ----------
+HTTP/2 200 
+cache-control: private, max-age=0
+content-type: text/xml; charset=utf-8
+server: Microsoft-IIS/10.0
+x-aspnet-version: 4.0.30319
+x-powered-by: ASP.NET
+date: Thu, 30 May 2024 10:13:40 GMT
+content-length: 1829
+
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ConfirmPurchaseResponse xmlns="http://ZEUSTravelInsuranceGateway/WebServices"><PurchaseResponse><ProposalState>CONFIRMED</ProposalState><ItineraryID>461</ItineraryID><PNR>VH6AZA</PNR><ErrorCode>0</ErrorCode><ErrorMessage>[Premium corrected and accepted]Invalid premium detected for pax[asd dsa, Age(32), premium(77)]. Correct premium should be [77.07]&lt;BR&gt;ChannelCode = IBE&lt;BR&gt;PseudoAgentCode = B2BAE&lt;BR&gt;PseudoCityCode = &lt;BR&gt;SelectedReturnDateTime(Exception) = 2025-01-01 06:30:00&lt;BR&gt;SelectedPlanID = 2628&lt;BR&gt;SelectedUnderwriterID = 63&lt;BR&gt;NewPolicyNo_ResultCode = 0&lt;BR&gt;SelectedNewPolicyNo = T2P-2024-AE2API-0000801&lt;BR&gt;NewPolicyNo_ResultMessage = SUCCESS&lt;BR&gt;&lt;BR&gt;AddNewPolicy(VH6AZA, IBE, B2BAE, , EN, EN, T2P-2024-AE2API-0000801, 2628, AE2-API-OUTBOUND-GOLD, INSC, 63, AED, 77.07, 1, 0, 0, 1, AE, XXX, IN, , AI, 638, 2025-01-01 06:30:00, , 0, 2025-01-01 06:30:00, 1, 0, 1, 0, 2024-05-30 00:00:00)Start.AddNewContactPerson.SelectedItinerary_ID = 461</ErrorMessage><PolicyNo>T2P-2024-AE2API-0000801</PolicyNo><PolicyPurchasedDateTime>2024-05-30 10:13:40</PolicyPurchasedDateTime><ConfirmedPassengers><ConfirmedPassenger><FirstName>asd</FirstName><LastName>dsa</LastName><DOB>1992-04-14 00:00:00</DOB><IdentityNo>123456</IdentityNo><PolicyNo>T2P-2024-AE2API-0000801_1</PolicyNo><PolicyURLLink>https://uat-tpe.tune2protect.com/CoiGenerator/ZEUS_Process_GeneratePolicyB2B_v2.aspx?IID=461&amp;PNO=T2P-2024-AE2API-0000801</PolicyURLLink></ConfirmedPassenger></ConfirmedPassengers></PurchaseResponse></ConfirmPurchaseResponse></soap:Body></soap:Envelope>
+----------END RESPONSE ----------
+========== END REQUEST/RESPONSE ==========
+
+========== BEGIN REQUEST/RESPONSE ==========
+purchase ID: 977998
+Request Method Name: ConfirmPurchase
+Response Status: 1
+Timestamp: 2024-05-30 15:56:21
+----------BEGIN REQUEST ----------
+<?xml version="1.0" encoding="utf-8"?>
+        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+        <soap:Body>
+        <ConfirmPurchase xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
+        <GenericRequest><Authentication>
+                    <Username>UAT_DEMO</Username>
+                    <Password>ypHALsJ3EG3p</Password>
+                 </Authentication><Header>
+                <Channel>IBE_B2BAE</Channel>
+                <ItineraryID></ItineraryID>
+                <PNR>VH7ICH</PNR>
+                <PolicyNo/>
+                <PurchaseDate>2024-05-30 15:55:41</PurchaseDate>
+                <SSRFeeCode>INSC</SSRFeeCode>
+                <Currency>AED</Currency>
+                <TotalPremium>77.07</TotalPremium>
+                <CountryCode>EN</CountryCode>
+                <CultureCode>EN</CultureCode>
+                <TotalAdults>1</TotalAdults>
+                <TotalChild>0</TotalChild>
+                <TotalInfants>0 </TotalInfants>
+             </Header><ContactDetails>
+        <ContactPerson>asd dsa</ContactPerson>
+        <Address1></Address1>
+        <Address2></Address2>
+        <Address3/>
+        <HomePhoneNum/>
+        <MobilePhoneNum>9869556696</MobilePhoneNum>
+        <OtherPhoneNum/>
+        <PostCode></PostCode>
+        <City></City>
+        <State></State>
+        <Country></Country>
+        <EmailAddress>asd@gmail.com</EmailAddress>
+        </ContactDetails>    <Flights>   
+            <Flight>   
+            <DepartCountryCode>AE</DepartCountryCode>
+            <DepartStationCode></DepartStationCode>
+            <ArrivalCountryCode>IN</ArrivalCountryCode>
+            <ArrivalStationCode></ArrivalStationCode>
+            <DepartAirlineCode>AI</DepartAirlineCode>
+            <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
+            <ReturnAirlineCode></ReturnAirlineCode>
+            <ReturnDateTime></ReturnDateTime>
+            <DepartFlightNo>638</DepartFlightNo>
+            <ReturnFlightNo></ReturnFlightNo>
+            </Flight>
+         </Flights><Passengers><Passenger>
+            <IsInfant>0</IsInfant>
+            <FirstName>asd</FirstName>
+            <LastName>dsa</LastName>
+            <Gender>Male</Gender>
+            <DOB>2001-04-12 00:00:00</DOB>
+            <Age>23</Age>
+            <IdentityType>Passport</IdentityType>
+            <IdentityNo>123456</IdentityNo>
+            <IsQualified>true</IsQualified>
+            <Nationality>NP</Nationality>
+            <CountryOfResidence>NP</CountryOfResidence>
+            <SelectedPlanCode>AE2-API-OUTBOUND-GOLD</SelectedPlanCode>
+            <SelectedSSRFeeCode>INSB1_API_AE2_GO_OB</SelectedSSRFeeCode>
+            <CurrencyCode>AED</CurrencyCode>
+            <PassengerPremiumAmount>77</PassengerPremiumAmount>
+            </Passenger></Passengers>
+        </GenericRequest>
+        </ConfirmPurchase>
+        </soap:Body>
+        </soap:Envelope>
+----------END REQUEST ----------
+----------BEGIN RESPONSE ----------
+HTTP/2 200 
+cache-control: private, max-age=0
+content-type: text/xml; charset=utf-8
+server: Microsoft-IIS/10.0
+x-aspnet-version: 4.0.30319
+x-powered-by: ASP.NET
+date: Thu, 30 May 2024 10:26:21 GMT
+content-length: 1829
+
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ConfirmPurchaseResponse xmlns="http://ZEUSTravelInsuranceGateway/WebServices"><PurchaseResponse><ProposalState>CONFIRMED</ProposalState><ItineraryID>462</ItineraryID><PNR>VH7ICH</PNR><ErrorCode>0</ErrorCode><ErrorMessage>[Premium corrected and accepted]Invalid premium detected for pax[asd dsa, Age(23), premium(77)]. Correct premium should be [77.07]&lt;BR&gt;ChannelCode = IBE&lt;BR&gt;PseudoAgentCode = B2BAE&lt;BR&gt;PseudoCityCode = &lt;BR&gt;SelectedReturnDateTime(Exception) = 2025-01-01 06:30:00&lt;BR&gt;SelectedPlanID = 2628&lt;BR&gt;SelectedUnderwriterID = 63&lt;BR&gt;NewPolicyNo_ResultCode = 0&lt;BR&gt;SelectedNewPolicyNo = T2P-2024-AE2API-0000802&lt;BR&gt;NewPolicyNo_ResultMessage = SUCCESS&lt;BR&gt;&lt;BR&gt;AddNewPolicy(VH7ICH, IBE, B2BAE, , EN, EN, T2P-2024-AE2API-0000802, 2628, AE2-API-OUTBOUND-GOLD, INSC, 63, AED, 77.07, 1, 0, 0, 1, AE, XXX, IN, , AI, 638, 2025-01-01 06:30:00, , 0, 2025-01-01 06:30:00, 1, 0, 1, 0, 2024-05-30 00:00:00)Start.AddNewContactPerson.SelectedItinerary_ID = 462</ErrorMessage><PolicyNo>T2P-2024-AE2API-0000802</PolicyNo><PolicyPurchasedDateTime>2024-05-30 10:26:21</PolicyPurchasedDateTime><ConfirmedPassengers><ConfirmedPassenger><FirstName>asd</FirstName><LastName>dsa</LastName><DOB>2001-04-12 00:00:00</DOB><IdentityNo>123456</IdentityNo><PolicyNo>T2P-2024-AE2API-0000802_1</PolicyNo><PolicyURLLink>https://uat-tpe.tune2protect.com/CoiGenerator/ZEUS_Process_GeneratePolicyB2B_v2.aspx?IID=462&amp;PNO=T2P-2024-AE2API-0000802</PolicyURLLink></ConfirmedPassenger></ConfirmedPassengers></PurchaseResponse></ConfirmPurchaseResponse></soap:Body></soap:Envelope>
+----------END RESPONSE ----------
+========== END REQUEST/RESPONSE ==========
+
+========== BEGIN REQUEST/RESPONSE ==========
+purchase ID: 977998
+Request Method Name: ConfirmPurchase
+Response Status: 1
+Timestamp: 2024-05-30 15:57:50
+----------BEGIN REQUEST ----------
+<?xml version="1.0" encoding="utf-8"?>
+        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+        <soap:Body>
+        <ConfirmPurchase xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
+        <GenericRequest><Authentication>
+                    <Username>UAT_DEMO</Username>
+                    <Password>ypHALsJ3EG3p</Password>
+                 </Authentication><Header>
+                <Channel>IBE_B2BAE</Channel>
+                <ItineraryID></ItineraryID>
+                <PNR>VH7ICH</PNR>
+                <PolicyNo/>
+                <PurchaseDate>2024-05-30 15:55:41</PurchaseDate>
+                <SSRFeeCode>INSC</SSRFeeCode>
+                <Currency>AED</Currency>
+                <TotalPremium>77.07</TotalPremium>
+                <CountryCode>EN</CountryCode>
+                <CultureCode>EN</CultureCode>
+                <TotalAdults>1</TotalAdults>
+                <TotalChild>0</TotalChild>
+                <TotalInfants>0 </TotalInfants>
+             </Header><ContactDetails>
+        <ContactPerson>asd dsa</ContactPerson>
+        <Address1></Address1>
+        <Address2></Address2>
+        <Address3/>
+        <HomePhoneNum/>
+        <MobilePhoneNum>9869556696</MobilePhoneNum>
+        <OtherPhoneNum/>
+        <PostCode></PostCode>
+        <City></City>
+        <State></State>
+        <Country></Country>
+        <EmailAddress>asd@gmail.com</EmailAddress>
+        </ContactDetails>    <Flights>   
+            <Flight>   
+            <DepartCountryCode>AE</DepartCountryCode>
+            <DepartStationCode></DepartStationCode>
+            <ArrivalCountryCode>IN</ArrivalCountryCode>
+            <ArrivalStationCode></ArrivalStationCode>
+            <DepartAirlineCode>AI</DepartAirlineCode>
+            <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
+            <ReturnAirlineCode></ReturnAirlineCode>
+            <ReturnDateTime></ReturnDateTime>
+            <DepartFlightNo>638</DepartFlightNo>
+            <ReturnFlightNo></ReturnFlightNo>
+            </Flight>
+         </Flights><Passengers><Passenger>
+            <IsInfant>0</IsInfant>
+            <FirstName>asd</FirstName>
+            <LastName>dsa</LastName>
+            <Gender>Male</Gender>
+            <DOB>2001-04-12 00:00:00</DOB>
+            <Age>23</Age>
+            <IdentityType>Passport</IdentityType>
+            <IdentityNo>123456</IdentityNo>
+            <IsQualified>true</IsQualified>
+            <Nationality>NP</Nationality>
+            <CountryOfResidence>NP</CountryOfResidence>
+            <SelectedPlanCode>AE2-API-OUTBOUND-GOLD</SelectedPlanCode>
+            <SelectedSSRFeeCode>INSB1_API_AE2_GO_OB</SelectedSSRFeeCode>
+            <CurrencyCode>AED</CurrencyCode>
+            <PassengerPremiumAmount>77</PassengerPremiumAmount>
+            </Passenger></Passengers>
+        </GenericRequest>
+        </ConfirmPurchase>
+        </soap:Body>
+        </soap:Envelope>
+----------END REQUEST ----------
+----------BEGIN RESPONSE ----------
+HTTP/2 200 
+cache-control: private, max-age=0
+content-type: text/xml; charset=utf-8
+server: Microsoft-IIS/10.0
+x-aspnet-version: 4.0.30319
+x-powered-by: ASP.NET
+date: Thu, 30 May 2024 10:27:50 GMT
+content-length: 612
+
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ConfirmPurchaseResponse xmlns="http://ZEUSTravelInsuranceGateway/WebServices"><PurchaseResponse><ProposalState>ONHOLD</ProposalState><ErrorCode>12111</ErrorCode><ErrorMessage>Duplicate transaction detected.&lt;BR&gt;ChannelCode = IBE&lt;BR&gt;PseudoAgentCode = B2BAE&lt;BR&gt;PseudoCityCode = </ErrorMessage><PolicyNo /></PurchaseResponse></ConfirmPurchaseResponse></soap:Body></soap:Envelope>
+----------END RESPONSE ----------
+========== END REQUEST/RESPONSE ==========
+
+========== BEGIN REQUEST/RESPONSE ==========
+purchase ID: 977998
+Request Method Name: ConfirmPurchase
+Response Status: 1
+Timestamp: 2024-05-30 16:00:37
+----------BEGIN REQUEST ----------
+<?xml version="1.0" encoding="utf-8"?>
+        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+        <soap:Body>
+        <ConfirmPurchase xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
+        <GenericRequest><Authentication>
+                    <Username>UAT_DEMO</Username>
+                    <Password>ypHALsJ3EG3p</Password>
+                 </Authentication><Header>
+                <Channel>IBE_B2BAE</Channel>
+                <ItineraryID></ItineraryID>
+                <PNR>VH6OMO</PNR>
+                <PolicyNo/>
+                <PurchaseDate>2024-05-30 15:59:57</PurchaseDate>
+                <SSRFeeCode>INSC</SSRFeeCode>
+                <Currency>AED</Currency>
+                <TotalPremium>77.07</TotalPremium>
+                <CountryCode>EN</CountryCode>
+                <CultureCode>EN</CultureCode>
+                <TotalAdults>1</TotalAdults>
+                <TotalChild>0</TotalChild>
+                <TotalInfants>0 </TotalInfants>
+             </Header><ContactDetails>
+        <ContactPerson>Rishiskesh Thapa</ContactPerson>
+        <Address1></Address1>
+        <Address2></Address2>
+        <Address3/>
+        <HomePhoneNum/>
+        <MobilePhoneNum>9869556696</MobilePhoneNum>
+        <OtherPhoneNum/>
+        <PostCode></PostCode>
+        <City></City>
+        <State></State>
+        <Country></Country>
+        <EmailAddress>asd@gmail.com</EmailAddress>
+        </ContactDetails>    <Flights>   
+            <Flight>   
+            <DepartCountryCode>AE</DepartCountryCode>
+            <DepartStationCode></DepartStationCode>
+            <ArrivalCountryCode>IN</ArrivalCountryCode>
+            <ArrivalStationCode></ArrivalStationCode>
+            <DepartAirlineCode>AI</DepartAirlineCode>
+            <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
+            <ReturnAirlineCode></ReturnAirlineCode>
+            <ReturnDateTime></ReturnDateTime>
+            <DepartFlightNo>638</DepartFlightNo>
+            <ReturnFlightNo></ReturnFlightNo>
+            </Flight>
+         </Flights><Passengers><Passenger>
+            <IsInfant>0</IsInfant>
+            <FirstName>Rishiskesh</FirstName>
+            <LastName>Thapa</LastName>
+            <Gender>Male</Gender>
+            <DOB>2000-04-30 00:00:00</DOB>
+            <Age>24</Age>
+            <IdentityType>Passport</IdentityType>
+            <IdentityNo>1234567</IdentityNo>
+            <IsQualified>true</IsQualified>
+            <Nationality>NP</Nationality>
+            <CountryOfResidence>NP</CountryOfResidence>
+            <SelectedPlanCode>AE2-API-OUTBOUND-GOLD</SelectedPlanCode>
+            <SelectedSSRFeeCode>INSB1_API_AE2_GO_OB</SelectedSSRFeeCode>
+            <CurrencyCode>AED</CurrencyCode>
+            <PassengerPremiumAmount>77</PassengerPremiumAmount>
+            </Passenger></Passengers>
+        </GenericRequest>
+        </ConfirmPurchase>
+        </soap:Body>
+        </soap:Envelope>
+----------END REQUEST ----------
+----------BEGIN RESPONSE ----------
+HTTP/2 200 
+cache-control: private, max-age=0
+content-type: text/xml; charset=utf-8
+server: Microsoft-IIS/10.0
+x-aspnet-version: 4.0.30319
+x-powered-by: ASP.NET
+date: Thu, 30 May 2024 10:30:37 GMT
+content-length: 1848
+
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ConfirmPurchaseResponse xmlns="http://ZEUSTravelInsuranceGateway/WebServices"><PurchaseResponse><ProposalState>CONFIRMED</ProposalState><ItineraryID>463</ItineraryID><PNR>VH6OMO</PNR><ErrorCode>0</ErrorCode><ErrorMessage>[Premium corrected and accepted]Invalid premium detected for pax[Rishiskesh Thapa, Age(24), premium(77)]. Correct premium should be [77.07]&lt;BR&gt;ChannelCode = IBE&lt;BR&gt;PseudoAgentCode = B2BAE&lt;BR&gt;PseudoCityCode = &lt;BR&gt;SelectedReturnDateTime(Exception) = 2025-01-01 06:30:00&lt;BR&gt;SelectedPlanID = 2628&lt;BR&gt;SelectedUnderwriterID = 63&lt;BR&gt;NewPolicyNo_ResultCode = 0&lt;BR&gt;SelectedNewPolicyNo = T2P-2024-AE2API-0000803&lt;BR&gt;NewPolicyNo_ResultMessage = SUCCESS&lt;BR&gt;&lt;BR&gt;AddNewPolicy(VH6OMO, IBE, B2BAE, , EN, EN, T2P-2024-AE2API-0000803, 2628, AE2-API-OUTBOUND-GOLD, INSC, 63, AED, 77.07, 1, 0, 0, 1, AE, XXX, IN, , AI, 638, 2025-01-01 06:30:00, , 0, 2025-01-01 06:30:00, 1, 0, 1, 0, 2024-05-30 00:00:00)Start.AddNewContactPerson.SelectedItinerary_ID = 463</ErrorMessage><PolicyNo>T2P-2024-AE2API-0000803</PolicyNo><PolicyPurchasedDateTime>2024-05-30 10:30:37</PolicyPurchasedDateTime><ConfirmedPassengers><ConfirmedPassenger><FirstName>Rishiskesh</FirstName><LastName>Thapa</LastName><DOB>2000-04-30 00:00:00</DOB><IdentityNo>1234567</IdentityNo><PolicyNo>T2P-2024-AE2API-0000803_1</PolicyNo><PolicyURLLink>https://uat-tpe.tune2protect.com/CoiGenerator/ZEUS_Process_GeneratePolicyB2B_v2.aspx?IID=463&amp;PNO=T2P-2024-AE2API-0000803</PolicyURLLink></ConfirmedPassenger></ConfirmedPassengers></PurchaseResponse></ConfirmPurchaseResponse></soap:Body></soap:Envelope>
+----------END RESPONSE ----------
+========== END REQUEST/RESPONSE ==========
+
+========== BEGIN REQUEST/RESPONSE ==========
+purchase ID: 978000
+Request Method Name: ConfirmPurchase
+Response Status: 1
+Timestamp: 2024-05-30 16:46:07
+----------BEGIN REQUEST ----------
+<?xml version="1.0" encoding="utf-8"?>
+        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+        <soap:Body>
+        <ConfirmPurchase xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
+        <GenericRequest><Authentication>
+                    <Username>UAT_DEMO</Username>
+                    <Password>ypHALsJ3EG3p</Password>
+                 </Authentication><Header>
+                <Channel>IBE_B2BAE</Channel>
+                <ItineraryID></ItineraryID>
+                <PNR>VHDXN4</PNR>
+                <PolicyNo/>
+                <PurchaseDate>2024-05-30 16:45:27</PurchaseDate>
+                <SSRFeeCode>INSC</SSRFeeCode>
+                <Currency>AED</Currency>
+                <TotalPremium>117.44</TotalPremium>
+                <CountryCode>EN</CountryCode>
+                <CultureCode>EN</CultureCode>
+                <TotalAdults>1</TotalAdults>
+                <TotalChild>0</TotalChild>
+                <TotalInfants>0 </TotalInfants>
+             </Header><ContactDetails>
+        <ContactPerson>Sushanti Malla</ContactPerson>
+        <Address1></Address1>
+        <Address2></Address2>
+        <Address3/>
+        <HomePhoneNum/>
+        <MobilePhoneNum>9865669969</MobilePhoneNum>
+        <OtherPhoneNum/>
+        <PostCode></PostCode>
+        <City></City>
+        <State></State>
+        <Country></Country>
+        <EmailAddress>sushant1.teamtft@gmail.com</EmailAddress>
+        </ContactDetails>    <Flights>   
+            <Flight>   
+            <DepartCountryCode>AE</DepartCountryCode>
+            <DepartStationCode></DepartStationCode>
+            <ArrivalCountryCode>IN</ArrivalCountryCode>
+            <ArrivalStationCode></ArrivalStationCode>
+            <DepartAirlineCode>AI</DepartAirlineCode>
+            <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
+            <ReturnAirlineCode></ReturnAirlineCode>
+            <ReturnDateTime></ReturnDateTime>
+            <DepartFlightNo>638</DepartFlightNo>
+            <ReturnFlightNo></ReturnFlightNo>
+            </Flight>
+         </Flights><Passengers><Passenger>
+            <IsInfant>0</IsInfant>
+            <FirstName>Sushanti</FirstName>
+            <LastName>Malla</LastName>
+            <Gender>Male</Gender>
+            <DOB>2012-04-30 00:00:00</DOB>
+            <Age>12</Age>
+            <IdentityType>Passport</IdentityType>
+            <IdentityNo>123456</IdentityNo>
+            <IsQualified>true</IsQualified>
+            <Nationality>NP</Nationality>
+            <CountryOfResidence>NP</CountryOfResidence>
+            <SelectedPlanCode>AE2-API-OUTBOUND-PLATINUM</SelectedPlanCode>
+            <SelectedSSRFeeCode>INSB1_API_AE2_PL_OB</SelectedSSRFeeCode>
+            <CurrencyCode>AED</CurrencyCode>
+            <PassengerPremiumAmount>117</PassengerPremiumAmount>
+            </Passenger></Passengers>
+        </GenericRequest>
+        </ConfirmPurchase>
+        </soap:Body>
+        </soap:Envelope>
+----------END REQUEST ----------
+----------BEGIN RESPONSE ----------
+HTTP/2 200 
+cache-control: private, max-age=0
+content-type: text/xml; charset=utf-8
+server: Microsoft-IIS/10.0
+x-aspnet-version: 4.0.30319
+x-powered-by: ASP.NET
+date: Thu, 30 May 2024 11:16:07 GMT
+content-length: 1850
+
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ConfirmPurchaseResponse xmlns="http://ZEUSTravelInsuranceGateway/WebServices"><PurchaseResponse><ProposalState>CONFIRMED</ProposalState><ItineraryID>468</ItineraryID><PNR>VHDXN4</PNR><ErrorCode>0</ErrorCode><ErrorMessage>[Premium corrected and accepted]Invalid premium detected for pax[Sushanti Malla, Age(12), premium(117)]. Correct premium should be [117.44]&lt;BR&gt;ChannelCode = IBE&lt;BR&gt;PseudoAgentCode = B2BAE&lt;BR&gt;PseudoCityCode = &lt;BR&gt;SelectedReturnDateTime(Exception) = 2025-01-01 06:30:00&lt;BR&gt;SelectedPlanID = 2629&lt;BR&gt;SelectedUnderwriterID = 63&lt;BR&gt;NewPolicyNo_ResultCode = 0&lt;BR&gt;SelectedNewPolicyNo = T2P-2024-AE2API-0000806&lt;BR&gt;NewPolicyNo_ResultMessage = SUCCESS&lt;BR&gt;&lt;BR&gt;AddNewPolicy(VHDXN4, IBE, B2BAE, , EN, EN, T2P-2024-AE2API-0000806, 2629, AE2-API-OUTBOUND-PLATINUM, INSC, 63, AED, 117.44, 1, 0, 0, 1, AE, XXX, IN, , AI, 638, 2025-01-01 06:30:00, , 0, 2025-01-01 06:30:00, 1, 0, 1, 0, 2024-05-30 00:00:00)Start.AddNewContactPerson.SelectedItinerary_ID = 468</ErrorMessage><PolicyNo>T2P-2024-AE2API-0000806</PolicyNo><PolicyPurchasedDateTime>2024-05-30 11:16:07</PolicyPurchasedDateTime><ConfirmedPassengers><ConfirmedPassenger><FirstName>Sushanti</FirstName><LastName>Malla</LastName><DOB>2012-04-30 00:00:00</DOB><IdentityNo>123456</IdentityNo><PolicyNo>T2P-2024-AE2API-0000806_1</PolicyNo><PolicyURLLink>https://uat-tpe.tune2protect.com/CoiGenerator/ZEUS_Process_GeneratePolicyB2B_v2.aspx?IID=468&amp;PNO=T2P-2024-AE2API-0000806</PolicyURLLink></ConfirmedPassenger></ConfirmedPassengers></PurchaseResponse></ConfirmPurchaseResponse></soap:Body></soap:Envelope>
+----------END RESPONSE ----------
+========== END REQUEST/RESPONSE ==========
+
+========== BEGIN REQUEST/RESPONSE ==========
+purchase ID: 978002
+Request Method Name: ConfirmPurchase
+Response Status: 1
+Timestamp: 2024-05-31 10:24:49
+----------BEGIN REQUEST ----------
+<?xml version="1.0" encoding="utf-8"?>
+        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+        <soap:Body>
+        <ConfirmPurchase xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
+        <GenericRequest><Authentication>
+                    <Username>UAT_DEMO</Username>
+                    <Password>ypHALsJ3EG3p</Password>
+                 </Authentication><Header>
+                <Channel>IBE_B2BAE</Channel>
+                <ItineraryID></ItineraryID>
+                <PNR>VLKKN8</PNR>
+                <PolicyNo/>
+                <PurchaseDate>2024-05-31 10:24:06</PurchaseDate>
+                <SSRFeeCode>INSC</SSRFeeCode>
+                <Currency>AED</Currency>
+                <TotalPremium>77.07</TotalPremium>
+                <CountryCode>EN</CountryCode>
+                <CultureCode>EN</CultureCode>
+                <TotalAdults>1</TotalAdults>
+                <TotalChild>0</TotalChild>
+                <TotalInfants>0 </TotalInfants>
+             </Header><ContactDetails>
+        <ContactPerson>asd sda</ContactPerson>
+        <Address1></Address1>
+        <Address2></Address2>
+        <Address3/>
+        <HomePhoneNum/>
+        <MobilePhoneNum>9869556696</MobilePhoneNum>
+        <OtherPhoneNum/>
+        <PostCode></PostCode>
+        <City></City>
+        <State></State>
+        <Country></Country>
+        <EmailAddress>asd@gmail.com</EmailAddress>
+        </ContactDetails>    <Flights>   
+            <Flight>   
+            <DepartCountryCode>AE</DepartCountryCode>
+            <DepartStationCode></DepartStationCode>
+            <ArrivalCountryCode>IN</ArrivalCountryCode>
+            <ArrivalStationCode></ArrivalStationCode>
+            <DepartAirlineCode>AI</DepartAirlineCode>
+            <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
+            <ReturnAirlineCode></ReturnAirlineCode>
+            <ReturnDateTime></ReturnDateTime>
+            <DepartFlightNo>638</DepartFlightNo>
+            <ReturnFlightNo></ReturnFlightNo>
+            </Flight>
+         </Flights><Passengers><Passenger>
+            <IsInfant>0</IsInfant>
+            <FirstName>asd</FirstName>
+            <LastName>sda</LastName>
+            <Gender>Male</Gender>
+            <DOB>2012-05-30 00:00:00</DOB>
+            <Age>12</Age>
+            <IdentityType>Passport</IdentityType>
+            <IdentityNo>123456</IdentityNo>
+            <IsQualified>true</IsQualified>
+            <Nationality>NP</Nationality>
+            <CountryOfResidence>NP</CountryOfResidence>
+            <SelectedPlanCode>AE2-API-OUTBOUND-GOLD</SelectedPlanCode>
+            <SelectedSSRFeeCode>INSB1_API_AE2_GO_OB</SelectedSSRFeeCode>
+            <CurrencyCode>AED</CurrencyCode>
+            <PassengerPremiumAmount>77</PassengerPremiumAmount>
+            </Passenger></Passengers>
+        </GenericRequest>
+        </ConfirmPurchase>
+        </soap:Body>
+        </soap:Envelope>
+----------END REQUEST ----------
+----------BEGIN RESPONSE ----------
+HTTP/2 200 
+cache-control: private, max-age=0
+content-type: text/xml; charset=utf-8
+server: Microsoft-IIS/10.0
+x-aspnet-version: 4.0.30319
+x-powered-by: ASP.NET
+date: Fri, 31 May 2024 04:54:49 GMT
+content-length: 1829
+
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ConfirmPurchaseResponse xmlns="http://ZEUSTravelInsuranceGateway/WebServices"><PurchaseResponse><ProposalState>CONFIRMED</ProposalState><ItineraryID>477</ItineraryID><PNR>VLKKN8</PNR><ErrorCode>0</ErrorCode><ErrorMessage>[Premium corrected and accepted]Invalid premium detected for pax[asd sda, Age(12), premium(77)]. Correct premium should be [77.07]&lt;BR&gt;ChannelCode = IBE&lt;BR&gt;PseudoAgentCode = B2BAE&lt;BR&gt;PseudoCityCode = &lt;BR&gt;SelectedReturnDateTime(Exception) = 2025-01-01 06:30:00&lt;BR&gt;SelectedPlanID = 2628&lt;BR&gt;SelectedUnderwriterID = 63&lt;BR&gt;NewPolicyNo_ResultCode = 0&lt;BR&gt;SelectedNewPolicyNo = T2P-2024-AE2API-0000810&lt;BR&gt;NewPolicyNo_ResultMessage = SUCCESS&lt;BR&gt;&lt;BR&gt;AddNewPolicy(VLKKN8, IBE, B2BAE, , EN, EN, T2P-2024-AE2API-0000810, 2628, AE2-API-OUTBOUND-GOLD, INSC, 63, AED, 77.07, 1, 0, 0, 1, AE, XXX, IN, , AI, 638, 2025-01-01 06:30:00, , 0, 2025-01-01 06:30:00, 1, 0, 1, 0, 2024-05-31 00:00:00)Start.AddNewContactPerson.SelectedItinerary_ID = 477</ErrorMessage><PolicyNo>T2P-2024-AE2API-0000810</PolicyNo><PolicyPurchasedDateTime>2024-05-31 04:54:49</PolicyPurchasedDateTime><ConfirmedPassengers><ConfirmedPassenger><FirstName>asd</FirstName><LastName>sda</LastName><DOB>2012-05-30 00:00:00</DOB><IdentityNo>123456</IdentityNo><PolicyNo>T2P-2024-AE2API-0000810_1</PolicyNo><PolicyURLLink>https://uat-tpe.tune2protect.com/CoiGenerator/ZEUS_Process_GeneratePolicyB2B_v2.aspx?IID=477&amp;PNO=T2P-2024-AE2API-0000810</PolicyURLLink></ConfirmedPassenger></ConfirmedPassengers></PurchaseResponse></ConfirmPurchaseResponse></soap:Body></soap:Envelope>
+----------END RESPONSE ----------
+========== END REQUEST/RESPONSE ==========
+
+========== BEGIN REQUEST/RESPONSE ==========
+purchase ID: 978006
+Request Method Name: ConfirmPurchase
+Response Status: 1
+Timestamp: 2024-05-31 11:01:12
+----------BEGIN REQUEST ----------
+<?xml version="1.0" encoding="utf-8"?>
+        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+        <soap:Body>
+        <ConfirmPurchase xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
+        <GenericRequest><Authentication>
+                    <Username>UAT_DEMO</Username>
+                    <Password>ypHALsJ3EG3p</Password>
+                 </Authentication><Header>
+                <Channel>IBE_B2BAE</Channel>
+                <ItineraryID></ItineraryID>
+                <PNR>VLPKZC</PNR>
+                <PolicyNo/>
+                <PurchaseDate>2024-05-31 11:00:27</PurchaseDate>
+                <SSRFeeCode>INSC</SSRFeeCode>
+                <Currency>AED</Currency>
+                <TotalPremium>77.07</TotalPremium>
+                <CountryCode>EN</CountryCode>
+                <CultureCode>EN</CultureCode>
+                <TotalAdults>1</TotalAdults>
+                <TotalChild>0</TotalChild>
+                <TotalInfants>0 </TotalInfants>
+             </Header><ContactDetails>
+        <ContactPerson>asd dsa</ContactPerson>
+        <Address1></Address1>
+        <Address2></Address2>
+        <Address3/>
+        <HomePhoneNum/>
+        <MobilePhoneNum>9869556696</MobilePhoneNum>
+        <OtherPhoneNum/>
+        <PostCode></PostCode>
+        <City></City>
+        <State></State>
+        <Country></Country>
+        <EmailAddress>asd@gmail.com</EmailAddress>
+        </ContactDetails>    <Flights>   
+            <Flight>   
+            <DepartCountryCode>AE</DepartCountryCode>
+            <DepartStationCode></DepartStationCode>
+            <ArrivalCountryCode>IN</ArrivalCountryCode>
+            <ArrivalStationCode></ArrivalStationCode>
+            <DepartAirlineCode>AI</DepartAirlineCode>
+            <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
+            <ReturnAirlineCode></ReturnAirlineCode>
+            <ReturnDateTime></ReturnDateTime>
+            <DepartFlightNo>638</DepartFlightNo>
+            <ReturnFlightNo></ReturnFlightNo>
+            </Flight>
+         </Flights><Passengers><Passenger>
+            <IsInfant>0</IsInfant>
+            <FirstName>asd</FirstName>
+            <LastName>dsa</LastName>
+            <Gender>Male</Gender>
+            <DOB>2012-05-30 00:00:00</DOB>
+            <Age>12</Age>
+            <IdentityType>Passport</IdentityType>
+            <IdentityNo>1234567</IdentityNo>
+            <IsQualified>true</IsQualified>
+            <Nationality>NP</Nationality>
+            <CountryOfResidence>NP</CountryOfResidence>
+            <SelectedPlanCode>AE2-API-OUTBOUND-GOLD</SelectedPlanCode>
+            <SelectedSSRFeeCode>INSB1_API_AE2_GO_OB</SelectedSSRFeeCode>
+            <CurrencyCode>AED</CurrencyCode>
+            <PassengerPremiumAmount>77</PassengerPremiumAmount>
+            </Passenger></Passengers>
+        </GenericRequest>
+        </ConfirmPurchase>
+        </soap:Body>
+        </soap:Envelope>
+----------END REQUEST ----------
+----------BEGIN RESPONSE ----------
+HTTP/2 200 
+cache-control: private, max-age=0
+content-type: text/xml; charset=utf-8
+server: Microsoft-IIS/10.0
+x-aspnet-version: 4.0.30319
+x-powered-by: ASP.NET
+date: Fri, 31 May 2024 05:31:12 GMT
+content-length: 1830
+
+<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><ConfirmPurchaseResponse xmlns="http://ZEUSTravelInsuranceGateway/WebServices"><PurchaseResponse><ProposalState>CONFIRMED</ProposalState><ItineraryID>478</ItineraryID><PNR>VLPKZC</PNR><ErrorCode>0</ErrorCode><ErrorMessage>[Premium corrected and accepted]Invalid premium detected for pax[asd dsa, Age(12), premium(77)]. Correct premium should be [77.07]&lt;BR&gt;ChannelCode = IBE&lt;BR&gt;PseudoAgentCode = B2BAE&lt;BR&gt;PseudoCityCode = &lt;BR&gt;SelectedReturnDateTime(Exception) = 2025-01-01 06:30:00&lt;BR&gt;SelectedPlanID = 2628&lt;BR&gt;SelectedUnderwriterID = 63&lt;BR&gt;NewPolicyNo_ResultCode = 0&lt;BR&gt;SelectedNewPolicyNo = T2P-2024-AE2API-0000811&lt;BR&gt;NewPolicyNo_ResultMessage = SUCCESS&lt;BR&gt;&lt;BR&gt;AddNewPolicy(VLPKZC, IBE, B2BAE, , EN, EN, T2P-2024-AE2API-0000811, 2628, AE2-API-OUTBOUND-GOLD, INSC, 63, AED, 77.07, 1, 0, 0, 1, AE, XXX, IN, , AI, 638, 2025-01-01 06:30:00, , 0, 2025-01-01 06:30:00, 1, 0, 1, 0, 2024-05-31 00:00:00)Start.AddNewContactPerson.SelectedItinerary_ID = 478</ErrorMessage><PolicyNo>T2P-2024-AE2API-0000811</PolicyNo><PolicyPurchasedDateTime>2024-05-31 05:31:12</PolicyPurchasedDateTime><ConfirmedPassengers><ConfirmedPassenger><FirstName>asd</FirstName><LastName>dsa</LastName><DOB>2012-05-30 00:00:00</DOB><IdentityNo>1234567</IdentityNo><PolicyNo>T2P-2024-AE2API-0000811_1</PolicyNo><PolicyURLLink>https://uat-tpe.tune2protect.com/CoiGenerator/ZEUS_Process_GeneratePolicyB2B_v2.aspx?IID=478&amp;PNO=T2P-2024-AE2API-0000811</PolicyURLLink></ConfirmedPassenger></ConfirmedPassengers></PurchaseResponse></ConfirmPurchaseResponse></soap:Body></soap:Envelope>
 ----------END RESPONSE ----------
 ========== END REQUEST/RESPONSE ==========

@@ -1,71 +1,43 @@
-<?xml version="1.0" encoding="utf-8"?>
-        <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-        xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-        <soap:Body>
-        <ConfirmPurchase xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
-        <GenericRequest><web:Authentication>
-        <web:Username>UAT_DEMO</web:Username>
-        <web:Password>ypHALsJ3EG3p</web:Password>
-     </web:Authentication><Header>
-            <Channel>IBE_B2BAE</Channel>
-            <ItineraryID></ItineraryID>
-            <PNR></PNR>
-            <PolicyNo/>
-            <PurchaseDate>2024-05-23 18:00:00</PurchaseDate>
-            <SSRFeeCode>INSC</SSRFeeCode>
-            <Currency>AED</Currency>
-            <TotalPremium>77.07</TotalPremium>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://ZEUSTravelInsuranceGateway/WebServices">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <GetAvailablePlansOTAWithRiders xmlns="http://ZEUSTravelInsuranceGateway/WebServices">
+                <GenericRequestOTALite><Authentication>
+                    <Username>Travel_Free_Travels</Username>
+                    <Password>7qPiDYANEcMJ</Password>
+                 </Authentication><Header>
+            <Channel>IBE_TFTNP</Channel>
+            <Currency>NPR</Currency>
             <CountryCode>EN</CountryCode>
             <CultureCode>EN</CultureCode>
             <TotalAdults>1</TotalAdults>
             <TotalChild>0</TotalChild>
             <TotalInfants>0 </TotalInfants>
-         </Header><ContactDetails>
-        <ContactPerson>asd dsa</ContactPerson>
-        <Address1></Address1>
-        <Address2></Address2>
-        <Address3/>
-        <HomePhoneNum/>
-        <MobilePhoneNum>9869556696</MobilePhoneNum>
-        <OtherPhoneNum/>
-        <PostCode></PostCode>
-        <City></City>
-        <State></State>
-        <Country></Country>
-        <EmailAddress>asd@gmail.com</EmailAddress>
-        </ContactDetails>
-    <Flights>   
-    <Flight>   
-    <DepartCountryCode>AE</DepartCountryCode>
-    <DepartStationCode></DepartStationCode>
-    <ArrivalCountryCode>IN</ArrivalCountryCode>
-    <ArrivalStationCode></ArrivalStationCode>
-    <DepartAirlineCode>AI</DepartAirlineCode>
-    <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
-    <ReturnAirlineCode></ReturnAirlineCode>
-    <ReturnDateTime></ReturnDateTime>
-    <DepartFlightNo>638</DepartFlightNo>
-    <ReturnFlightNo></ReturnFlightNo>
-    </Flight>
- </Flights><Passengers><Passenger>
-            <IsInfant>0</IsInfant>
-            <FirstName>asd</FirstName>
-            <LastName>dsa</LastName>
-            <Gender>Male</Gender>
-            <DOB> 00:00:00</DOB>
-            <Age>12</Age>
-            <IdentityType>Passport</IdentityType>
-            <IdentityNo>123456</IdentityNo>
-            <IsQualified>true</IsQualified>
-            <Nationality>NP</Nationality>
-            <CountryOfResidence>NP</CountryOfResidence>
-            <SelectedPlanCode>AE2-API-OUTBOUND-GOLD</SelectedPlanCode>
-            <SelectedSSRFeeCode></SelectedSSRFeeCode>
-            <CurrencyCode>AED</CurrencyCode>
-            <PassengerPremiumAmount>77</PassengerPremiumAmount>
-            </Passenger></Passengers>
-        </GenericRequest>
-        </ConfirmPurchase>
-        </soap:Body>
-        </soap:Envelope>
+         </Header>
+                    <Flights>
+                <DepartCountryCode>NP</DepartCountryCode>
+                <DepartStationCode></DepartStationCode>
+                <ArrivalCountryCode>TH</ArrivalCountryCode>
+                <ArrivalStationCode></ArrivalStationCode>
+                <DepartAirlineCode>TG</DepartAirlineCode>
+                <DepartDateTime>2024-06-15 00:25:00</DepartDateTime>
+                <ReturnAirlineCode></ReturnAirlineCode>
+                <ReturnDateTime></ReturnDateTime>
+                <DepartFlightNo>310</DepartFlightNo>
+                <ReturnFlightNo></ReturnFlightNo>
+                </Flights>
+                    <Flights>
+                <DepartCountryCode>TH</DepartCountryCode>
+                <DepartStationCode></DepartStationCode>
+                <ArrivalCountryCode>AU</ArrivalCountryCode>
+                <ArrivalStationCode></ArrivalStationCode>
+                <DepartAirlineCode>TG</DepartAirlineCode>
+                <DepartDateTime>2024-06-15 08:30:00</DepartDateTime>
+                <ReturnAirlineCode></ReturnAirlineCode>
+                <ReturnDateTime></ReturnDateTime>
+                <DepartFlightNo>475</DepartFlightNo>
+                <ReturnFlightNo></ReturnFlightNo>
+                </Flights></GenericRequestOTALite>
+            </GetAvailablePlansOTAWithRiders>
+            </soapenv:Body>
+            </soapenv:Envelope>

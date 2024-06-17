@@ -1,3 +1,76 @@
+
+<?php 
+if($isInsured == 1 && $insuranceStatus != 'none'){?>
+<p id="notification" class="notification"></p>
+<div id="insuranceButtonContainer" class="insuranceButtonContainer">   
+</div>
+
+<?php
+$containerColor = ($insuranceStatus == 'CONFIRMED') ? '#22bb33':'red';?>
+<script>
+window.onload = () => {
+    const notificationStatus = <?php echo (($insuranceStatus == 'CONFIRMED') ? 1:0)?>;
+    const insuranceCertificateUrl = "<?php echo $policyUrl;?>";
+    let notificationElement = document.getElementById("notification");
+    document.getElementById("notification").style.display= "block";
+    notificationElement.innerHTML  = '';
+    
+    if(notificationStatus == 1){
+        notificationElement.innerHTML = "Congratulations! Your trip has successfully been insured. Please click the below button to download your certificate. A copy of this certificate and ticket will also be sent to your email.";
+
+        let buttonContainer = document.getElementById("insuranceButtonContainer");
+        buttonContainer.innerHTML = `
+        <a id ="insurance" class="insuranceButton" target="_blank" href=${insuranceCertificateUrl}>Download Insurance Certificate</a>`;
+        insuranceButtonContainer.style.display="grid";
+        insuranceButton = document.getElementById("insurance");
+        insuranceButton.classList.add("insuranceButton");
+
+        if(notificationStatus && !localStorage.getItem('insuranceClicked')){
+        localStorage.setItem('insuranceClicked', true);
+        document.getElementById('insurance').click();
+
+    }
+    } else {
+        notificationElement.innerHTML = "Your trip insurance purchase has failed. Please contact +977- 9860000111 immediately for assistance.";
+    }
+    
+
+}
+
+</script>
+<style>
+    .insuranceButtonContainer{
+       display: none;
+       place-content: center;
+        padding:1em;
+        color:white;
+    }
+    .notification{
+        display:none;
+
+        text-align: center;
+        padding:0.1em;
+        font-weight:bold;
+        color:white;
+        box-shadow:2px 2px black;        
+        background-color: <?php echo $containerColor?>;
+
+    }
+    .insuranceButton{
+        background: purple;
+        color:white;
+        padding:0.5em;
+        border:1px solid purple;
+        border-radius: 15px;
+        box-shadow: 2px 2px black;
+    }
+    .insuranceButton:hover{
+        background: white;
+        color:black;
+        cursor:pointer;
+    }
+</style>
+<?php }?>
 <div id="printpage">
 <?php
  //debug($data);exit;

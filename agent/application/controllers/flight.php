@@ -28,6 +28,7 @@ class Flight extends CI_Controller
         $this->load->library('provab_sms'); // we need this provab_sms library to send sms.
         $this->current_module = $this->config->item('current_module');
         $this->load->model("insurance_model");
+        $this->load->library("provab_mailer");
     }
     /**
      * FIXME : REMOVE THIS - Balu A
@@ -768,7 +769,7 @@ $insuranceAmount = 0;
                 if($post_params['isInsured'] == 1 && $post_params['insuranceId'] != NULL && $post_params['insuranceId'] != ''){
                     $insurancePlansDetails= json_decode(provab_decrypt($post_params['insuranceToken']), true);
                     if($insurancePlansDetails['id'] !== $post_params['id']){
-                        //exceptio page
+                        //exception page
                     }
                     $searchData = $this->flight_model->get_safe_search_data($search_id);
                     if($searchData['status'] != 1){
@@ -1159,9 +1160,15 @@ $insuranceAmount = 0;
         $request .= '</Passengers>';
         return $request;
     }
-    function ConfirmPurchase($insuranceDetails, $amount, $pnr)
+    function ConfirmPurchase($insuranceDetails= '', $amount = '', $pnr = '')
     {
-       
+        $pdfurl = 'https://uat-tpe.tune2protect.com/CoiGenerator/ZEUS_Process_GeneratePolicyB2B_v2.aspx?IID=463&PNO=T2P-2024-AE2API-0000803';
+        $contents = file_get_contents($pdfurl);
+        $pdf_path = BASEPATH . 'policy.pdf';
+        file_put_contents($pdf_path, $contents);
+        $mail_template = 'This is your pdf mail';
+        $email = 'saman.teamtft@gmail.com';
+        $ss = $this->provab_mailer->send_mail($email, domain_name() . ' - Flight Ticket', $mail_template, $pdf_path);
         $authHeader = $this->getAuthHeaderArko();
         $searchId = $insuranceDetails['searchId'];
         $segmentDetails = $insuranceDetails['SegmentDetails'];

@@ -14,6 +14,7 @@ class Voucher extends CI_Controller {
 		//$this->load->library("provab_pdf");
 		$this->load->library('provab_mailer');
 		$this->load->library('booking_data_formatter');
+		$this->load->model('insurance_model');
 		//we need to activate bus api which are active for current domain and load those libraries
 		//$this->output->enable_profiler(TRUE);
 	}
@@ -70,6 +71,7 @@ class Voucher extends CI_Controller {
 								$page_data['email_send_check']=TRUE;
 							     $mail_template = $this->template->isolated_view('voucher/bus_voucher', $page_data);
 							     $this->provab_mailer->send_mail($email, domain_name().' - Bus Ticket',$mail_template);
+				
 							   }
 					break;
 					case 'show_pdf' :
@@ -856,8 +858,13 @@ $domain_address = $this->custom_db->single_table_records ( 'domain_list','addres
 	/**
 	 *
 	 */
-	function flight($app_reference, $booking_source='', $booking_status='', $operation='show_voucher',$email='')
+	function flight($app_reference, $booking_source='', $booking_status='', $operation='show_voucher',$email='', $insuranceStatus = '')
 	{
+		if($email == 'insurance'){
+			$email = '';
+		}
+
+
 		error_reporting(0);
 		$this->load->model('flight_model');
 		if (empty($app_reference) == false) {
@@ -944,6 +951,18 @@ $domain_address = $this->custom_db->single_table_records ( 'domain_list','addres
 				$page_data['data']['voucher_phone'] = $voucher_details['data'][0]['phone'];
 				$page_data['data']['voucher_email'] = $voucher_details['data'][0]['email'];
 				//debug($page_data['data']['phone_code']);exit;
+				if($insuranceStatus != ''){
+					$insuranceDetails = $this->insurance_model->getInsuranceDetails(array('app_reference'=>$app_reference));
+					if($insuranceDetails['status'] == 1){
+						$page_data['isInsured'] = 1;
+					$page_data['insuranceStatus'] = $insuranceStatus;
+					$page_data['policyUrl'] = $insuranceDetails['data'][0]['bankname'];
+			
+					}else{
+						$page_data['isInsured'] = 0;
+						$page_data['insuranceStatus'] = 'none';
+					}
+					}
 				switch ($operation) {
 					case 'show_voucher' : 
 				//	debug($page_data);die;
@@ -955,8 +974,17 @@ $domain_address = $this->custom_db->single_table_records ( 'domain_list','addres
                                                  $create_pdf = new Provab_Pdf();
 						$mail_template_pdf = $this->template->isolated_view('voucher/flight_pdf', $page_data);
                          
-						/*$pdf = $create_pdf->create_pdf_investor($mail_template_pdf,'F');
-                                                 $this->provab_mailer->send_mail($email, domain_name().' - Flight Ticket',$mail_template,$pdf);*/
+						$pdf = $create_pdf->create_pdf_investor($mail_template_pdf,'F');
+                                                 $this->provab_mailer->send_mail($email, domain_name().' - Flight Ticket',$mail_template,$pdf);
+												 if($insuranceStatus == 'CONFIRMED' && $page_data['isInsured']== 1){
+													$pdfurl = $page_data['policyUrl'];
+													$contents = file_get_contents($pdfurl);
+													$pdf_path = BASEPATH . 'policy.pdf';
+													file_put_contents($pdf_path, $contents);
+													$mail_template = 'Please find your insurance certificate attached with this email';
+													$ss = $this->provab_mailer->send_mail($email, domain_name() . ' - Insurance Certificate', $mail_template, $pdf_path);
+													unlink($pdf_path);
+												 }
                                                  $this->session->unset_userdata($app_reference);
                                                  
                                                }
@@ -976,6 +1004,15 @@ $domain_address = $this->custom_db->single_table_records ( 'domain_list','addres
 						$mail_template = $this->template->isolated_view('voucher/flight_pdf', $page_data);
 						$pdf = $create_pdf->create_pdf($mail_template,'F');
 						$this->provab_mailer->send_mail($email, domain_name().' - Flight Ticket',$mail_template ,$pdf);
+						if($insuranceStatus == 'CONFIRMED' && $page_data['isInsured']== 1){
+							$pdfurl = $page_data['policyUrl'];
+							$contents = file_get_contents($pdfurl);
+							$pdf_path = BASEPATH . 'policy.pdf';
+							file_put_contents($pdf_path, $contents);
+							$mail_template = 'Please find your insurance certificate attached with this email';
+							$ss = $this->provab_mailer->send_mail($email, domain_name() . ' - Insurance Certificate', $mail_template, $pdf_path);
+							unlink($pdf_path);
+						 }
 						break;
 				}
 			}

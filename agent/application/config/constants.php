@@ -527,10 +527,10 @@ define('NICA_URL', 'https://secureacceptance.cybersource.com/pay');
 
 
 // LIVE CREDENTIALS FOR PROTECT INSURANCE API
-define('PROTECT_LIVE_USERNAME', 'UAT_DEMO');
-define('PROTECT_LIVE_PASSWORD', 'ypHALsJ3EG3p');
-define('PROTECT_LIVE_CHANNEL_CODE', 'IBE_B2BAE');
-define('PROTECT_LIVE_REQUEST_URL', 'https://uat-tpe.tune2protect.com/ZeusAPI/Zeus.asmx');
+define('PROTECT_LIVE_USERNAME', 'Travel_Free_Travels');
+define('PROTECT_LIVE_PASSWORD', '7qPiDYANEcMJ');
+define('PROTECT_LIVE_CHANNEL_CODE', 'IBE_TFTNP');
+define('PROTECT_LIVE_REQUEST_URL', 'https://zeus.tune2protect.com/ZeusAPI/v5/Zeus.asmx');
 
 
 //TEST CREDENTIALS FOR PROTECT INSURANCE API
