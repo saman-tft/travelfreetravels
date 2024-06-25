@@ -1,14 +1,10 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 require_once('InsuranceInterface.php');
-// ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
-// error_reporting(E_ALL);
-// error_reporting(E_ALL);
 /**
  *
- * @package Protect
- * @subpackage Insurance
- * @author Saman <saman.teamtft@gmail.com>
+ * @package Insurance
+ * @subpackage Protect
+ * @author Saman <tripatheesaman@gmail.com>
  * @version V1
  */
 class Protect implements InsuranceInterface
@@ -114,6 +110,7 @@ class Protect implements InsuranceInterface
                     $response['data'] = '';
                     $response['status'] = 0;
                     $this->insuranceLogger($request['id'], $request['data'],  $response['message'], $request['method_name'], 'error', $response['status']);
+                    throw new Exception("Fetching data from the api failed.");
                 }
             }
         } else {
@@ -160,7 +157,8 @@ class Protect implements InsuranceInterface
                 $searchData = $headerData['data']['search_data'];
                 if ($searchData['status'] == 1 && isset($searchData['data'])) {
                     //get current currency
-                    $currentCurrency = get_application_currency_preference();
+                    $currency = ($this->environment == 'test') ? 'AED' : 'NPR';
+                    $countryCode =  ($this->environment == 'test') ? 'AE' : 'NP';
 
                     //IF number of adults,children,infants is blank 0 is assigned
                     $numberOfAdults = ($searchData['data']['adult_config'] == 0 || $searchData['data']['adult_config'] == NULL || $searchData['data']['adult_config'] == '') ? 0 : $searchData['data']['adult_config'];
@@ -170,8 +168,8 @@ class Protect implements InsuranceInterface
                     //prepare the request to return
                     $response['data'] = "<Header>
             <Channel>" . $this->channelCode . "</Channel>
-            <Currency>NPR</Currency>
-            <CountryCode>EN</CountryCode>
+            <Currency>$currency</Currency>
+            <CountryCode>$countryCode</CountryCode>
             <CultureCode>EN</CultureCode>
             <TotalAdults>$numberOfAdults</TotalAdults>
             <TotalChild>$numberOfChildren</TotalChild>
@@ -184,18 +182,23 @@ class Protect implements InsuranceInterface
                     //search data not found
                     $response['status'] = 0;
                     $response['message'] = "No record with the search id was found";
+                    throw new Exception("No record with the search id was found");
                 }
             } else {
                 //null search id
                 $response['status'] = 0;
                 $response['data'] = '';
                 $response['message'] = "Invalid search id";
+                throw new Exception("Invalid Search Id");
+
             }
         } else {
             //invalid data provided or unauth access
             $response['status'] = 0;
             $response['data'] = '';
             $response['message'] = "Unauthorized access";
+            throw new Exception("Unauthorized Access");
+
         }
         return $response;
     }
@@ -241,18 +244,23 @@ private function get_ConfirmPurchase_Request_Header(Array $headerData): Array{
                 //search data not found
                 $response['status'] = 0;
                 $response['message'] = "No record with the search id was found";
+                throw new Exception("No record with the search id was found");
+
             }
         } else {
             //null search id
             $response['status'] = 0;
             $response['data'] = '';
             $response['message'] = "Invalid search id";
+            throw new Exception("Invalid search id");
+
         }
     } else {
         //invalid data provided or unauth access
         $response['status'] = 0;
         $response['data'] = '';
         $response['message'] = "Unauthorized access";
+        throw new Exception("Unauthorized Access");
     }
     return $response;
 
@@ -284,11 +292,14 @@ private function get_ConfirmPurchase_Request_Header(Array $headerData): Array{
             //no search id and unauthorized access
             $response['status'] = 0;
             $response['data'] = '';
-            $response['message'] = 'Invalid request data for request method GetAvailablePlansOTAWithRiders ';
+            $response['message'] = 'Invalid request data for request method GetAvailablePlansOTAWithRiders';
+            throw new Exception("Invalid request data for request method GetAvailablePlansOTAWithRiders");
+
         }
         return $response;
     }
     private function getBookingPassengerInformation($insuranceDetails){
+        if ((is_array($insuranceDetails) == true) && isset($insuranceDetails['status']) && $insuranceDetails['status'] === 1) {
         $response = '<ContactDetails>
         <ContactPerson>'.$insuranceDetails['bookingPassengerDetails']['name'].'</ContactPerson>
         <Address1></Address1>
@@ -303,6 +314,9 @@ private function get_ConfirmPurchase_Request_Header(Array $headerData): Array{
         <Country></Country>
         <EmailAddress>'.$insuranceDetails['bookingPassengerDetails']['email'].'</EmailAddress>
         </ContactDetails>';
+        }else{
+            throw new Exception("Invalid passenger data provided");
+        }
         return $response;
     }
     function formatPassengerInformationToXML($insuranceInformation){
@@ -361,20 +375,6 @@ private function get_ConfirmPurchase_Request_Header(Array $headerData): Array{
             $authHeader = $this->getAuthHeader();
             $bookingPersonDetails =$this->getBookingPassengerInformation($insuranceDetails);
             $currentFlightInformation = $this->formatFlightInformationToXMLForPurchase($searchData, $segmentDetails);
-            $currentFlightInformation = '    <Flights>   
-            <Flight>   
-            <DepartCountryCode>AE</DepartCountryCode>
-            <DepartStationCode></DepartStationCode>
-            <ArrivalCountryCode>IN</ArrivalCountryCode>
-            <ArrivalStationCode></ArrivalStationCode>
-            <DepartAirlineCode>AI</DepartAirlineCode>
-            <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
-            <ReturnAirlineCode></ReturnAirlineCode>
-            <ReturnDateTime></ReturnDateTime>
-            <DepartFlightNo>638</DepartFlightNo>
-            <ReturnFlightNo></ReturnFlightNo>
-            </Flight>
-         </Flights>';
         $passengerInformation = $this->formatPassengerInformationToXML($insuranceDetails);
         $response['data'] = '<?xml version="1.0" encoding="utf-8"?>
         <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -398,6 +398,7 @@ private function get_ConfirmPurchase_Request_Header(Array $headerData): Array{
             $response['status'] = 0;
             $response['data'] = '';
             $response['message'] = 'Invalid request data for request method GetAvailablePlansOTAWithRiders ';
+            throw new Exception("Invalid request data for request method GetAvailablePlansOTAWithRiders");
         }
         return $response;
     }
@@ -460,19 +461,21 @@ private function get_ConfirmPurchase_Request_Header(Array $headerData): Array{
                     </Flights>";
             }
         }
-        // $request = '
-        //     <Flights>
-        //     <DepartCountryCode>NP</DepartCountryCode>
-        //     <DepartStationCode></DepartStationCode>
-        //     <ArrivalCountryCode>IN</ArrivalCountryCode>
-        //     <ArrivalStationCode></ArrivalStationCode>
-        //     <DepartAirlineCode>AI</DepartAirlineCode>
-        //     <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
-        //     <ReturnAirlineCode></ReturnAirlineCode>
-        //     <ReturnDateTime></ReturnDateTime>
-        //     <DepartFlightNo>638</DepartFlightNo>
-        //     <ReturnFlightNo></ReturnFlightNo>
-        // </Flights>';
+        if($this->environment == 'test'){
+        $request = '
+            <Flights>
+            <DepartCountryCode>NP</DepartCountryCode>
+            <DepartStationCode></DepartStationCode>
+            <ArrivalCountryCode>IN</ArrivalCountryCode>
+            <ArrivalStationCode></ArrivalStationCode>
+            <DepartAirlineCode>AI</DepartAirlineCode>
+            <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
+            <ReturnAirlineCode></ReturnAirlineCode>
+            <ReturnDateTime></ReturnDateTime>
+            <DepartFlightNo>638</DepartFlightNo>
+            <ReturnFlightNo></ReturnFlightNo>
+        </Flights>';
+        }
 
         return $request;
     }
@@ -534,6 +537,22 @@ private function get_ConfirmPurchase_Request_Header(Array $headerData): Array{
             }
         }
         $request .= '</Flights>';
+        if($this->environment == 'test'){
+            $request = '<Flights>   
+            <Flight>   
+            <DepartCountryCode>AE</DepartCountryCode>
+            <DepartStationCode></DepartStationCode>
+            <ArrivalCountryCode>IN</ArrivalCountryCode>
+            <ArrivalStationCode></ArrivalStationCode>
+            <DepartAirlineCode>AI</DepartAirlineCode>
+            <DepartDateTime>2025-01-01 06:30:00</DepartDateTime>
+            <ReturnAirlineCode></ReturnAirlineCode>
+            <ReturnDateTime></ReturnDateTime>
+            <DepartFlightNo>638</DepartFlightNo>
+            <ReturnFlightNo></ReturnFlightNo>
+            </Flight>
+         </Flights>';
+        }
 
         return $request;
     }
@@ -551,7 +570,19 @@ private function get_ConfirmPurchase_Request_Header(Array $headerData): Array{
         $rawResponseArray = $this->convertToArray($xml->asXML());
         if (empty($rawResponseArray['soap:Envelope']['soap:Body']['GetAvailablePlansOTAWithRidersResponse']['GenericResponse']['ErrorCode']) || $rawResponseArray['soap:Envelope']['soap:Body']['GetAvailablePlansOTAWithRidersResponse']['GenericResponse']['ErrorCode'] == 0) {
             // all good
-            $availablePlans = $rawResponseArray['soap:Envelope']['soap:Body']['GetAvailablePlansOTAWithRidersResponse']['GenericResponse']['AvailablePlans']['AvailablePlan'];
+            if(count( $rawResponseArray['soap:Envelope']['soap:Body']['GetAvailablePlansOTAWithRidersResponse']['GenericResponse']['AvailablePlans'])>0 && valid_array( $rawResponseArray['soap:Envelope']['soap:Body']['GetAvailablePlansOTAWithRidersResponse']['GenericResponse']['AvailablePlans']) == true){
+            $availablePlans = $rawResponseArray['soap:Envelope']['soap:Body']['GetAvailablePlansOTAWithRidersResponse']['GenericResponse']['AvailablePlans']['AvailablePlan'] ?? [];
+            }else{
+                $availablePlans = [];
+            }
+            if(valid_array($rawResponseArray['soap:Envelope']['soap:Body']['GetAvailablePlansOTAWithRidersResponse']['GenericResponse']['AvailableUpsellPlans']) == true && count($rawResponseArray['soap:Envelope']['soap:Body']['GetAvailablePlansOTAWithRidersResponse']['GenericResponse']['AvailableUpsellPlans'])>0){
+            $availableUpsellPlans = $rawResponseArray['soap:Envelope']['soap:Body']['GetAvailablePlansOTAWithRidersResponse']['GenericResponse']['AvailableUpsellPlans']['UpsellPlanGroup'] ?? [];
+            if(count($availableUpsellPlans)>0 && valid_array($availableUpsellPlans) == true){
+            foreach($availableUpsellPlans as $k=>$v){
+                $availablePlans[] = $availableUpsellPlans[$k]['UpsellPlans']['UpsellPlan'];
+            }
+        }
+    }
             foreach ($availablePlans as $plan) {
                 $planType = '';
                 if (strpos($plan['PlanTitle'], 'Gold') !== false) {

@@ -45,7 +45,7 @@ class Amadeus_private extends Common_Api_Grind
         $password = $this->CI->flight_engine_system . '_password';
         $this->UserName = $this->CI->$user_name;
         $this->Password = $this->CI->$password;
-        $this->Url = 'https://localhost/travelfreetravels/services/webservices/index.php/flight/service/';
+        $this->Url = 'https://travelfreetravels.com/services/webservices/index.php/flight/service/';
         $this->ClientId = $this->CI->domain_key;
     }
 

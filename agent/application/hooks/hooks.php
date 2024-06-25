@@ -74,7 +74,9 @@ class application
 			$domain_details = $domain_details ['data'] [0];
 			// debug($domain_details);exit;
 			//$this->CI->application_default_template = 'template_v3';
-			$this->CI->application_default_template = isset($_GET['theme']) ? $_GET['theme'] : isset($domain_details['b2b_theme_id']) ? $domain_details['b2b_theme_id'] : $domain_details['theme_id'];
+			// $this->CI->application_default_template = isset($_GET['theme']) ? $_GET['theme'] : isset($domain_details['b2b_theme_id']) ? $domain_details['b2b_theme_id'] : $domain_details['theme_id'];
+			$this->CI->application_default_template = (isset($_GET['theme']) ? $_GET['theme'] : isset($domain_details['b2b_theme_id'])) ? $domain_details['b2b_theme_id'] : $domain_details['theme_id'];
+
 			$this->CI->entity_domain_name = $domain_details ['domain_name'];
 			$this->CI->entity_domain_phone = $domain_details['phone'];
 			$this->CI->entity_domain_mail = $domain_details['email'];

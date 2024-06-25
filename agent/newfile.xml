@@ -8,7 +8,7 @@
                  </Authentication><Header>
             <Channel>IBE_TFTNP</Channel>
             <Currency>NPR</Currency>
-            <CountryCode>EN</CountryCode>
+            <CountryCode>NP</CountryCode>
             <CultureCode>EN</CultureCode>
             <TotalAdults>1</TotalAdults>
             <TotalChild>0</TotalChild>
@@ -17,25 +17,37 @@
                     <Flights>
                 <DepartCountryCode>NP</DepartCountryCode>
                 <DepartStationCode></DepartStationCode>
-                <ArrivalCountryCode>TH</ArrivalCountryCode>
+                <ArrivalCountryCode>CN</ArrivalCountryCode>
                 <ArrivalStationCode></ArrivalStationCode>
-                <DepartAirlineCode>TG</DepartAirlineCode>
-                <DepartDateTime>2024-06-15 00:25:00</DepartDateTime>
+                <DepartAirlineCode>MU</DepartAirlineCode>
+                <DepartDateTime>2024-06-29 16:35:00</DepartDateTime>
                 <ReturnAirlineCode></ReturnAirlineCode>
                 <ReturnDateTime></ReturnDateTime>
-                <DepartFlightNo>310</DepartFlightNo>
+                <DepartFlightNo>9618</DepartFlightNo>
                 <ReturnFlightNo></ReturnFlightNo>
                 </Flights>
                     <Flights>
-                <DepartCountryCode>TH</DepartCountryCode>
+                <DepartCountryCode>CN</DepartCountryCode>
+                <DepartStationCode></DepartStationCode>
+                <ArrivalCountryCode>CN</ArrivalCountryCode>
+                <ArrivalStationCode></ArrivalStationCode>
+                <DepartAirlineCode>MU</DepartAirlineCode>
+                <DepartDateTime>2024-06-30 11:25:00</DepartDateTime>
+                <ReturnAirlineCode></ReturnAirlineCode>
+                <ReturnDateTime></ReturnDateTime>
+                <DepartFlightNo>2481</DepartFlightNo>
+                <ReturnFlightNo></ReturnFlightNo>
+                </Flights>
+                    <Flights>
+                <DepartCountryCode>CN</DepartCountryCode>
                 <DepartStationCode></DepartStationCode>
                 <ArrivalCountryCode>AU</ArrivalCountryCode>
                 <ArrivalStationCode></ArrivalStationCode>
-                <DepartAirlineCode>TG</DepartAirlineCode>
-                <DepartDateTime>2024-06-15 08:30:00</DepartDateTime>
+                <DepartAirlineCode>MU</DepartAirlineCode>
+                <DepartDateTime>2024-06-30 19:00:00</DepartDateTime>
                 <ReturnAirlineCode></ReturnAirlineCode>
                 <ReturnDateTime></ReturnDateTime>
-                <DepartFlightNo>475</DepartFlightNo>
+                <DepartFlightNo>749</DepartFlightNo>
                 <ReturnFlightNo></ReturnFlightNo>
                 </Flights></GenericRequestOTALite>
             </GetAvailablePlansOTAWithRiders>

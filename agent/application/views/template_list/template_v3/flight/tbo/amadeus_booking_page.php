@@ -241,8 +241,7 @@
         text-transform: capitalize;
     }
     .individualPlans{
-        display:flex;
-        flex-direction: column;
+        max-height: 50vh;
     }
     .individualPlansContainer{
         display:grid;
@@ -282,6 +281,7 @@
   place-content: center;
   place-items: center;
   color: white;
+  min-width: 30vw;
 }
 .additionalDetailsList{
     display: flex;
@@ -361,6 +361,7 @@
 .navigationButtonsContainer {
   display: flex;
   justify-content: space-between;
+  gap:0.5em;
 }
 .backButton{
     background:purple;
@@ -1250,7 +1251,7 @@ echo generate_low_balance_popup($FareDetails['_CustomerBuying'] + $FareDetails['
                                     <div class="selectedPlanDetails insuranceSection" id="selectedPlanDetails"></div>
                                     <div id="insuranceSection" class="insuranceSection">
                                         <p>Would you like to purchase insurance for this flight?</p>
-                                        <!-- <a href='<?php echo base_url() . "insurance/GetAvailablePlansOTAWithRiders/" . $search_data['search_id'] . '/' . $segmentDetails ?>'>Insure Trip</a>
+                                         <!-- <a href='<?php echo base_url() . "insurance/GetAvailablePlansOTAWithRiders/" . $search_data['search_id'] . '/' . $segmentDetails ?>'>Insure Trip</a>
                                         <a href='<?php echo base_url() . "flight/ConfirmPurchase" ?>'>Confirm Insurance</a> -->
                                         <div class="buttonContainer">
                                             <button type="button" class="btn yesButton insuranceButton" id="yesBtn">Yes</button>
@@ -2193,7 +2194,7 @@ function getAdditionalPlanDetails(planDetails){
                 .catch(error => {
                     console.error('Error fetching data:', error);
                     hideLoading();
-                    modalBody.innerHTML = '<p>Error loading data. Please try again later.</p>';
+                    modalBody.innerHTML = '<p class="text-danger">No plans available at the moment.Please try again later</p>';
                 });
         }
     }
@@ -2295,6 +2296,8 @@ function getAdditionalPlanDetails(planDetails){
 
     function showFamilyPlans(familyPlans, passenger) {
         modalContentContainer.style.maxWidth="700px";
+        modal.style.display = "flex";
+        modal.style.alignItems = "center";
         modalBody.innerHTML = `
         <div id="familyPlans">
         <div id="familyPlansContainer">
@@ -2390,11 +2393,12 @@ function getAdditionalPlanDetails(planDetails){
         const passengerAge = getPassengerAge(passengerDOB);
         const passengerGender = getPassengerGender(passenger);
         modalContentContainer.style.maxWidth="700px";
-
+        modal.style.display = "flex";
+        modal.style.alignItems = "center";
 
         modalBody.innerHTML = `
         <h2 class="individualPlanSelectionTitle">Choose a plan for <span class="passengerName">${passengerName}</span></h2>
-        <div id="individualPlans">
+        <div id="individualPlans" class="individualPlans">
         <div id="individualPlansContainer" class="individualPlansContainer">
             <!-- Individual plans will be loaded here -->
         </div>

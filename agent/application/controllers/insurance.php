@@ -29,14 +29,19 @@ class Insurance extends CI_Controller
         if ($searchId != NULL && $searchId != '' && $SegmentDetailsToken != NULL && $SegmentDetailsToken != '') {
             $rawHeaderData = $this->prepare_GetAvailablePlansOTAWithRiders_Header_Data($searchId);
             if ($rawHeaderData['status'] !== 1 && valid_array($rawHeaderData) !== true) {
-                //failed to prepare header data
+                $exception['message'] = "Failed to prepare header data.";
+                $exception['methodName'] = $methodName;
+                $exception = base64_encode(json_encode($exception));
+                redirect(base_url() . 'index.php/insurance/insuranceExceptionHandler/' . $exception);
             }
             try {
                 $formattedHeaderData = $this->insuranceService->getFormattedHeader($rawHeaderData);
             } catch (Exception $e) {
-                $formattedHeaderData['status'] = 0;
-                $formattedHeaderData['data'] = '';
-                $formattedHeaderData['message'] = $e->getMessage();
+                $exception['methodName'] = $methodName;
+                $exception['message'] = $e->getMessage();
+                $exception = base64_encode(json_encode($exception));
+                redirect(base_url() . 'index.php/insurance/insuranceExceptionHandler/' . $exception);
+                
             }
 
             $rawRequestData = $this->prepare_GetAvailablePlansOTAWithRiders_Request_Data($searchId, $SegmentDetailsToken);
@@ -46,9 +51,10 @@ class Insurance extends CI_Controller
                 try {
                     $formattedRequest = $this->insuranceService->getFormattedApiRequest($rawRequestData);
                 } catch (Exception $e) {
-                    $formattedRequest['status'] = 0;
-                    $formattedRequest['data'] = '';
-                    $formattedRequest['message'] = $e->getMessage();
+                    $exception['methodName'] = $methodName;
+                    $exception['message'] = $e->getMessage();
+                    $exception = base64_encode(json_encode($exception));
+                    redirect(base_url() . 'index.php/insurance/insuranceExceptionHandler/' . $exception);
                 }
                 if ($formattedRequest['status'] === 1 && $formattedRequest['data'] != '') {
                     $formattedRequest['method_name'] = $methodName;
@@ -57,9 +63,10 @@ class Insurance extends CI_Controller
                     try {
                         $rawApiResponse = $this->insuranceService->getRawApiResponse($formattedRequest);
                     } catch (Exception $e) {
-                        $rawApiResponse['status'] = 0;
-                        $rawApiResponse['data'] = '';
-                        $rawApiResponse['message'] = $e->getMessage();
+                        $exception['methodName'] = $methodName;
+                        $exception['message'] = $e->getMessage();
+                        $exception = base64_encode(json_encode($exception));
+                        redirect(base_url() . 'index.php/insurance/insuranceExceptionHandler/' . $exception);
                     }
                     if ($rawApiResponse['status'] === 1) {
                         $rawApiResponse['method_name'] = $methodName;
@@ -67,9 +74,10 @@ class Insurance extends CI_Controller
                             $formattedApiData = $this->insuranceService->getFormattedApiResponse($rawApiResponse);
                             $formattedApiData['message'] = '';
                         } catch (Exception $e) {
-                            $formattedApiData['status'] = 0;
-                            $formattedApiData['data'] = '';
-                            $formattedApiData['message'] = $e->getMessage();
+                            $exception['methodName'] = $methodName;
+                            $exception['message'] = $e->getMessage();
+                            $exception = base64_encode(json_encode($exception));
+                            redirect(base_url() . 'index.php/insurance/insuranceExceptionHandler/' . $exception);
                         }
 
                         if ($formattedApiData['status'] === 1) {
@@ -88,8 +96,10 @@ class Insurance extends CI_Controller
     }
     private function prepare_ConfirmPurchase_Header_Data($searchId,$methodName, $pnr, $totalAmount, $bookId){
         if ($searchId == "" || $searchId == NULL || $methodName == '' || $methodName == NULL || $methodName == NULL || $pnr == '' || $pnr == NULL ||$totalAmount == ''|| $totalAmount == NULL) {
-            echo "Unauthorized Access";
-            exit;
+            $exception['methodName'] = 'prepare_ConfirmPurchase_Header_Data';
+            $exception['message'] = "Unauthorized access";
+            $exception = base64_encode(json_encode($exception));
+            redirect(base_url() . 'index.php/insurance/insuranceExceptionHandler/' . $exception);
         }
 
         $searchData = $this->flight_model->get_safe_search_data($searchId);
@@ -107,15 +117,17 @@ class Insurance extends CI_Controller
                 $rawData['method_name'] = $methodName;
                 $rawData['message'] = '';
             }else{
-                $rawData['message'] = "No such booking record exists";
-                $rawData['data'] = '';
-                $rawData['status'] = 0;
+                $exception['methodName'] = 'prepare_ConfirmPurchase_Header_Data';
+                $exception['message'] = "No such booking record exists";
+                $exception = base64_encode(json_encode($exception));
+                redirect(base_url() . 'index.php/insurance/insuranceExceptionHandler/' . $exception);
             }
            
         } else {
-            $rawData['message'] = "No such search record exists";
-            $rawData['data'] = '';
-            $rawData['status'] = 0;
+            $exception['methodName'] = 'prepare_ConfirmPurchase_Header_Data';
+            $exception['message'] = "No such booking record exists";
+            $exception = base64_encode(json_encode($exception));
+            redirect(base_url() . 'index.php/insurance/insuranceExceptionHandler/' . $exception);
         }
         return $rawData;
     }
@@ -125,7 +137,10 @@ class Insurance extends CI_Controller
         if ($bookId != NULL && $bookId != '' && $bookingSource != NULL && $bookingSource != '') {
             $completeInsuranceInformation = $this->insurance_model->getInsuranceDetails(array('app_reference'=>$bookId));
             if($completeInsuranceInformation['status'] != 1){
-                // no such record exists
+                $exception['methodName'] = $methodName;
+                $exception['message'] = "No such insurance record exists";
+                $exception = base64_encode(json_encode($exception));
+                redirect(base_url() . 'index.php/insurance/insuranceExceptionHandler/' . $exception);
             }
             $insuranceDetails = json_decode($completeInsuranceInformation['data'][0]['message'], true);
 
@@ -135,22 +150,28 @@ class Insurance extends CI_Controller
 
             $this->ConfirmPurchase($searchId,$bookId, $methodName, $pnr, $insuranceTotalAmount, $insuranceDetails, $bookingSource);
         }else{
-            //anauth access
+            $exception['methodName'] = $methodName;
+            $exception['message'] = "Unauthorized access";
+            $exception = base64_encode(json_encode($exception));
+            redirect(base_url() . 'index.php/insurance/insuranceExceptionHandler/' . $exception);
         }
     }
     private function ConfirmPurchase($searchId, $bookId, $methodName, $pnr, $insuranceTotalAmount, $insuranceDetails, $bookingSource){
         if($bookId != NULL && $bookId != '' && $bookingSource != NULL && $bookingSource != ''){
             $rawHeaderData = $this->prepare_ConfirmPurchase_Header_Data($searchId,$methodName, $pnr, $insuranceTotalAmount, $bookId);
             if ($rawHeaderData['status'] !== 1 && valid_array($rawHeaderData) !== true) {
-
-                //failed to prepare header data
+                $exception['message'] = "Failed to prepare header data.";
+                $exception['methodName'] = $methodName;
+                $exception = base64_encode(json_encode($exception));
+                redirect(base_url() . 'index.php/insurance/insuranceExceptionHandler/' . $exception);
             }
             try {
                 $formattedHeaderData = $this->insuranceService->getFormattedHeader($rawHeaderData);
             } catch (Exception $e) {
-                $formattedHeaderData['status'] = 0;
-                $formattedHeaderData['data'] = '';
-                $formattedHeaderData['message'] = $e->getMessage();
+                $exception['message'] = $e->getMessage();
+                $exception['methodName'] = $methodName;
+                $exception = base64_encode(json_encode($exception));
+                redirect(base_url() . 'index.php/insurance/insuranceExceptionHandler/' . $exception);
             }
 
             $rawRequestData = $this->prepare_ConfirmPurchase_Request_Data($searchId, $insuranceDetails,$methodName);
@@ -160,9 +181,10 @@ class Insurance extends CI_Controller
                 try {
                     $formattedRequest = $this->insuranceService->getFormattedApiRequest($rawRequestData);
                 } catch (Exception $e) {
-                    $formattedRequest['status'] = 0;
-                    $formattedRequest['data'] = '';
-                    $formattedRequest['message'] = $e->getMessage();
+                    $exception['message'] = $e->getMessage();
+                    $exception['methodName'] = $methodName;
+                    $exception = base64_encode(json_encode($exception));
+                    redirect(base_url() . 'index.php/insurance/insuranceExceptionHandler/' . $exception);
                 }
                 if ($formattedRequest['status'] === 1 && $formattedRequest['data'] != '') {
                     $formattedRequest['method_name'] = $methodName;
@@ -171,9 +193,10 @@ class Insurance extends CI_Controller
                     try {
                         $rawApiResponse = $this->insuranceService->getRawApiResponse($formattedRequest);
                     } catch (Exception $e) {
-                        $rawApiResponse['status'] = 0;
-                        $rawApiResponse['data'] = '';
-                        $rawApiResponse['message'] = $e->getMessage();
+                        $exception['message'] = $e->getMessage();
+                        $exception['methodName'] = $methodName;
+                        $exception = base64_encode(json_encode($exception));
+                        redirect(base_url() . 'index.php/insurance/insuranceExceptionHandler/' . $exception);
                     }
                     if ($rawApiResponse['status'] === 1) {
                         $rawApiResponse['method_name'] = $methodName;
@@ -182,8 +205,10 @@ class Insurance extends CI_Controller
                             $formattedApiData['message'] = '';
                         } catch (Exception $e) {
                             $formattedApiData['status'] = 'FAILED';
-                            $formattedApiData['data'] = '';
-                            $formattedApiData['message'] = $e->getMessage();
+                            $exception['message'] = $e->getMessage();
+                            $exception['methodName'] = $methodName;
+                            $exception = base64_encode(json_encode($exception));
+                            redirect(base_url() . 'index.php/insurance/insuranceExceptionHandler/' . $exception);
                         }
 
                         if ($formattedApiData['status'] == 'CONFIRMED') {
@@ -191,11 +216,16 @@ class Insurance extends CI_Controller
                             $updateStatus = $this->insurance_model->updateConfirmedInsuranceDetails($bookId, $formattedApiData);
                             }catch(Exception $e){
                                 $updateStatus['status'] = 0;
-                                $updateStatus['message'] = $e->getMessage();
+                                $exception['message'] = $e->getMessage();
+                                $exception['methodName'] = $methodName;
+                                $exception = base64_encode(json_encode($exception));
+                                redirect(base_url() . 'index.php/insurance/insuranceExceptionHandler/' . $exception);
                             }
                         }else{
-
-                            //log failed exception or on hold exception
+                            $exception['message'] = "Failed to confirm purchase";
+                            $exception['methodName'] = $methodName;
+                            $exception = base64_encode(json_encode($exception));
+                            redirect(base_url() . 'index.php/insurance/insuranceExceptionHandler/' . $exception);
                         }
                         redirect(base_url() . 'index.php/voucher/flight/' . $bookId . '/' . $bookingSource . '/' . 'BOOKING_CONFIRMED' . '/show_voucher' . '/insurance'. '/'. $formattedApiData['status']);
                         
@@ -209,8 +239,10 @@ class Insurance extends CI_Controller
     private function prepare_GetAvailablePlansOTAWithRiders_Header_Data(String $searchId)
     {
         if ($searchId == "" || $searchId == NULL) {
-            echo "Unauthorized Access prepare_GetAvailablePlansOTAWithRiders_Header_Data";
-            exit;
+            $exception['message'] = "Unauthorized access";
+            $exception['methodName'] = "prepare_GetAvailablePlansOTAWithRiders_Header_Data";
+            $exception = base64_encode(json_encode($exception));
+            redirect(base_url() . 'index.php/insurance/insuranceExceptionHandler/' . $exception);
         }
 
         $searchData = $this->flight_model->get_safe_search_data($searchId);
@@ -230,8 +262,10 @@ class Insurance extends CI_Controller
     private function prepare_GetAvailablePlansOTAWithRiders_Request_Data(String $searchId, String $SegmentDetailsToken)
     {
         if ($searchId == "" || $searchId == NULL || $SegmentDetailsToken == NULL || $SegmentDetailsToken == '') {
-            echo "Unauthorized Access";
-            exit;
+            $exception['message'] = "Unauthorized access";
+            $exception['methodName'] = "prepare_GetAvailablePlansOTAWithRiders_Request_Data";
+            $exception = base64_encode(json_encode($exception));
+            redirect(base_url() . 'index.php/insurance/insuranceExceptionHandler/' . $exception);
         }
 
         $searchData = $this->flight_model->get_safe_search_data($searchId);
@@ -245,13 +279,19 @@ class Insurance extends CI_Controller
             $rawData['data'] = '';
             $rawData['message'] = "No such record exists";
             $rawData['status'] = 0;
+            $exception['message'] = "No such record exists";
+            $exception['methodName'] = "prepare_GetAvailablePlansOTAWithRiders_Request_Data";
+            $exception = base64_encode(json_encode($exception));
+            redirect(base_url() . 'index.php/insurance/insuranceExceptionHandler/' . $exception);
         }
         return $rawData;
     }
     private function prepare_ConfirmPurchase_Request_Data($searchId, $insuranceDetails,$methodName){
         if ($searchId == "" || $searchId == NULL || $methodName == NULL || $methodName == '' || !valid_array($insuranceDetails)) {
-            echo "Unauthorized Access";
-            exit;
+            $exception['message'] = "Unauthorized access";
+            $exception['methodName'] = "prepare_ConfirmPurchase_Request_Data";
+            $exception = base64_encode(json_encode($exception));
+            redirect(base_url() . 'index.php/insurance/insuranceExceptionHandler/' . $exception);
         }
 
         $searchData = $this->flight_model->get_safe_search_data($searchId);
@@ -266,5 +306,59 @@ class Insurance extends CI_Controller
             $rawData['status'] = 0;
         }
         return $rawData; 
+    }
+
+    public function insuranceExceptionHandler($exception){
+        if(!$exception){
+            $exception['message'] = "Please try again";
+            $exception['status'] = 0;
+            $exception['methodName'] = "Unknown"; 
+            $exception = base64_encode($exception, true);
+        }
+        $this->exceptionLogger($exception);
+        $this->template->view('insurance/exception');
+    }
+
+    private function exceptionLogger($exception){
+        if(!$exception){
+            $exception['message'] = "Please try again";
+            $exception['status'] = 0;
+            $exception['methodName'] = "Unknown"; 
+        }else{
+            $exception = base64_decode($exception, true);
+        }
+        $status = 0;
+        $methodName = $exception['methodName'];
+        $message = $exception['message'];
+        $log_entry = "\n========== BEGIN EXCEPTION ==========\n";
+        $log_entry .= "Exception Method Name: $methodName\n";
+        $log_entry .= "Response Status: $status\n";
+        $log_entry .= "Timestamp: " . date('Y-m-d H:i:s') . "\n";
+        $log_entry .= "$message\n";
+        $log_entry .= "========== END EXCEPTION ==========\n";
+
+
+        $log_dir = BASEPATH . "../logs/insurance_logs/protect_logs";
+        $log_file = "{$log_dir}/" . "exception_log" . '.log';
+    
+        if (!is_dir($log_dir)) {
+            if (!mkdir($log_dir, 0755, true)) {
+                log_message('error', 'Unable to create log directory: ' . $log_dir);
+                return;
+            }
+        }
+    
+        if (!file_exists($log_file)) {
+            if (!touch($log_file)) {
+                log_message('error', 'Unable to create log file: ' . $log_file);
+                return;
+            }
+        }
+    
+        if (!write_file($log_file, $log_entry, 'a')) {
+            log_message('error', 'Unable to write to log file: ' . $log_file);
+        } else {
+            log_message('debug', 'Successfully wrote to log file: ' . $log_file);
+        }
     }
 }
